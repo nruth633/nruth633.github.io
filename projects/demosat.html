@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Advanced Project PCB — Nicolas Ruth</title>
+    <title>DemoSat Balloon Payload — Nicolas Ruth</title>
     <meta
       name="description"
-      content="Course capstone PCB designed in KiCad — schematic capture, layout, custom footprint library, and fabrication-ready gerbers."
+      content="A sensor-payload PCB for a high-altitude balloon flight — temperature, humidity, barometric pressure, and 3-axis acceleration with SD logging."
     />
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
-    <link rel="canonical" href="https://nruth633.github.io/projects/adv-project-pcb.html" />
+    <link rel="canonical" href="https://nruth633.github.io/projects/demosat.html" />
     <link rel="stylesheet" href="../css/style.css" />
     <script>
       (function () {
@@ -51,66 +51,45 @@
       <article>
         <header class="detail-header wrap">
           <a class="back-link" href="../projects.html">← All projects</a>
-          <p class="section-label">PCB Design</p>
-          <h1>Advanced Project PCB</h1>
+          <p class="section-label">PCB Design · Sensors · Flight Hardware</p>
+          <h1>DemoSat High-Altitude Balloon Payload</h1>
           <ul class="tags">
-            <li class="tag tag-accent">KiCad 7+</li>
-            <li class="tag">Schematic</li>
-            <li class="tag">Layout</li>
-            <li class="tag">Gerbers</li>
+            <li class="tag tag-accent">KiCad</li>
+            <li class="tag">Arduino Uno shield</li>
+            <li class="tag">I²C</li>
+            <li class="tag">SD logging</li>
           </ul>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="https://github.com/nruth633/adv-project-pcb" rel="noopener">
-              View source
-            </a>
-          </div>
         </header>
 
         <section class="wrap" style="padding-top: var(--space-m)">
-          <!-- Replace with a KiCad 3D render or a photo of the fabricated board:
-               <img src="../assets/img/adv-pcb.png" alt="3D render of the advanced project board">
-               In KiCad: View → 3D Viewer → File → Export Current View as PNG -->
+          <!-- Swap for a real photo:
+               <img src="../assets/img/demosat.jpg" alt="The assembled DemoSat payload board"> -->
           <div
             class="card-media"
-            data-placeholder="board render → assets/img/adv-pcb.png"
+            data-placeholder="payload photo → assets/img/demosat.jpg"
             style="border-radius: var(--radius); border: 1px solid var(--border); aspect-ratio: 21/9; margin-bottom: var(--space-l)"
           ></div>
-
-          <dl class="spec-list">
-            <dt>Tool</dt>
-            <dd>KiCad 7+</dd>
-            <dt>Deliverables</dt>
-            <dd>Schematic, board layout, BOM, gerbers</dd>
-            <dt>Libraries</dt>
-            <dd>Custom footprint library for non-stock parts</dd>
-            <dt>Context</dt>
-            <dd>Advanced electronics course project</dd>
-          </dl>
 
           <div class="prose">
             <h2 style="font-size: var(--step-2); margin-bottom: var(--space-m)">
               What it is
             </h2>
             <p>
-              A course capstone board taken through the full design flow —
-              schematic capture, component selection, layout, and export of
-              fabrication-ready gerbers. Not a breadboard mockup: the output is
-              the set of files a fab house needs to actually build the thing.
+              A sensor payload flown on a high-altitude balloon, built as an
+              Arduino Uno shield and designed and soldered from scratch in KiCad.
+              Four sensors log the flight environment to an SD card for recovery
+              and analysis after landing.
             </p>
-
-            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
-              Custom footprints
-            </h2>
             <p>
-              Several parts had no usable stock symbol or footprint, so the
-              project carries its own library built from the manufacturer
-              datasheets — pad geometry, courtyard, and 3D models included. This
-              is the part of board design that quietly eats the most time, and
-              getting it wrong means a board that arrives unusable.
+              What separates this from a bench project is that it only gets one
+              attempt. Once the balloon is released there is no debugging, no
+              reflashing, and no reseating a loose connector — so component
+              selection has to account for where the payload is going, not just
+              whether the circuit works on a desk.
             </p>
 
             <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
-              Repository layout
+              Sensor suite
             </h2>
           </div>
 
@@ -118,63 +97,69 @@
             <table>
               <thead>
                 <tr>
-                  <th scope="col">Path</th>
-                  <th scope="col">Contents</th>
+                  <th scope="col">Part</th>
+                  <th scope="col">Measures</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">ADV_PROJECT.kicad_pro</th>
-                  <td>Project entry point — open this in KiCad</td>
+                  <th scope="row">DS18B20</th>
+                  <td>Temperature</td>
                 </tr>
                 <tr>
-                  <th scope="row">COMPONENTS/</th>
-                  <td>Symbols and 3D models</td>
+                  <th scope="row">HIH9120</th>
+                  <td>Relative humidity</td>
                 </tr>
                 <tr>
-                  <th scope="row">MyFootprints/</th>
-                  <td>Custom footprint library</td>
+                  <th scope="row">DPS310</th>
+                  <td>Barometric pressure — the altitude proxy</td>
                 </tr>
                 <tr>
-                  <th scope="row">GERBER/</th>
-                  <td>Manufacturing output</td>
-                </tr>
-                <tr>
-                  <th scope="row">DOCS/</th>
-                  <td>Design documentation and reference material</td>
+                  <th scope="row">ADXL345</th>
+                  <td>3-axis acceleration — ascent, burst, and descent dynamics</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
           <div class="prose">
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Designing for the environment
+            </h2>
+            <p>
+              Components were selected against the flight profile rather than
+              room conditions. A high-altitude balloon climbs through air that
+              gets down toward −50 °C and pressure that falls to a small
+              percentage of sea level, so parts have to hold their specified
+              accuracy at temperatures well below the commercial range most
+              datasheets lead with, and pressure sensing has to stay useful at
+              the low end rather than saturating.
+            </p>
+            <p>
+              Logging to SD rather than transmitting means the data survives loss
+              of radio contact — the payload keeps recording regardless of
+              whether anything is listening.
+            </p>
+
             <!-- ============================================================
-                 TODO — Nic, worth adding here:
-                   · what the board actually does (its function/purpose)
-                   · layer count, board dimensions, key components
-                   · design decisions: power routing, decoupling, ground pours
-                   · did you get it fabricated? did it work first try?
+                 TODO — Nic, worth adding if you have it:
+                   · peak altitude reached and total flight time
+                   · a plot of temperature or pressure vs. time (great visual)
+                   · did every sensor survive? anything drop out mid-flight?
+                   · logging rate and how you sized the SD capacity
+                   · how the payload was insulated / mounted
                  Then delete this comment.
                  ============================================================ -->
             <div class="callout">
               <p>
-                <strong>More detail coming.</strong> Board function, stackup, and
-                key layout decisions to be written up here.
+                <strong>Flight data coming.</strong> Altitude profile and recorded
+                sensor traces to be added here.
               </p>
             </div>
-
-            <p>
-              KiCad's regenerated files — the footprint info cache and rolling
-              backup folders — are kept out of version control, so the repository
-              holds design source rather than churn.
-            </p>
           </div>
 
           <div class="hero-actions">
             <a class="btn btn-ghost" href="../projects.html">← All projects</a>
-            <a class="btn btn-ghost" href="https://github.com/nruth633/adv-project-pcb" rel="noopener">
-              View source ↗
-            </a>
           </div>
         </section>
       </article>

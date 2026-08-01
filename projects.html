@@ -6,7 +6,7 @@
     <title>Projects — Nicolas Ruth</title>
     <meta
       name="description"
-      content="Embedded systems, PCB design, and control projects by Nicolas Ruth — STM32, KiCad, MATLAB, and Arduino."
+      content="Power electronics, RF, PCB design, and embedded projects by Nicolas Ruth — rail launcher, balloon payload, FM receiver, and custom boards."
     />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href="https://nruth633.github.io/projects.html" />
@@ -55,27 +55,152 @@
         </h1>
         <div class="prose">
           <p style="color: var(--text-soft)">
-            Coursework and self-directed work, mostly embedded systems and the
-            boards they run on. Every project links to its source — the KiCad
-            files and firmware are all public.
+            Coursework, competition work, and things I built because I wanted to
+            know if they'd work. Several have public design files on GitHub.
           </p>
         </div>
 
-        <div class="filter-bar" role="group" aria-label="Filter projects by technology">
+        <div class="filter-bar" role="group" aria-label="Filter projects by area">
           <button class="filter-btn" type="button" data-filter="all" aria-pressed="true">All</button>
-          <button class="filter-btn" type="button" data-filter="stm32" aria-pressed="false">STM32</button>
+          <button class="filter-btn" type="button" data-filter="power" aria-pressed="false">Power</button>
+          <button class="filter-btn" type="button" data-filter="rf" aria-pressed="false">RF &amp; analog</button>
           <button class="filter-btn" type="button" data-filter="pcb" aria-pressed="false">PCB</button>
-          <button class="filter-btn" type="button" data-filter="controls" aria-pressed="false">Controls</button>
-          <button class="filter-btn" type="button" data-filter="matlab" aria-pressed="false">MATLAB</button>
-          <button class="filter-btn" type="button" data-filter="arduino" aria-pressed="false">Arduino</button>
+          <button class="filter-btn" type="button" data-filter="embedded" aria-pressed="false">Embedded</button>
         </div>
         <p id="filter-status" class="visually-hidden" role="status" aria-live="polite"></p>
       </section>
 
       <section class="wrap" style="padding-top: var(--space-m)">
         <ul class="project-grid">
+          <!-- ---- Rail launcher ---- -->
+          <li data-tags="power">
+            <article class="card">
+              <div class="card-media" data-placeholder="railgun photo → assets/img/"></div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/rail-launcher.html">Electromagnetic Rail Launcher</a>
+                </h3>
+                <p class="card-desc">
+                  A DC boost converter steps an 11.1 V LiPo up to ~225 V to charge
+                  a 13,200 µF capacitor bank — about 330 joules — discharged
+                  across dual aluminium rails to accelerate a projectile.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">Power electronics</li>
+                  <li class="tag">High voltage</li>
+                  <li class="tag">330 J</li>
+                </ul>
+              </div>
+            </article>
+          </li>
+
+          <!-- ---- DemoSat ---- -->
+          <li data-tags="pcb embedded">
+            <article class="card">
+              <div class="card-media" data-placeholder="payload photo → assets/img/"></div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/demosat.html">DemoSat Balloon Payload</a>
+                </h3>
+                <p class="card-desc">
+                  A sensor-payload shield designed and soldered for a
+                  high-altitude balloon flight: temperature, humidity, barometric
+                  pressure, and 3-axis acceleration over I²C, logged to SD.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">KiCad</li>
+                  <li class="tag">Sensors</li>
+                  <li class="tag">I²C</li>
+                  <li class="tag">SD logging</li>
+                </ul>
+              </div>
+            </article>
+          </li>
+
+          <!-- ---- FM receiver ---- -->
+          <li data-tags="rf">
+            <article class="card">
+              <div class="card-media" data-placeholder="receiver photo → assets/img/"></div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/fm-receiver.html">FM Radio Receiver</a>
+                </h3>
+                <p class="card-desc">
+                  Built from discrete components — a hand-wound 0.15 µH coil and a
+                  1–30 pF variable capacitor tuning the 88–108 MHz band, an S9018
+                  RF transistor, and an LM386 driving a speaker.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">RF</li>
+                  <li class="tag">Analog</li>
+                  <li class="tag">Discrete</li>
+                </ul>
+              </div>
+            </article>
+          </li>
+
+          <!-- ---- EMP demonstrator ---- -->
+          <li data-tags="power">
+            <article class="card">
+              <div class="card-media" data-placeholder="EMP coil → assets/img/"></div>
+              <div class="card-body">
+                <h3 class="card-title">Electromagnetic Pulse Demonstrator</h3>
+                <p class="card-desc">
+                  A capacitor-discharge EMP generator: a 9 V high-voltage step-up
+                  converter charges a 20 kV ceramic capacitor bank, discharged
+                  through a hand-wound coil to produce a pulsed magnetic field.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">High voltage</li>
+                  <li class="tag">20 kV</li>
+                  <li class="tag">Magnetics</li>
+                </ul>
+              </div>
+            </article>
+          </li>
+
+          <!-- ---- Battery tester ---- -->
+          <li data-tags="pcb">
+            <article class="card">
+              <div class="card-media" data-placeholder="board photo → assets/img/"></div>
+              <div class="card-body">
+                <h3 class="card-title">Battery Tester Board</h3>
+                <p class="card-desc">
+                  A custom battery-tester PCB in KiCad, including non-standard
+                  component footprints and drill specifications written for
+                  in-house fabrication on an LPKF CNC milling machine.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">KiCad</li>
+                  <li class="tag">LPKF CNC</li>
+                  <li class="tag">Fabrication</li>
+                </ul>
+              </div>
+            </article>
+          </li>
+
+          <!-- ---- I/O shield ---- -->
+          <li data-tags="pcb embedded">
+            <article class="card">
+              <div class="card-media" data-placeholder="shield photo → assets/img/"></div>
+              <div class="card-body">
+                <h3 class="card-title">Arduino Uno I/O Shield</h3>
+                <p class="card-desc">
+                  A general-purpose I/O shield integrating potentiometers, push
+                  buttons, status and RGB LEDs, an OLED display, and
+                  selectable-voltage I²C / SPI expansion headers.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">KiCad</li>
+                  <li class="tag">Arduino</li>
+                  <li class="tag">OLED</li>
+                </ul>
+              </div>
+            </article>
+          </li>
+
           <!-- ---- Balancing robot ---- -->
-          <li data-tags="stm32 pcb controls arduino">
+          <li data-tags="embedded pcb">
             <article class="card">
               <div class="card-media" data-placeholder="robot photo → assets/img/"></div>
               <div class="card-body">
@@ -83,19 +208,41 @@
                   <a href="projects/balancing-robot.html">3-Wheel Balancing Robot</a>
                 </h3>
                 <p class="card-desc">
-                  STM32F401 firmware, a custom KiCad control board, and an
-                  ESP8266 handheld remote. Includes a balance loop variant that
-                  runs without wheel encoders, using an IMU-only attitude
-                  estimate.
+                  STM32F401 firmware, a custom KiCad control board, and an ESP8266
+                  handheld remote. Includes a balance loop variant that runs
+                  without wheel encoders, on an IMU-only attitude estimate.
                 </p>
                 <ul class="tags">
-                  <li class="tag tag-accent">STM32F401</li>
+                  <li class="tag tag-accent">STM32</li>
                   <li class="tag">MPU6050</li>
                   <li class="tag">KiCad</li>
-                  <li class="tag">ESP8266</li>
                 </ul>
                 <div class="card-links">
                   <a href="https://github.com/nruth633/3-wheel-balancing-robot" rel="noopener">Source ↗</a>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <!-- ---- IMU shield ---- -->
+          <li data-tags="pcb embedded">
+            <article class="card">
+              <div class="card-media" data-placeholder="shield photo → assets/img/"></div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="https://github.com/nruth633/arduino-shield-pcb" rel="noopener">Arduino Uno IMU Shield</a>
+                </h3>
+                <p class="card-desc">
+                  A second UNO-format shield, this one integrating an MPU6050 IMU
+                  so motion-sensing experiments sit in a fixed, repeatable
+                  orientation instead of on a breadboard.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">KiCad</li>
+                  <li class="tag">MPU6050</li>
+                </ul>
+                <div class="card-links">
+                  <a href="https://github.com/nruth633/arduino-shield-pcb" rel="noopener">Source ↗</a>
                 </div>
               </div>
             </article>
@@ -107,45 +254,19 @@
               <div class="card-media" data-placeholder="board render → assets/img/"></div>
               <div class="card-body">
                 <h3 class="card-title">
-                  <a href="projects/adv-project-pcb.html">Advanced Project PCB</a>
+                  <a href="https://github.com/nruth633/adv-project-pcb" rel="noopener">Advanced Project PCB</a>
                 </h3>
                 <p class="card-desc">
-                  Course capstone board carried from schematic through layout to
-                  fabrication-ready gerbers, with a custom footprint library for
-                  parts without stock symbols.
+                  Advanced electronics course board taken from schematic through
+                  layout to fabrication-ready gerbers, with a custom footprint
+                  library for parts that had no stock symbol.
                 </p>
                 <ul class="tags">
                   <li class="tag tag-accent">KiCad</li>
-                  <li class="tag">Layout</li>
                   <li class="tag">Gerbers</li>
                 </ul>
                 <div class="card-links">
                   <a href="https://github.com/nruth633/adv-project-pcb" rel="noopener">Source ↗</a>
-                </div>
-              </div>
-            </article>
-          </li>
-
-          <!-- ---- Arduino shield ---- -->
-          <li data-tags="pcb arduino">
-            <article class="card">
-              <div class="card-media" data-placeholder="shield photo → assets/img/"></div>
-              <div class="card-body">
-                <h3 class="card-title">
-                  <a href="projects/arduino-shield.html">Arduino UNO IMU Shield</a>
-                </h3>
-                <p class="card-desc">
-                  A shield in the UNO form factor integrating an MPU6050 IMU,
-                  designed so motion-sensing experiments were repeatable instead
-                  of rebuilt on a breadboard each time.
-                </p>
-                <ul class="tags">
-                  <li class="tag tag-accent">KiCad</li>
-                  <li class="tag">Arduino</li>
-                  <li class="tag">I²C</li>
-                </ul>
-                <div class="card-links">
-                  <a href="https://github.com/nruth633/arduino-shield-pcb" rel="noopener">Source ↗</a>
                 </div>
               </div>
             </article>
@@ -157,13 +278,11 @@
               <div class="card-media" data-placeholder="IEEE board → assets/img/"></div>
               <div class="card-body">
                 <h3 class="card-title">
-                  <a href="https://github.com/nruth633/ieee-pcb" rel="noopener">IEEE Project Board</a>
+                  <a href="https://github.com/nruth633/ieee-pcb" rel="noopener">IEEE LED Matrix Cube Board</a>
                 </h3>
                 <p class="card-desc">
-                  A KiCad board designed for an IEEE student project. The repo is
-                  deliberately trimmed to source only — the working copy was
-                  91 MB, almost entirely KiCad's rolling backup folder, against
-                  under 1 MB of actual design files.
+                  A KiCad board designed with the DU IEEE chapter — the layout for
+                  one slice of the LED matrix cube the group built.
                 </p>
                 <ul class="tags">
                   <li class="tag tag-accent">KiCad</li>
@@ -177,7 +296,7 @@
           </li>
 
           <!-- ---- STM32 learning ---- -->
-          <li data-tags="stm32 pcb">
+          <li data-tags="embedded">
             <article class="card">
               <div class="card-media" data-placeholder="bench setup → assets/img/"></div>
               <div class="card-body">
@@ -185,10 +304,9 @@
                   <a href="https://github.com/nruth633/stm32-learning" rel="noopener">STM32 Bring&#8209;up &amp; HAL Practice</a>
                 </h3>
                 <p class="card-desc">
-                  Self-directed STM32F401 work: HAL driver experiments, GPIO and
-                  peripheral exercises, a stripped-down blink build kept
-                  specifically for smoke-testing freshly assembled boards, and a
-                  board laid out following Phil's Lab PCB course.
+                  Self-directed STM32F401 work: HAL driver experiments, peripheral
+                  exercises, and a stripped-down blink build kept specifically for
+                  smoke-testing freshly assembled boards.
                 </p>
                 <ul class="tags">
                   <li class="tag tag-accent">STM32F401</li>
@@ -197,55 +315,6 @@
                 </ul>
                 <div class="card-links">
                   <a href="https://github.com/nruth633/stm32-learning" rel="noopener">Source ↗</a>
-                </div>
-              </div>
-            </article>
-          </li>
-
-          <!-- ---- Coursework ---- -->
-          <li data-tags="stm32 matlab controls arduino">
-            <article class="card">
-              <div class="card-media" data-placeholder="lab work → assets/img/"></div>
-              <div class="card-body">
-                <h3 class="card-title">
-                  <a href="https://github.com/nruth633/school" rel="noopener">Embedded &amp; Controls Coursework</a>
-                </h3>
-                <p class="card-desc">
-                  Embedded labs across two STM32 platforms (F407G and F103CBT6),
-                  microprocessor work in Arduino, and a run of MATLAB control
-                  system labs and projects. Each project self-contained and
-                  documented.
-                </p>
-                <ul class="tags">
-                  <li class="tag tag-accent">STM32</li>
-                  <li class="tag">MATLAB</li>
-                  <li class="tag">Controls</li>
-                </ul>
-                <div class="card-links">
-                  <a href="https://github.com/nruth633/school" rel="noopener">Source ↗</a>
-                </div>
-              </div>
-            </article>
-          </li>
-
-          <!-- ---- Analog / LTspice ---- -->
-          <li data-tags="controls matlab">
-            <article class="card">
-              <div class="card-media" data-placeholder="LTspice plot → assets/img/"></div>
-              <div class="card-body">
-                <h3 class="card-title">Analog Simulation &amp; Lab Work</h3>
-                <p class="card-desc">
-                  LTspice circuit simulation alongside physical lab measurement —
-                  transient and FFT analysis compared against bench results, plus
-                  MATLAB post-processing for advanced electronics labs.
-                </p>
-                <ul class="tags">
-                  <li class="tag tag-accent">LTspice</li>
-                  <li class="tag">MATLAB</li>
-                  <li class="tag">Analog</li>
-                </ul>
-                <div class="card-links">
-                  <span style="color: var(--text-faint)">Coursework — write-up coming</span>
                 </div>
               </div>
             </article>

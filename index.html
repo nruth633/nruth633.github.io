@@ -3,21 +3,18 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Nicolas Ruth — Electrical &amp; Embedded Engineering</title>
+    <title>Nicolas Ruth — Electrical Engineering</title>
     <meta
       name="description"
-      content="Nicolas Ruth — electrical and embedded engineering student. STM32 firmware, KiCad PCB design, RF measurement, and control systems."
+      content="Nicolas Ruth — B.S. Electrical Engineering at the University of Denver, 2027. Power electronics, PCB design and fabrication, RF, and embedded systems."
     />
     <meta name="author" content="Nicolas Ruth" />
 
     <meta property="og:type" content="website" />
-    <meta
-      property="og:title"
-      content="Nicolas Ruth — Electrical &amp; Embedded Engineering"
-    />
+    <meta property="og:title" content="Nicolas Ruth — Electrical Engineering" />
     <meta
       property="og:description"
-      content="STM32 firmware, KiCad PCB design, RF measurement, and control systems."
+      content="Power electronics, PCB design and fabrication, RF, and embedded systems."
     />
     <meta property="og:url" content="https://nruth633.github.io/" />
     <meta name="twitter:card" content="summary" />
@@ -48,9 +45,7 @@
             <li><a href="index.html" aria-current="page">Home</a></li>
             <li><a href="projects.html">Projects</a></li>
             <li><a href="resume.html">Resume</a></li>
-            <li>
-              <a href="https://github.com/nruth633" rel="noopener">GitHub</a>
-            </li>
+            <li><a href="https://github.com/nruth633" rel="noopener">GitHub</a></li>
           </ul>
         </nav>
         <button class="theme-toggle" type="button" aria-label="Switch theme">
@@ -68,12 +63,13 @@
     <main id="main">
       <!-- ---------- Hero ---------- -->
       <section class="hero wrap">
-        <p class="hero-eyebrow">Electrical &amp; Embedded Engineering</p>
+        <p class="hero-eyebrow">Electrical Engineering · University of Denver</p>
         <h1>Nicolas Ruth</h1>
         <p class="hero-lede">
-          I build embedded systems end to end — STM32 firmware in C, the custom
-          PCB it runs on, and the control loop that makes it behave. Currently
-          an engineering student working on RF and hardware design.
+          I build hardware that has to survive contact with the real world —
+          capacitor banks that store hundreds of joules, sensor payloads flown to
+          the edge of the atmosphere, and boards I mill and solder myself.
+          Graduating May 2027.
         </p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="projects.html">
@@ -95,58 +91,59 @@
       <!-- ---------- What I work with ---------- -->
       <section class="wrap reveal" aria-labelledby="skills-heading">
         <p class="section-label">What I work with</p>
-        <h2 id="skills-heading">Hardware, firmware, and the loop between them</h2>
+        <h2 id="skills-heading">From schematic to soldered board</h2>
 
         <div class="skill-grid">
           <article class="skill-card">
-            <h3>Embedded firmware</h3>
+            <h3>Power electronics</h3>
             <p>
-              STM32 in C — F401, F407, and F103 variants. STM32CubeIDE with HAL
-              drivers, peripheral bring-up, and board smoke-testing. Arduino for
-              rapid prototyping.
+              Boost converters, high-voltage capacitor banks, inrush limiting,
+              and the protection design that keeps a charging stage alive.
+              Hundreds of joules, handled deliberately.
             </p>
           </article>
 
           <article class="skill-card">
-            <h3>PCB design</h3>
+            <h3>PCB design &amp; fabrication</h3>
             <p>
-              KiCad end to end: schematic capture, layout, custom footprint
-              libraries, BOM and gerber generation. Several boards designed,
-              fabricated, and brought up.
+              KiCad schematic capture and layout, including non-standard
+              footprints and drill specs for in-house milling on an LPKF CNC.
+              Designed, fabricated, and soldered.
             </p>
           </article>
 
           <article class="skill-card">
-            <h3>RF &amp; test</h3>
+            <h3>RF &amp; analog</h3>
             <p>
-              Antenna design and S-parameter measurement. LTspice for analog
-              simulation, plus bench work with scopes and signal generators.
+              Antenna design and S-parameter measurement professionally; discrete
+              RF and audio analog design personally, down to hand-wound coils and
+              tuned LC front ends.
             </p>
           </article>
 
           <article class="skill-card">
-            <h3>Controls &amp; modelling</h3>
+            <h3>Embedded systems</h3>
             <p>
-              MATLAB for control system design and analysis — root locus,
-              frequency response, and closed-loop simulation from coursework and
-              lab work.
+              C and embedded C on STM32, Arduino, and Teensy. Sensor integration
+              over I²C and SPI, data logging, and board bring-up.
             </p>
           </article>
 
           <article class="skill-card">
-            <h3>Mechanical &amp; CAD</h3>
+            <h3>Simulation &amp; analysis</h3>
             <p>
-              Fusion 360 and Autodesk Inventor for enclosures and mounts, with
-              FDM 3D printing to get parts in hand and iterate quickly.
+              LTspice for circuit simulation and MATLAB for signals and systems
+              work, checked against real bench measurements with a scope and
+              multimeter.
             </p>
           </article>
 
           <article class="skill-card">
-            <h3>Tooling</h3>
+            <h3>Mechanical &amp; shop</h3>
             <p>
-              Git and GitHub for version control, including keeping design
-              revisions traceable rather than overwritten. Python for scripting
-              and data work.
+              SolidWorks and Onshape for parts and enclosures, 3D printing, and
+              comfort with hand and power tools — carried over from leading a
+              FIRST Robotics mechanical subteam.
             </p>
           </article>
         </div>
@@ -160,76 +157,66 @@
         <ul class="project-grid featured">
           <li>
             <article class="card">
-              <!-- Swap data-placeholder for <img> once a photo is added.
-                   Build photos live in the repo under firmware_main/Docs_Process/ -->
-              <div class="card-media" data-placeholder="robot photo → assets/img/"></div>
+              <div class="card-media" data-placeholder="railgun photo → assets/img/"></div>
               <div class="card-body">
                 <h3 class="card-title">
-                  <a href="projects/balancing-robot.html">3-Wheel Balancing Robot</a>
+                  <a href="projects/rail-launcher.html">Electromagnetic Rail Launcher</a>
                 </h3>
                 <p class="card-desc">
-                  A self-balancing robot built around an STM32F401 and an
-                  MPU6050 IMU, on a control board I designed in KiCad, driven by
-                  an ESP8266 handheld remote. Three firmware revisions kept
-                  side by side so the progression stays visible.
+                  A boost converter steps an 11.1 V LiPo up to ~225 V to charge a
+                  13,200 µF bank storing roughly 330 joules, then dumps it across
+                  dual aluminium rails to accelerate a projectile — with a
+                  protection network so the charging stage survives it.
                 </p>
                 <ul class="tags">
-                  <li class="tag tag-accent">STM32</li>
-                  <li class="tag">KiCad</li>
-                  <li class="tag">Controls</li>
-                  <li class="tag">ESP8266</li>
+                  <li class="tag tag-accent">Power electronics</li>
+                  <li class="tag">High voltage</li>
+                  <li class="tag">330 J</li>
                 </ul>
-                <div class="card-links">
-                  <a href="https://github.com/nruth633/3-wheel-balancing-robot" rel="noopener">Source ↗</a>
-                </div>
               </div>
             </article>
           </li>
 
           <li>
             <article class="card">
-              <div class="card-media" data-placeholder="board render → assets/img/"></div>
+              <div class="card-media" data-placeholder="payload photo → assets/img/"></div>
               <div class="card-body">
                 <h3 class="card-title">
-                  <a href="projects/adv-project-pcb.html">Advanced Project PCB</a>
+                  <a href="projects/demosat.html">DemoSat Balloon Payload</a>
                 </h3>
                 <p class="card-desc">
-                  A course capstone board taken from schematic through layout to
-                  fabrication-ready gerbers, including a custom footprint
-                  library for parts that had no stock symbol.
+                  A four-sensor payload PCB designed and soldered for a
+                  high-altitude balloon flight — temperature, humidity, pressure,
+                  and acceleration over I²C with SD logging, with parts chosen to
+                  survive the cold and near-vacuum up there.
                 </p>
                 <ul class="tags">
                   <li class="tag tag-accent">KiCad</li>
-                  <li class="tag">PCB</li>
-                  <li class="tag">Gerbers</li>
-                </ul>
-                <div class="card-links">
-                  <a href="https://github.com/nruth633/adv-project-pcb" rel="noopener">Source ↗</a>
-                </div>
-              </div>
-            </article>
-          </li>
-
-          <li>
-            <article class="card">
-              <div class="card-media" data-placeholder="shield photo → assets/img/"></div>
-              <div class="card-body">
-                <h3 class="card-title">
-                  <a href="projects/arduino-shield.html">Arduino UNO IMU Shield</a>
-                </h3>
-                <p class="card-desc">
-                  A custom shield in the Arduino UNO form factor integrating an
-                  MPU6050 IMU — designed to make motion-sensing experiments
-                  repeatable instead of a breadboard rebuilt every session.
-                </p>
-                <ul class="tags">
-                  <li class="tag tag-accent">KiCad</li>
-                  <li class="tag">Arduino</li>
+                  <li class="tag">Sensors</li>
                   <li class="tag">I²C</li>
                 </ul>
-                <div class="card-links">
-                  <a href="https://github.com/nruth633/arduino-shield-pcb" rel="noopener">Source ↗</a>
-                </div>
+              </div>
+            </article>
+          </li>
+
+          <li>
+            <article class="card">
+              <div class="card-media" data-placeholder="receiver photo → assets/img/"></div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/fm-receiver.html">FM Radio Receiver</a>
+                </h3>
+                <p class="card-desc">
+                  A working FM receiver built from discrete parts — a hand-wound
+                  0.15 µH coil and a variable capacitor tuning the whole
+                  88–108 MHz band, an S9018 recovering the signal, and an LM386
+                  driving a speaker.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">RF</li>
+                  <li class="tag">Analog</li>
+                  <li class="tag">Discrete</li>
+                </ul>
               </div>
             </article>
           </li>
@@ -246,8 +233,8 @@
         <h2 id="contact-heading">Get in touch</h2>
         <div class="prose">
           <p>
-            Open to internships and co-op roles in embedded systems, hardware,
-            and RF. The fastest way to reach me is email.
+            Based in Denver, CO. Open to internships and co-op roles in hardware,
+            power electronics, RF, and embedded systems.
           </p>
         </div>
         <div class="contact-links">

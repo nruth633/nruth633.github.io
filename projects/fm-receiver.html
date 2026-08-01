@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Arduino UNO IMU Shield — Nicolas Ruth</title>
+    <title>FM Radio Receiver — Nicolas Ruth</title>
     <meta
       name="description"
-      content="Custom Arduino UNO form-factor shield integrating an MPU6050 IMU — KiCad schematic, layout, and fabrication files."
+      content="An FM receiver built from discrete components — a hand-wound 0.15 µH coil, a 1–30 pF variable capacitor tuning 88–108 MHz, an S9018, and an LM386."
     />
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
-    <link rel="canonical" href="https://nruth633.github.io/projects/arduino-shield.html" />
+    <link rel="canonical" href="https://nruth633.github.io/projects/fm-receiver.html" />
     <link rel="stylesheet" href="../css/style.css" />
     <script>
       (function () {
@@ -51,100 +51,89 @@
       <article>
         <header class="detail-header wrap">
           <a class="back-link" href="../projects.html">← All projects</a>
-          <p class="section-label">PCB Design · Sensors</p>
-          <h1>Arduino UNO IMU Shield</h1>
+          <p class="section-label">RF · Analog</p>
+          <h1>FM Radio Receiver</h1>
           <ul class="tags">
-            <li class="tag tag-accent">KiCad 7+</li>
-            <li class="tag">MPU6050</li>
-            <li class="tag">Arduino UNO</li>
-            <li class="tag">I²C</li>
+            <li class="tag tag-accent">88–108 MHz</li>
+            <li class="tag">Hand-wound coil</li>
+            <li class="tag">S9018</li>
+            <li class="tag">LM386</li>
           </ul>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="https://github.com/nruth633/arduino-shield-pcb" rel="noopener">
-              View source
-            </a>
-          </div>
         </header>
 
         <section class="wrap" style="padding-top: var(--space-m)">
-          <!-- Replace with a photo of the assembled shield or a 3D render:
-               <img src="../assets/img/shield.jpg" alt="The IMU shield seated on an Arduino UNO"> -->
+          <!-- Swap for a real photo:
+               <img src="../assets/img/fm-receiver.jpg" alt="The FM receiver build"> -->
           <div
             class="card-media"
-            data-placeholder="shield photo → assets/img/shield.jpg"
+            data-placeholder="receiver photo → assets/img/fm-receiver.jpg"
             style="border-radius: var(--radius); border: 1px solid var(--border); aspect-ratio: 21/9; margin-bottom: var(--space-l)"
           ></div>
 
           <dl class="spec-list">
-            <dt>Form factor</dt>
-            <dd>Arduino UNO shield — standard header footprint</dd>
-            <dt>Sensor</dt>
-            <dd>MPU6050 — 6-axis IMU (gyro + accelerometer), I²C</dd>
-            <dt>Tool</dt>
-            <dd>KiCad 7+</dd>
-            <dt>Deliverables</dt>
-            <dd>Schematic, layout, component libraries, fabrication files</dd>
+            <dt>Band</dt>
+            <dd>88–108 MHz (FM broadcast)</dd>
+            <dt>Tank inductor</dt>
+            <dd>0.15 µH, hand-wound</dd>
+            <dt>Tuning</dt>
+            <dd>1–30 pF variable capacitor</dd>
+            <dt>RF stage</dt>
+            <dd>S9018 RF transistor</dd>
+            <dt>Audio stage</dt>
+            <dd>LM386 power amplifier driving a speaker</dd>
           </dl>
 
           <div class="prose">
             <h2 style="font-size: var(--step-2); margin-bottom: var(--space-m)">
-              Why build it
+              What it is
             </h2>
             <p>
-              Wiring an IMU onto a breadboard works right up until you need the
-              same setup twice. Jumpers work loose, the sensor sits at a slightly
-              different angle each time, and any orientation calibration you did
-              last session is gone.
-            </p>
-            <p>
-              Putting the MPU6050 on a proper shield fixes the sensor in a known
-              position relative to the board and makes the setup repeatable — you
-              seat it on the UNO and it's the same rig as last time. That matters
-              a lot for motion work, where the whole measurement is relative to
-              how the sensor is mounted.
+              A working FM broadcast receiver built from discrete components —
+              no receiver IC doing the hard part. Signal is picked up, tuned,
+              recovered, and amplified through stages I chose and assembled
+              individually.
             </p>
 
             <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
-              Design
+              Tuning the band
             </h2>
             <p>
-              Standard UNO header geometry so it stacks like any other shield,
-              with the IMU broken out over I²C. Designed in KiCad with the
-              schematic, board layout, component libraries, and documentation all
-              kept in the project.
+              The front end is an LC tank: a hand-wound 0.15 µH coil paired with a
+              1–30 pF variable capacitor. Sweeping that capacitor moves the
+              resonant frequency across the full 88–108 MHz broadcast band, which
+              is what turns the tuning knob into station selection.
+            </p>
+            <p>
+              Winding the inductor by hand is the interesting part. At these
+              frequencies a fraction of a microhenry decides where the band
+              lands, and the value depends on turn count, coil diameter, and
+              spacing — so the coil gets adjusted physically until the tuning
+              range covers the stations you actually want.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Recovery and audio
+            </h2>
+            <p>
+              An S9018 — a small-signal transistor with enough gain-bandwidth to
+              be useful at VHF — handles the RF stage and signal recovery. From
+              there the audio drops to an LM386, a classic low-power audio
+              amplifier, which drives a speaker directly.
             </p>
 
             <!-- ============================================================
-                 TODO — Nic, good things to add here:
-                   · pull-up resistor values on SDA/SCL and why
-                   · where you placed the IMU on the board and why
-                   · whether you had it fabricated and how bring-up went
-                   · a photo of it seated on the UNO
+                 TODO — Nic, good additions:
+                   · your coil geometry (turns, diameter, wire gauge)
+                   · the detection scheme you used (slope detection?)
+                   · how far you could receive / which stations came in
+                   · anything you had to tweak to get it to actually work
+                   · a photo of the coil — those photograph really well
                  Then delete this comment.
                  ============================================================ -->
-            <div class="callout">
-              <p>
-                <strong>More detail coming.</strong> Layout decisions, I²C bus
-                design, and assembly notes to be written up here.
-              </p>
-            </div>
-
-            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
-              Related work
-            </h2>
-            <p>
-              The same MPU6050 sensor drives attitude estimation on the
-              <a href="balancing-robot.html">3-wheel balancing robot</a> — this
-              shield was a useful place to get familiar with the part before it
-              had to hold a robot upright.
-            </p>
           </div>
 
           <div class="hero-actions">
             <a class="btn btn-ghost" href="../projects.html">← All projects</a>
-            <a class="btn btn-ghost" href="https://github.com/nruth633/arduino-shield-pcb" rel="noopener">
-              View source ↗
-            </a>
           </div>
         </section>
       </article>
