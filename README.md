@@ -17,6 +17,7 @@ css/style.css         the entire stylesheet
 js/main.js            theme toggle, filtering, scroll reveal
 assets/img/           photos and board renders
 assets/resume.pdf     resume download (add this file)
+tools/                one-off generators; not part of the published site
 ```
 
 ## Editing
@@ -47,9 +48,24 @@ keep the whole sheet on the detail page (see `battery-tester-card.png` next to
 and a schematic squeezed into that column can't be read. Add `figure-tall` to
 anything roughly square or taller so it doesn't swallow the viewport.
 
-**Social preview.** Every page carries Open Graph tags. `assets/img/og-card.png`
-is the generic card used by the home, projects, and resume pages; project pages
-point at their own lead image instead.
+**Social preview.** Every page carries Open Graph tags. Project pages point at
+their own lead image; home, projects, and resume share a generated card,
+`assets/img/og-card-v2.png`, built by `tools/make-og-card.py`.
+
+That card does **not** follow the stylesheet — the colours are baked into the
+pixels. Change the site's look and the thumbnail keeps showing the old one until
+the script is re-run:
+
+```sh
+python tools/make-og-card.py
+```
+
+Bump `VERSION` in the script and update the three `og:image` tags to match, then
+delete the old file. Publishing under a *new filename* is the point: iMessage,
+Slack, and LinkedIn cache previews keyed on the image URL, so overwriting the
+same name leaves everyone looking at the stale thumbnail. To check a link
+preview yourself before sharing it, append `?v=2` — that is a new URL to the
+cache and the site serves identically.
 
 **Change colours.** Every colour is a custom property at the top of
 `css/style.css`, under `:root` for light and `:root[data-theme="dark"]` for dark.
