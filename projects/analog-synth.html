@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Transistor Analog Synthesizer — Nicolas Ruth</title>
+    <meta
+      name="description"
+      content="An all-analog synthesizer built from transistors — astable oscillator, light and voltage pitch control, a slow modulator, and an LM386 output stage."
+    />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://nruth633.github.io/projects/analog-synth.html" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          if (saved) document.documentElement.setAttribute("data-theme", saved);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap nav">
+        <a class="nav-brand" href="../index.html">nic ruth</a>
+        <nav aria-label="Main">
+          <ul class="nav-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../projects.html" aria-current="page">Projects</a></li>
+            <li><a href="../resume.html">Resume</a></li>
+            <li><a href="https://github.com/nruth633" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" type="button" aria-label="Switch theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <article>
+        <header class="detail-header wrap">
+          <a class="back-link" href="../projects.html">← All projects</a>
+          <p class="section-label">Analog Design · Audio · Discrete Transistors</p>
+          <h1>Analog Synthesizer Built From Transistors</h1>
+          <ul class="tags">
+            <li class="tag tag-accent">No microcontroller</li>
+            <li class="tag">Astable multivibrator</li>
+            <li class="tag">LM386</li>
+            <li class="tag">Single 9 V</li>
+          </ul>
+        </header>
+
+        <section class="wrap" style="padding-top: var(--space-m)">
+          <figure class="figure">
+            <img
+              src="../assets/img/synth-schematic.png"
+              alt="Schematic showing two astable multivibrator stages, the voltage follower pitch control, and the LM386 output amplifier"
+              width="1500" height="843"
+            />
+            <figcaption>
+              Voice oscillator, slow modulator, adjustable supply, and output
+              amplifier.
+            </figcaption>
+          </figure>
+
+          <div class="prose">
+            <h2 style="font-size: var(--step-2); margin-bottom: var(--space-m)">
+              What it is
+            </h2>
+            <p>
+              An analog synthesizer made out of transistors. It produces an
+              audible tone, the pitch can be bent two different ways — with light
+              and with a knob — and a second slow circuit sweeps the pitch on its
+              own so it sounds like a siren. Everything runs from a single 9 V
+              supply into a small speaker. There is no microcontroller anywhere
+              in it.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              The voice
+            </h2>
+            <p>
+              The tone comes from an astable multivibrator: two transistors wired
+              so each keeps switching the other off, producing a square wave.
+              Frequency follows f ≈ 1/(1.38·R·C), which with 10 kΩ and 100 nF
+              predicts around 725 Hz — and measured a little higher in practice,
+              which is normal for this topology.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Two ways to bend the pitch
+            </h2>
+            <p>
+              A photoresistor sits in the timing network. More light drops its
+              resistance and the tone rises; cover it and the pitch falls.
+            </p>
+            <p>
+              The knob works differently — it changes the oscillator's supply
+              voltage. A potentiometer sets a voltage, and a transistor follower
+              copies that voltage while still being able to source real current.
+              Without the follower the pot would sag under load and the pitch
+              would wander; with it, the knob sets a stiff voltage and the
+              oscillator tracks it cleanly.
+            </p>
+          </div>
+
+          <div class="figure-row">
+            <figure class="figure">
+              <img
+                src="../assets/img/synth-scope-930hz.jpg"
+                alt="Oscilloscope capture showing a square wave at 930 hertz, 8.48 volts peak to peak"
+                width="800" height="512"
+              />
+              <figcaption>
+                Ambient light: 930 Hz at 8.48 V peak-to-peak.
+              </figcaption>
+            </figure>
+            <figure class="figure">
+              <img
+                src="../assets/img/synth-scope-468hz.jpg"
+                alt="Oscilloscope capture showing the same waveform at 468 hertz with the photoresistor covered"
+                width="800" height="512"
+              />
+              <figcaption>
+                Photoresistor covered: 468 Hz — almost exactly half.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="prose">
+            <p>
+              Covering the sensor halved the frequency almost exactly, which is a
+              satisfyingly clean confirmation that the light path controls the
+              timing and not something incidental.
+            </p>
+            <p>
+              Sweeping the knob walked the tone from not oscillating at all, up
+              through 277 Hz, 638 Hz and 1243 Hz as the supply rose toward 7.4 V
+              — supply voltage controlling pitch exactly as the theory predicts.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Modulator and output
+            </h2>
+            <p>
+              A second astable runs deliberately slow, using 10 µF capacitors, at
+              a measured 1.67 Hz. It nudges the voice's timing up and down, which
+              drags the pitch around and produces the warble. Each oscillator
+              drives an LED so both are visible while running — which also made
+              the modulator rate countable by eye before I put a scope on it.
+            </p>
+            <p>
+              Output goes through an LM386. The tone is AC-coupled in so only
+              audio passes, and a series resistor on the output keeps the level
+              sane — the raw square wave is large enough to clip the amplifier
+              without it.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              The batteries didn't behave
+            </h2>
+          </div>
+
+          <figure class="figure">
+            <img
+              src="../assets/img/synth-batteries.jpg"
+              alt="Two 9 volt batteries side by side, one heavy-duty and one alkaline"
+              width="1500" height="455"
+            />
+            <figcaption>The two batteries that disagreed.</figcaption>
+          </figure>
+
+          <div class="prose">
+            <p>
+              Running the identical circuit on two different 9 V batteries gave
+              results that looked backwards. The one reading 8.2 V produced a
+              slow 1.9 Hz warble; the one reading 7.3 V produced a much faster
+              7.6 Hz. Higher voltage should mean a faster modulator, not slower.
+            </p>
+            <p>
+              The explanation is internal resistance. A real battery has
+              resistance inside it, so voltage sags under load — and a weaker
+              battery sags more. The two cells didn't just differ in voltage,
+              they differed in <em>stiffness</em>, and both readings were taken
+              while the circuit was running, so each already included its own
+              sag. The simple "more volts, faster" rule was comparing two things
+              that weren't otherwise equal.
+            </p>
+            <p>
+              The clean way to test supply voltage in isolation is a bench supply
+              that holds its output regardless of current draw. That the label on
+              a battery describes only one of its two relevant properties was the
+              most useful thing this project taught me.
+            </p>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn btn-ghost" href="../projects.html">← All projects</a>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p style="margin: 0">© <span id="year">2026</span> Nicolas Ruth</p>
+        <p style="margin: 0">
+          Built with plain HTML and CSS ·
+          <a href="https://github.com/nruth633/nruth633.github.io" rel="noopener">Source</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+  </body>
+</html>

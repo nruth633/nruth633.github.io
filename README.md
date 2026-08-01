@@ -51,9 +51,17 @@ Search the source for `TODO` — each one marks a spot with placeholder text:
 
 - `resume.html` — Arsenal Nexus start date and the three experience bullets
 - `index.html` — LinkedIn URL (commented out until you add it)
-- `projects/*.html` — measured results and build details (each page lists
-  exactly what would strengthen it)
-- `assets/img/` — no photos yet; every project shows a placeholder block
+- Photos for the FM receiver, EMP demonstrator, battery tester, I/O shield,
+  balancing robot, and the GitHub boards — those cards still show placeholders
+
+## Image sources
+
+Everything in `assets/img/` was pulled from your own coursework documents and
+re-encoded for the web (26 MB → 2.4 MB). Deliberately *excluded*, because they
+weren't yours to publish: a stock photo of a naval railgun, a textbook diagram
+of rail physics, and the Adafruit product shots of the DemoSat sensors.
+
+If you add photos, keep to that rule — your own work only.
 
 ## Before you publish
 

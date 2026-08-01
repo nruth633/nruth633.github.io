@@ -6,7 +6,7 @@
     <title>DemoSat Balloon Payload — Nicolas Ruth</title>
     <meta
       name="description"
-      content="A sensor-payload PCB for a high-altitude balloon flight — temperature, humidity, barometric pressure, and 3-axis acceleration with SD logging."
+      content="Redesigning a high-altitude balloon payload around obsolete sensors: 120 g and $115 against a 200 g / $147 budget, at 259 mW."
     />
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href="https://nruth633.github.io/projects/demosat.html" />
@@ -51,45 +51,46 @@
       <article>
         <header class="detail-header wrap">
           <a class="back-link" href="../projects.html">← All projects</a>
-          <p class="section-label">PCB Design · Sensors · Flight Hardware</p>
+          <p class="section-label">PCB Design · Sensors · Component Selection</p>
           <h1>DemoSat High-Altitude Balloon Payload</h1>
           <ul class="tags">
             <li class="tag tag-accent">KiCad</li>
-            <li class="tag">Arduino Uno shield</li>
-            <li class="tag">I²C</li>
-            <li class="tag">SD logging</li>
+            <li class="tag">120 g</li>
+            <li class="tag">$115</li>
+            <li class="tag">259 mW</li>
           </ul>
         </header>
 
         <section class="wrap" style="padding-top: var(--space-m)">
-          <!-- Swap for a real photo:
-               <img src="../assets/img/demosat.jpg" alt="The assembled DemoSat payload board"> -->
-          <div
-            class="card-media"
-            data-placeholder="payload photo → assets/img/demosat.jpg"
-            style="border-radius: var(--radius); border: 1px solid var(--border); aspect-ratio: 21/9; margin-bottom: var(--space-l)"
-          ></div>
+          <figure class="figure">
+            <img
+              src="../assets/img/demosat-render.jpg"
+              alt="3D render of the assembled payload shield showing the DPS310 pressure sensor, display, and status LEDs"
+              width="1500" height="1029"
+            />
+            <figcaption>The payload as an Arduino Uno shield.</figcaption>
+          </figure>
 
           <div class="prose">
             <h2 style="font-size: var(--step-2); margin-bottom: var(--space-m)">
-              What it is
+              The actual problem
             </h2>
             <p>
-              A sensor payload flown on a high-altitude balloon, built as an
-              Arduino Uno shield and designed and soldered from scratch in KiCad.
-              Four sensors log the flight environment to an SD card for recovery
-              and analysis after landing.
+              This wasn't a blank-page design. There was an existing balloon
+              payload, and the task was to rebuild it — because when I ran the
+              feasibility check on the original, two of its four sensors were
+              simply <strong>out of production</strong>. You cannot buy the
+              humidity or pressure parts any more, so the original design is
+              unbuildable regardless of whether it once worked.
             </p>
             <p>
-              What separates this from a bench project is that it only gets one
-              attempt. Once the balloon is released there is no debugging, no
-              reflashing, and no reseating a loose connector — so component
-              selection has to account for where the payload is going, not just
-              whether the circuit works on a desk.
+              That turned the project into a component-selection exercise with
+              hard constraints, which is a far more realistic engineering problem
+              than picking parts freely.
             </p>
 
             <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
-              Sensor suite
+              Constraints and outcome
             </h2>
           </div>
 
@@ -97,26 +98,26 @@
             <table>
               <thead>
                 <tr>
-                  <th scope="col">Part</th>
-                  <th scope="col">Measures</th>
+                  <th scope="col">Requirement</th>
+                  <th scope="col">Budget</th>
+                  <th scope="col">Achieved</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">DS18B20</th>
-                  <td>Temperature</td>
+                  <th scope="row">Mass</th>
+                  <td>under 200 g</td>
+                  <td>~120 g</td>
                 </tr>
                 <tr>
-                  <th scope="row">HIH9120</th>
-                  <td>Relative humidity</td>
+                  <th scope="row">Cost</th>
+                  <td>under $147</td>
+                  <td>~$115</td>
                 </tr>
                 <tr>
-                  <th scope="row">DPS310</th>
-                  <td>Barometric pressure — the altitude proxy</td>
-                </tr>
-                <tr>
-                  <th scope="row">ADXL345</th>
-                  <td>3-axis acceleration — ascent, burst, and descent dynamics</td>
+                  <th scope="row">Power</th>
+                  <td>less than the original (~90 mA)</td>
+                  <td>259 mW typical, 459 mW with all LEDs on</td>
                 </tr>
               </tbody>
             </table>
@@ -124,38 +125,124 @@
 
           <div class="prose">
             <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
-              Designing for the environment
+              Sensor selection
             </h2>
             <p>
-              Components were selected against the flight profile rather than
-              room conditions. A high-altitude balloon climbs through air that
-              gets down toward −50 °C and pressure that falls to a small
-              percentage of sea level, so parts have to hold their specified
-              accuracy at temperatures well below the commercial range most
-              datasheets lead with, and pressure sensing has to stay useful at
-              the low end rather than saturating.
+              Every replacement had to justify itself against the part it
+              replaced — not just "is it available", but does it improve
+              resolution, accuracy, or power draw, and does it drop the supply
+              rail toward 3.3 V so the whole board can share one voltage.
+            </p>
+          </div>
+
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Measures</th>
+                  <th scope="col">Original</th>
+                  <th scope="col">Chosen</th>
+                  <th scope="col">Why</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Acceleration</th>
+                  <td>ADXL335</td>
+                  <td>ADXL345</td>
+                  <td>
+                    I²C instead of analog, 13-bit, range to ±16 g rather than
+                    ±3 g, ~140 µA at 3.3 V
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Pressure</th>
+                  <td>HSCDANN015PAAA5</td>
+                  <td>DPS310</td>
+                  <td>
+                    300–1200 hPa, runs on 1.7–3.6 V instead of 5 V, and only
+                    ~1.7 µA at 3.3 V
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Humidity</th>
+                  <td>HIH-4030</td>
+                  <td>HIH-9120</td>
+                  <td>
+                    I²C, ±1.7 % accuracy against ±3.5 %, physically much smaller
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Temperature</th>
+                  <td>TMP36</td>
+                  <td>DS18B20</td>
+                  <td>
+                    Digital rather than analog, 9–12 bit instead of ADC-limited
+                    to 10, ±0.5 °C against ±2 °C, waterproof package suits
+                    external mounting
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="prose">
+            <p>
+              Three of the four talk I²C, so they share one two-wire bus. The
+              DS18B20 is the exception — it's a 1-Wire part, which costs a pin
+              but buys a sealed probe that can sit outside the enclosure and
+              read the actual outside air rather than the inside of a warm box.
             </p>
             <p>
-              Logging to SD rather than transmitting means the data survives loss
-              of radio contact — the payload keeps recording regardless of
-              whether anything is listening.
+              Going digital across the board also sidesteps the Arduino's 10-bit
+              ADC, which was quietly the accuracy ceiling on the original design
+              no matter how good the analog sensors were.
             </p>
+          </div>
 
-            <!-- ============================================================
-                 TODO — Nic, worth adding if you have it:
-                   · peak altitude reached and total flight time
-                   · a plot of temperature or pressure vs. time (great visual)
-                   · did every sensor survive? anything drop out mid-flight?
-                   · logging rate and how you sized the SD capacity
-                   · how the payload was insulated / mounted
-                 Then delete this comment.
-                 ============================================================ -->
-            <div class="callout">
-              <p>
-                <strong>Flight data coming.</strong> Altitude profile and recorded
-                sensor traces to be added here.
-              </p>
-            </div>
+          <div class="figure-row">
+            <figure class="figure">
+              <img
+                src="../assets/img/demosat-pcb-front.png"
+                alt="KiCad render of the payload board, front copper layer"
+                width="562" height="439"
+              />
+              <figcaption>Board front.</figcaption>
+            </figure>
+            <figure class="figure">
+              <img
+                src="../assets/img/demosat-pcb-back.png"
+                alt="KiCad render of the payload board, back copper layer"
+                width="557" height="439"
+              />
+              <figcaption>Board back.</figcaption>
+            </figure>
+          </div>
+
+          <div class="prose">
+            <p>
+              The finished layout is a 2-layer board, 69.5 × 54.0 mm
+              (2.74 × 2.13 in) — three of them quoted at $29.05 through OSH Park.
+            </p>
+          </div>
+
+          <div class="figure-row">
+            <figure class="figure">
+              <img
+                src="../assets/img/demosat-schematic.png"
+                alt="KiCad schematic of the payload, showing the sensor blocks and Arduino shield headers"
+                width="1500" height="772"
+              />
+              <figcaption>Schematic.</figcaption>
+            </figure>
+            <figure class="figure">
+              <img
+                src="../assets/img/demosat-block-diagram.jpg"
+                alt="Hand-drawn block diagram: accelerometer, humidity, pressure and internal and external temperature feeding the Uno over I2C, out to a datalogger and four LEDs"
+                width="1486" height="1242"
+              />
+              <figcaption>System block diagram from the design phase.</figcaption>
+            </figure>
           </div>
 
           <div class="hero-actions">

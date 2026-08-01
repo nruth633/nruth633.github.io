@@ -643,6 +643,44 @@ section {
   }
 }
 
+/* ---------- Figures ---------- */
+
+.figure {
+  margin: 0 0 var(--space-l);
+}
+
+.figure img {
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-sunken);
+}
+
+.figure figcaption {
+  margin-top: var(--space-xs);
+  font-size: var(--step--1);
+  color: var(--text-faint);
+  line-height: 1.5;
+}
+
+/* Side-by-side figures that stack on narrow screens. */
+.figure-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
+  gap: var(--space-m);
+  margin-bottom: var(--space-l);
+}
+
+.figure-row .figure {
+  margin-bottom: 0;
+}
+
+/* Tall photos shouldn't dominate the page. */
+.figure-tall img {
+  max-height: 30rem;
+  object-fit: contain;
+}
+
 /* ---------- Spec table ---------- */
 
 .spec-list {

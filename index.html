@@ -157,21 +157,23 @@
         <ul class="project-grid featured">
           <li>
             <article class="card">
-              <div class="card-media" data-placeholder="railgun photo → assets/img/"></div>
+              <div class="card-media">
+                <img src="assets/img/railgun-rails.jpg" alt="Aluminium rails in a 3D-printed housing with a BB armature between them" loading="lazy" width="1500" height="934" />
+              </div>
               <div class="card-body">
                 <h3 class="card-title">
                   <a href="projects/rail-launcher.html">Electromagnetic Rail Launcher</a>
                 </h3>
                 <p class="card-desc">
-                  A boost converter steps an 11.1 V LiPo up to ~225 V to charge a
-                  13,200 µF bank storing roughly 330 joules, then dumps it across
-                  dual aluminium rails to accelerate a projectile — with a
-                  protection network so the charging stage survives it.
+                  ~330 J stored in a 13,200 µF bank charged to 225 V from an
+                  11.1 V LiPo. Inrush held to 85 mA by twelve series resistors
+                  picked for wattage rather than resistance, behind a 600 V
+                  blocking diode.
                 </p>
                 <ul class="tags">
-                  <li class="tag tag-accent">Power electronics</li>
+                  <li class="tag tag-accent">330 J</li>
+                  <li class="tag">Power electronics</li>
                   <li class="tag">High voltage</li>
-                  <li class="tag">330 J</li>
                 </ul>
               </div>
             </article>
@@ -179,43 +181,47 @@
 
           <li>
             <article class="card">
-              <div class="card-media" data-placeholder="payload photo → assets/img/"></div>
+              <div class="card-media">
+                <img src="assets/img/bandgap-extrapolation.png" alt="Plot of base-emitter voltage against temperature extrapolated back to 0 K" loading="lazy" width="1042" height="816" />
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/bandgap.html">Measuring the Silicon Bandgap</a>
+                </h3>
+                <p class="card-desc">
+                  Extracted the silicon bandgap and Boltzmann's constant from a
+                  single transistor using a 9 V battery and a multimeter, then
+                  combined them into a flat 1.31 V reference — within 13–17 % of
+                  textbook values, with the gap explained.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">Semiconductor physics</li>
+                  <li class="tag">Measurement</li>
+                  <li class="tag">R² = 0.97</li>
+                </ul>
+              </div>
+            </article>
+          </li>
+
+          <li>
+            <article class="card">
+              <div class="card-media">
+                <img src="assets/img/demosat-render.jpg" alt="3D render of the DemoSat balloon payload shield" loading="lazy" width="1500" height="1029" />
+              </div>
               <div class="card-body">
                 <h3 class="card-title">
                   <a href="projects/demosat.html">DemoSat Balloon Payload</a>
                 </h3>
                 <p class="card-desc">
-                  A four-sensor payload PCB designed and soldered for a
-                  high-altitude balloon flight — temperature, humidity, pressure,
-                  and acceleration over I²C with SD logging, with parts chosen to
-                  survive the cold and near-vacuum up there.
+                  Rebuilt a high-altitude balloon payload after two of its four
+                  sensors went out of production — a component-selection problem
+                  with hard limits. Came in at 120 g and $115 against a 200 g /
+                  $147 budget.
                 </p>
                 <ul class="tags">
                   <li class="tag tag-accent">KiCad</li>
                   <li class="tag">Sensors</li>
                   <li class="tag">I²C</li>
-                </ul>
-              </div>
-            </article>
-          </li>
-
-          <li>
-            <article class="card">
-              <div class="card-media" data-placeholder="receiver photo → assets/img/"></div>
-              <div class="card-body">
-                <h3 class="card-title">
-                  <a href="projects/fm-receiver.html">FM Radio Receiver</a>
-                </h3>
-                <p class="card-desc">
-                  A working FM receiver built from discrete parts — a hand-wound
-                  0.15 µH coil and a variable capacitor tuning the whole
-                  88–108 MHz band, an S9018 recovering the signal, and an LM386
-                  driving a speaker.
-                </p>
-                <ul class="tags">
-                  <li class="tag tag-accent">RF</li>
-                  <li class="tag">Analog</li>
-                  <li class="tag">Discrete</li>
                 </ul>
               </div>
             </article>

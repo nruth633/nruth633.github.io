@@ -6,7 +6,7 @@
     <title>Projects — Nicolas Ruth</title>
     <meta
       name="description"
-      content="Power electronics, RF, PCB design, and embedded projects by Nicolas Ruth — rail launcher, balloon payload, FM receiver, and custom boards."
+      content="Power electronics, analog design, PCB, and embedded projects by Nicolas Ruth — rail launcher, bandgap measurement, balloon payload, and custom boards."
     />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href="https://nruth633.github.io/projects.html" />
@@ -56,14 +56,14 @@
         <div class="prose">
           <p style="color: var(--text-soft)">
             Coursework, competition work, and things I built because I wanted to
-            know if they'd work. Several have public design files on GitHub.
+            know whether they'd work. Several have public design files on GitHub.
           </p>
         </div>
 
         <div class="filter-bar" role="group" aria-label="Filter projects by area">
           <button class="filter-btn" type="button" data-filter="all" aria-pressed="true">All</button>
           <button class="filter-btn" type="button" data-filter="power" aria-pressed="false">Power</button>
-          <button class="filter-btn" type="button" data-filter="rf" aria-pressed="false">RF &amp; analog</button>
+          <button class="filter-btn" type="button" data-filter="analog" aria-pressed="false">Analog &amp; RF</button>
           <button class="filter-btn" type="button" data-filter="pcb" aria-pressed="false">PCB</button>
           <button class="filter-btn" type="button" data-filter="embedded" aria-pressed="false">Embedded</button>
         </div>
@@ -75,20 +75,46 @@
           <!-- ---- Rail launcher ---- -->
           <li data-tags="power">
             <article class="card">
-              <div class="card-media" data-placeholder="railgun photo → assets/img/"></div>
+              <div class="card-media">
+                <img src="assets/img/railgun-rails.jpg" alt="Aluminium rails in a 3D-printed housing with a BB armature" loading="lazy" width="1500" height="934" />
+              </div>
               <div class="card-body">
                 <h3 class="card-title">
                   <a href="projects/rail-launcher.html">Electromagnetic Rail Launcher</a>
                 </h3>
                 <p class="card-desc">
-                  A DC boost converter steps an 11.1 V LiPo up to ~225 V to charge
-                  a 13,200 µF capacitor bank — about 330 joules — discharged
-                  across dual aluminium rails to accelerate a projectile.
+                  ~330 J stored in a 13,200 µF bank charged to 225 V from an
+                  11.1 V LiPo, with inrush held to 85 mA by twelve series
+                  resistors chosen for wattage, not just resistance.
                 </p>
                 <ul class="tags">
-                  <li class="tag tag-accent">Power electronics</li>
+                  <li class="tag tag-accent">330 J</li>
+                  <li class="tag">Power electronics</li>
                   <li class="tag">High voltage</li>
-                  <li class="tag">330 J</li>
+                </ul>
+              </div>
+            </article>
+          </li>
+
+          <!-- ---- Bandgap ---- -->
+          <li data-tags="analog">
+            <article class="card">
+              <div class="card-media">
+                <img src="assets/img/bandgap-extrapolation.png" alt="Plot extrapolating base-emitter voltage to 0 K" loading="lazy" width="1042" height="816" />
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/bandgap.html">Measuring the Silicon Bandgap</a>
+                </h3>
+                <p class="card-desc">
+                  Pulled the silicon bandgap (1.31 eV) and Boltzmann's constant
+                  (1.56 × 10⁻²³ J/K) out of one transistor with a 9 V battery and
+                  a multimeter, then combined them into a flat voltage reference.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">Semiconductor physics</li>
+                  <li class="tag">Measurement</li>
+                  <li class="tag">R² = 0.97</li>
                 </ul>
               </div>
             </article>
@@ -97,28 +123,53 @@
           <!-- ---- DemoSat ---- -->
           <li data-tags="pcb embedded">
             <article class="card">
-              <div class="card-media" data-placeholder="payload photo → assets/img/"></div>
+              <div class="card-media">
+                <img src="assets/img/demosat-render.jpg" alt="3D render of the DemoSat payload shield" loading="lazy" width="1500" height="1029" />
+              </div>
               <div class="card-body">
                 <h3 class="card-title">
                   <a href="projects/demosat.html">DemoSat Balloon Payload</a>
                 </h3>
                 <p class="card-desc">
-                  A sensor-payload shield designed and soldered for a
-                  high-altitude balloon flight: temperature, humidity, barometric
-                  pressure, and 3-axis acceleration over I²C, logged to SD.
+                  Rebuilt a high-altitude balloon payload after two of its four
+                  sensors went out of production. Landed at 120 g and $115
+                  against a 200 g / $147 budget.
                 </p>
                 <ul class="tags">
                   <li class="tag tag-accent">KiCad</li>
                   <li class="tag">Sensors</li>
                   <li class="tag">I²C</li>
-                  <li class="tag">SD logging</li>
+                </ul>
+              </div>
+            </article>
+          </li>
+
+          <!-- ---- Analog synth ---- -->
+          <li data-tags="analog">
+            <article class="card">
+              <div class="card-media">
+                <img src="assets/img/synth-scope-930hz.jpg" alt="Oscilloscope capture of a 930 Hz square wave" loading="lazy" width="800" height="512" />
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/analog-synth.html">Transistor Analog Synthesizer</a>
+                </h3>
+                <p class="card-desc">
+                  An all-analog instrument with no microcontroller — astable
+                  oscillator, light and voltage pitch control, slow modulator,
+                  LM386 output. Every stage verified on the scope.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">Discrete analog</li>
+                  <li class="tag">Audio</li>
+                  <li class="tag">LM386</li>
                 </ul>
               </div>
             </article>
           </li>
 
           <!-- ---- FM receiver ---- -->
-          <li data-tags="rf">
+          <li data-tags="analog">
             <article class="card">
               <div class="card-media" data-placeholder="receiver photo → assets/img/"></div>
               <div class="card-body">

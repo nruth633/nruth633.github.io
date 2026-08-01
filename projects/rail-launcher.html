@@ -6,7 +6,7 @@
     <title>Electromagnetic Rail Launcher — Nicolas Ruth</title>
     <meta
       name="description"
-      content="A rail-type electromagnetic launcher: 11.1 V LiPo boosted to ~225 V charging a 13,200 µF bank storing ~330 J, discharged across dual aluminium rails."
+      content="A rail launcher storing ~330 J: 11.1 V LiPo boosted to 225 V into a 13,200 µF bank, with inrush limited to 85 mA. Built for an electromagnetics course."
     />
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href="https://nruth633.github.io/projects/rail-launcher.html" />
@@ -51,107 +51,187 @@
       <article>
         <header class="detail-header wrap">
           <a class="back-link" href="../projects.html">← All projects</a>
-          <p class="section-label">Power Electronics · High Voltage</p>
+          <p class="section-label">Power Electronics · High Voltage · Electromagnetics</p>
           <h1>Electromagnetic Rail Launcher</h1>
           <ul class="tags">
-            <li class="tag tag-accent">Boost converter</li>
+            <li class="tag tag-accent">~330 J</li>
             <li class="tag">225 V</li>
             <li class="tag">13,200 µF</li>
-            <li class="tag">~330 J</li>
+            <li class="tag">Boost converter</li>
           </ul>
         </header>
 
         <section class="wrap" style="padding-top: var(--space-m)">
-          <!-- Swap for a real photo:
-               <img src="../assets/img/railgun.jpg" alt="The rail launcher with its capacitor bank"> -->
-          <div
-            class="card-media"
-            data-placeholder="railgun photo → assets/img/railgun.jpg"
-            style="border-radius: var(--radius); border: 1px solid var(--border); aspect-ratio: 21/9; margin-bottom: var(--space-l)"
-          ></div>
+          <figure class="figure">
+            <img
+              src="../assets/img/railgun-rails.jpg"
+              alt="Two aluminium rails mounted in an orange 3D-printed housing, with a steel BB seated between them as the armature"
+              width="1500" height="934"
+            />
+            <figcaption>
+              The rails and armature. The projectile completes the circuit
+              between them — which is also why it tends to weld itself in place
+              if it starts from rest.
+            </figcaption>
+          </figure>
 
           <dl class="spec-list">
             <dt>Source</dt>
-            <dd>11.1 V LiPo (3S)</dd>
+            <dd>11.1 V, 2200 mAh LiPo (rechargeable, by design)</dd>
             <dt>Converter</dt>
-            <dd>DC boost stage, 11.1 V → ~225 V</dd>
+            <dd>DC boost module — fuse, op-amps, transformer, trim pot</dd>
             <dt>Storage</dt>
-            <dd>
-              13,200 µF — six 250 V / 2200 µF electrolytics in parallel
-            </dd>
+            <dd>13,200 µF — six 250 V / 2200 µF electrolytics in parallel</dd>
             <dt>Energy</dt>
-            <dd>~330 J at full charge</dd>
-            <dt>Protection</dt>
-            <dd>2.6 kΩ inrush-limiting network behind a 600 V blocking diode</dd>
-            <dt>Launch stage</dt>
-            <dd>Dual aluminium rails</dd>
+            <dd>E = ½CV² ≈ 0.5 × 0.0132 × 225² ≈ <strong>330 J</strong></dd>
+            <dt>Inrush limit</dt>
+            <dd>12 × 220 Ω in series (2.64 kΩ) → 85 mA charge current</dd>
+            <dt>Blocking</dt>
+            <dd>600 V diode ahead of the resistor bank</dd>
+            <dt>Rails</dt>
+            <dd>Two solid aluminium rods; steel BB armature</dd>
+            <dt>Housing</dt>
+            <dd>3D printed</dd>
           </dl>
 
           <div class="prose">
             <h2 style="font-size: var(--step-2); margin-bottom: var(--space-m)">
-              What it does
+              The brief I set myself
             </h2>
             <p>
-              A rail-type electromagnetic launcher. Current flowing up one rail,
-              through a projectile, and back down the other produces a Lorentz
-              force that accelerates the projectile along the rails. The
-              engineering problem isn't the rails — it's getting a few hundred
-              joules into a capacitor bank from a battery, and then releasing it
-              all at once without destroying the circuit that charged it.
+              Get as much stored energy per dollar as possible, use rails rather
+              than a coil, make it rechargeable, make it safe to operate, and
+              make it actually work. The rails are the easy part. Everything
+              interesting is in getting 330 joules into a capacitor bank from a
+              battery and releasing it without destroying the circuit that
+              charged it.
             </p>
 
             <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
-              Charging stage
+              How it works
             </h2>
             <p>
-              A DC boost converter steps the 11.1 V LiPo up to roughly 225 V,
-              charging six 250 V / 2200 µF electrolytics wired in parallel for a
-              combined 13,200 µF. At 225 V that bank holds on the order of 330
-              joules — consistent with ½CV², which is the number worth quoting
-              because it's what actually goes into the shot.
+              Current runs up one rail, through the armature, and back down the
+              other. The two rails carry current in opposite directions, so the
+              magnetic field between them and the current through the projectile
+              produce a Lorentz force that drives the armature down the rails.
+              Force scales with current, so the whole design is about producing a
+              very large, very brief current pulse — which is what a capacitor
+              bank is for.
             </p>
-            <p>
-              Running the capacitors at 225 V against a 250 V rating leaves
-              headroom rather than sitting at the edge of the part's spec, which
-              matters for electrolytics that degrade under repeated hard cycling.
-            </p>
+          </div>
 
+          <figure class="figure">
+            <img
+              src="../assets/img/railgun-circuit.jpg"
+              alt="Hand-drawn circuit diagram: 11.1 V LiPo into a boost module producing 225 V, through a 600 V diode, then twelve 220 ohm resistors in series into six parallel capacitors feeding the rails"
+              width="1497" height="1010"
+            />
+            <figcaption>
+              The charging chain as I laid it out — LiPo, boost module, blocking
+              diode, resistor bank, capacitor bank, rails.
+            </figcaption>
+          </figure>
+
+          <div class="prose">
             <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
               Protecting the charger
             </h2>
             <p>
-              An empty capacitor bank looks like a short circuit. Connect a boost
-              converter straight to 13,200 µF at 0 V and the inrush current is
-              limited only by parasitic resistance — enough to destroy the
-              converter on the first charge cycle.
+              A discharged capacitor bank looks like a short circuit. Connect a
+              boost converter directly to 13,200 µF sitting at 0 V and the only
+              thing limiting current is parasitic resistance — which is enough to
+              kill the converter on the very first charge.
             </p>
             <p>
-              A 2.6 kΩ resistor network limits that inrush to something the
-              charging stage survives, and a 600 V blocking diode keeps the
-              discharge from travelling backwards into the converter when the
-              bank dumps. Both are cheap parts standing between a working circuit
-              and a destroyed one.
+              So the charge path goes through 2.64 kΩ, holding the current to
+              about 85 mA at 225 V. The detail I like here is that it's
+              <em>twelve 220 Ω resistors in series</em> rather than one 2.6 kΩ
+              part. The resistance is the same either way; the difference is
+              power handling. Splitting the string spreads the dissipation across
+              twelve packages instead of cooking one, which is the difference
+              between a resistor that survives repeated charge cycles and one
+              that chars.
+            </p>
+            <p>
+              The 600 V diode sits ahead of that bank so the discharge can't
+              travel backwards into the converter when the capacitors dump.
+            </p>
+          </div>
+
+          <div class="figure-row">
+            <figure class="figure">
+              <img
+                src="../assets/img/railgun-capbank.jpg"
+                alt="Six large electrolytic capacitors wired in parallel, seated in a 3D-printed tray"
+                width="1500" height="1125"
+              />
+              <figcaption>
+                Six 250 V / 2200 µF electrolytics in parallel — 13,200 µF total.
+              </figcaption>
+            </figure>
+            <figure class="figure">
+              <img
+                src="../assets/img/railgun-boost-225v.jpg"
+                alt="A multimeter reading 224.8 volts"
+                width="1290" height="1774"
+              />
+              <figcaption>
+                Boost output measured 224.8–225.1 V against a 225 V target.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="prose">
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Where it got difficult
+            </h2>
+            <p>
+              Bonding the rails to the supply wires was harder than expected —
+              aluminium is unpleasant to solder, and the joint has to carry the
+              full discharge current without becoming the weak point. Rail
+              spacing was equally fiddly: too loose and the armature loses
+              contact, too tight and it binds instead of accelerating.
+            </p>
+            <p>
+              Two failure modes dominate this kind of launcher. <strong>Rail
+              erosion</strong> — the arc and plasma at the contact point eat the
+              rail surface, so the bore degrades with every shot. And the
+              armature <strong>welding itself to the rails</strong>: if the
+              projectile starts from rest, the current arrives before it's
+              moving and fuses it in place. The fix is to give it an initial
+              velocity so it's already sliding when the bank dumps.
             </p>
 
             <div class="callout">
               <p>
-                <strong>On safety.</strong> A charged 13,200 µF bank at 225 V is
-                genuinely dangerous and stays dangerous after the supply is
-                disconnected. This was built and operated with bleeder
-                discharge, insulated tooling, and verification that the bank was
-                down before touching anything.
+                <strong>On safety.</strong> 330 J at 225 V is genuinely
+                dangerous, and a capacitor bank stays dangerous long after the
+                supply is disconnected. "Make it safe" was an explicit design
+                objective, not an afterthought — hence the enclosed 3D-printed
+                housing, the fused converter, and a deliberate charge and
+                discharge procedure.
               </p>
             </div>
+          </div>
 
-            <!-- ============================================================
-                 TODO — Nic, strong additions here if you have them:
-                   · measured muzzle velocity, or how you estimated it
-                   · rail material/dimensions and how they held up to arcing
-                   · switching element — SCR? spark gap? how you triggered it
-                   · charge time from flat to 225 V
-                   · what failed along the way and how you fixed it
-                 Then delete this comment.
-                 ============================================================ -->
+          <div class="figure-row">
+            <figure class="figure figure-tall">
+              <img
+                src="../assets/img/railgun-assembled.jpg"
+                alt="The assembled rail launcher viewed from above, rails running down the centre of the printed housing"
+                width="1500" height="2197"
+              />
+              <figcaption>Assembled, looking down the bore.</figcaption>
+            </figure>
+            <figure class="figure figure-tall">
+              <img
+                src="../assets/img/railgun-housing.jpg"
+                alt="The complete unit with its 3D-printed housing and heatsinking"
+                width="1500" height="2073"
+              />
+              <figcaption>The finished unit in its printed housing.</figcaption>
+            </figure>
           </div>
 
           <div class="hero-actions">
