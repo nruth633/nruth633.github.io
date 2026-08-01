@@ -6,13 +6,13 @@
     <title>3-Wheel Balancing Robot — Nicolas Ruth</title>
     <meta
       name="description"
-      content="A three-wheel balancing robot: STM32F401 firmware on a hand-soldered KiCad control board, MPU6050 IMU, and an ESP8266 remote. The hardware works; the control loop is still untuned."
+      content="A three-wheel robot on a hand-soldered STM32F401 board, driven from a phone browser over an ESP8266 access point with live IMU telemetry. It drives; the balance loop is unfinished."
     />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="3-Wheel Balancing Robot — Nicolas Ruth" />
     <meta
       property="og:description"
-      content="STM32F401 firmware on a hand-soldered control board I designed, with an MPU6050 and an ESP8266 remote. It does not balance yet — that is the open problem."
+      content="Drives from any phone browser over the ESP8266's own WiFi access point, with roll and pitch streaming back live. The balance loop is the part that was never finished."
     />
     <meta property="og:url" content="https://nruth633.github.io/projects/balancing-robot.html" />
     <meta property="og:image" content="https://nruth633.github.io/assets/img/robot-top.jpg" />
@@ -66,7 +66,7 @@
             <li class="tag">MPU6050</li>
             <li class="tag">KiCad</li>
             <li class="tag">ESP8266</li>
-            <li class="tag">STM32CubeIDE</li>
+            <li class="tag">WebSockets</li>
           </ul>
           <div class="hero-actions">
             <a class="btn btn-primary" href="https://github.com/nruth633/3-wheel-balancing-robot" rel="noopener">
@@ -91,8 +91,11 @@
             <dd>MPU6050 — 3-axis gyro + 3-axis accelerometer over I²C</dd>
             <dt>Toolchain</dt>
             <dd>STM32CubeIDE, HAL drivers, C</dd>
-            <dt>Remote</dt>
-            <dd>ESP8266 handheld, Arduino sketch</dd>
+            <dt>Control</dt>
+            <dd>
+              ESP8266 access point serving its own web UI — driven from a phone
+              browser over WebSockets
+            </dd>
             <dt>Board</dt>
             <dd>Custom control PCB designed in KiCad</dd>
           </dl>
@@ -102,17 +105,19 @@
               What it is
             </h2>
             <p>
-              A three-wheel robot intended to hold itself upright by driving its
-              wheels against the direction it's falling. The IMU reports
-              attitude, the firmware turns that into a motor command, and it all
-              runs on a board I designed, laid out, and soldered myself.
+              A three-wheel robot running on a board I designed, laid out, and
+              soldered myself. It drives — connect a phone to the WiFi network
+              the robot puts out, open its address in a browser, and you get a
+              control pad that moves it forward, backward, and turning, with the
+              IMU's roll and pitch coming back live on the same page.
             </p>
             <p>
-              <strong>It has never actually balanced.</strong> The board is
-              designed, fabricated, and populated, and the firmware is written
-              across several revisions — but the control loop was never tuned to
-              the point where the robot holds itself up. Saying otherwise would
-              be easy and wrong, so: that part is unfinished.
+              <strong>What it doesn't do is balance.</strong> The intent was an
+              inverted pendulum that holds itself upright by driving its wheels
+              against the direction it's falling, and that part was never
+              finished — the control loop exists but was never tuned to the point
+              where the robot stays up on its own. It's a working
+              remote-controlled robot with an unfinished controller on top of it.
             </p>
             <p>
               It was built across several iterations. Rather than overwriting
@@ -157,7 +162,10 @@
                 </tr>
                 <tr>
                   <th scope="row">remote_esp8266</th>
-                  <td>Wireless handheld remote, written as an Arduino sketch</td>
+                  <td>
+                    ESP8266 access point, web server, and WebSocket control
+                    page — the phone UI
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">pcb</th>
@@ -171,6 +179,27 @@
           </div>
 
           <div class="prose">
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Driving it from a phone
+            </h2>
+            <p>
+              There's no pairing step and no app to install. The ESP8266 brings
+              up its own access point, so the robot is a WiFi network — join it,
+              open the ESP's address, and it serves a control page straight off
+              the microcontroller. Any phone with a browser works, and the whole
+              thing runs with no internet involved at all.
+            </p>
+            <p>
+              Commands go over a WebSocket rather than plain HTTP requests. That
+              matters for driving: a request-per-keypress adds a round trip to
+              every command and the robot lurches behind your thumb, whereas an
+              open socket carries small JSON messages continuously in both
+              directions. The return direction is what makes it useful for
+              debugging — speed, roll, and pitch stream back onto the same page,
+              so the IMU can be watched live while the robot is moving instead of
+              after the fact over a serial cable.
+            </p>
+
             <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
               The encoder-free variant
             </h2>
