@@ -6,13 +6,13 @@
     <title>3-Wheel Balancing Robot — Nicolas Ruth</title>
     <meta
       name="description"
-      content="Self-balancing three-wheel robot: STM32F401 firmware, custom KiCad control board, MPU6050 IMU, and an ESP8266 handheld remote."
+      content="A three-wheel balancing robot: STM32F401 firmware on a hand-soldered KiCad control board, MPU6050 IMU, and an ESP8266 remote. The hardware works; the control loop is still untuned."
     />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="3-Wheel Balancing Robot — Nicolas Ruth" />
     <meta
       property="og:description"
-      content="Self-balancing three-wheel robot: STM32F401 firmware, custom KiCad control board, MPU6050 IMU, and an ESP8266 handheld remote."
+      content="STM32F401 firmware on a hand-soldered control board I designed, with an MPU6050 and an ESP8266 remote. It does not balance yet — that is the open problem."
     />
     <meta property="og:url" content="https://nruth633.github.io/projects/balancing-robot.html" />
     <meta property="og:image" content="https://nruth633.github.io/assets/img/robot-top.jpg" />
@@ -102,10 +102,17 @@
               What it is
             </h2>
             <p>
-              A three-wheel robot that holds itself upright by driving its wheels
-              against the direction it's falling. The IMU reports attitude, the
-              control loop turns that into a motor command, and the whole thing
-              runs on a board I designed and assembled myself.
+              A three-wheel robot intended to hold itself upright by driving its
+              wheels against the direction it's falling. The IMU reports
+              attitude, the firmware turns that into a motor command, and it all
+              runs on a board I designed, laid out, and soldered myself.
+            </p>
+            <p>
+              <strong>It has never actually balanced.</strong> The board is
+              designed, fabricated, and populated, and the firmware is written
+              across several revisions — but the control loop was never tuned to
+              the point where the robot holds itself up. Saying otherwise would
+              be easy and wrong, so: that part is unfinished.
             </p>
             <p>
               It was built across several iterations. Rather than overwriting
@@ -144,8 +151,8 @@
                 <tr>
                   <th scope="row">balance_noEncoder</th>
                   <td>
-                    Balance loop running without wheel encoders — attitude
-                    estimated from the IMU alone
+                    Balance loop variant running without wheel encoders —
+                    attitude estimated from the IMU alone
                   </td>
                 </tr>
                 <tr>
@@ -171,9 +178,16 @@
               One branch of the project drops the wheel encoders entirely and
               estimates attitude from the IMU alone. That removes a sensor and
               its wiring, but it also removes the velocity feedback the loop was
-              leaning on — so the balance controller has to do more with less.
-              Keeping it alongside the encoder version makes the tradeoff
-              concrete instead of theoretical.
+              leaning on — so the controller has to do more with less. Both
+              versions are kept side by side rather than one replacing the
+              other, which is what makes the tradeoff something you can compare
+              instead of argue about.
+            </p>
+            <p>
+              Neither version balances yet. Tuning is where the project sits: an
+              inverted pendulum is unstable by definition, so the loop has to
+              react faster than the robot falls, and getting the gains and the
+              loop rate into that window is the work still left.
             </p>
 
             <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">

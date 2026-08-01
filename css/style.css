@@ -208,6 +208,9 @@ section {
   letter-spacing: 0.1em;
   color: var(--text-faint);
   margin-bottom: var(--space-s);
+  /* A heading can carry this class when the label is the only title a section
+     needs — it shouldn't then pick up the heading weight. */
+  font-weight: 400;
 }
 
 /* Available to screen readers, hidden visually. */
