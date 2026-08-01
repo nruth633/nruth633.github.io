@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Resume — Nicolas Ruth</title>
+    <meta
+      name="description"
+      content="Resume of Nicolas Ruth — electrical and embedded engineering student. Experience, education, skills, and coursework."
+    />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://nruth633.github.io/resume.html" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          if (saved) document.documentElement.setAttribute("data-theme", saved);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap nav">
+        <a class="nav-brand" href="index.html">nic ruth</a>
+        <nav aria-label="Main">
+          <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="resume.html" aria-current="page">Resume</a></li>
+            <li><a href="https://github.com/nruth633" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" type="button" aria-label="Switch theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="wrap">
+        <p class="section-label">Resume</p>
+        <h1 style="font-size: var(--step-3); margin-bottom: var(--space-m)">
+          Nicolas Ruth
+        </h1>
+        <div class="prose">
+          <p style="color: var(--text-soft)">
+            Electrical and embedded engineering student. Firmware in C on STM32,
+            PCB design in KiCad, and RF measurement work — comfortable owning a
+            design from schematic through bring-up.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <!-- TODO: drop your resume PDF at assets/resume.pdf and this link works. -->
+          <a class="btn btn-primary" href="assets/resume.pdf">Download PDF</a>
+          <a class="btn btn-ghost" href="mailto:nruth633@gmail.com">Email me</a>
+        </div>
+      </section>
+
+      <!-- ---------- Experience ---------- -->
+      <section class="wrap reveal" aria-labelledby="exp-heading">
+        <p class="section-label">Experience</p>
+        <h2 id="exp-heading" style="font-size: var(--step-2); margin-bottom: var(--space-l)">
+          Experience
+        </h2>
+
+        <!-- ============================================================
+             TODO — Nic, fill this in. I only know Arsenal Nexus exists
+             (from your email domain and the private RF repo on GitHub).
+             I deliberately did not invent a job title, dates, or duties.
+             Replace the bracketed text below.
+             ============================================================ -->
+        <article class="entry">
+          <div class="entry-head">
+            <h3>[Your job title]</h3>
+            <p class="entry-meta">[Start] – [End or Present]</p>
+          </div>
+          <p class="entry-org">Arsenal Nexus</p>
+          <ul>
+            <li>
+              [What you worked on — RF and antenna design, S-parameter
+              measurement. One line per bullet, lead with the verb.]
+            </li>
+            <li>[A result or measurement, if you can share one.]</li>
+            <li>[Tools you used day to day.]</li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- ---------- Education ---------- -->
+      <section class="wrap reveal" aria-labelledby="edu-heading">
+        <p class="section-label">Education</p>
+        <h2 id="edu-heading" style="font-size: var(--step-2); margin-bottom: var(--space-l)">
+          Education
+        </h2>
+
+        <article class="entry">
+          <div class="entry-head">
+            <!-- TODO: your degree and school -->
+            <h3>[B.S. Electrical Engineering]</h3>
+            <p class="entry-meta">[Expected Month Year]</p>
+          </div>
+          <p class="entry-org">[Your University]</p>
+          <p style="color: var(--text-soft); font-size: var(--step--1)">
+            [Optional: GPA, honors, or relevant activities — IEEE student branch,
+            design teams, anything like that.]
+          </p>
+        </article>
+
+        <h3 style="font-size: var(--step-0); margin: var(--space-l) 0 var(--space-s)">
+          Relevant coursework
+        </h3>
+        <!-- These are inferred from your repos and local files. Adjust the
+             names to match your actual course titles. -->
+        <ul class="course-list">
+          <li>Embedded Systems</li>
+          <li>Advanced Embedded Systems</li>
+          <li>Control Systems</li>
+          <li>Microprocessors</li>
+          <li>Advanced Electronics Lab</li>
+          <li>Analog Circuit Design</li>
+          <li>Electromagnetics</li>
+          <li>Engineering Physics</li>
+        </ul>
+      </section>
+
+      <!-- ---------- Skills ---------- -->
+      <section class="wrap reveal" aria-labelledby="skills-heading">
+        <p class="section-label">Skills</p>
+        <h2 id="skills-heading" style="font-size: var(--step-2); margin-bottom: var(--space-l)">
+          Technical skills
+        </h2>
+
+        <div class="table-scroll">
+          <table>
+            <caption class="visually-hidden">Technical skills grouped by area</caption>
+            <tbody>
+              <tr>
+                <th scope="row">Languages</th>
+                <td>C, MATLAB, Python, HTML/CSS</td>
+              </tr>
+              <tr>
+                <th scope="row">Microcontrollers</th>
+                <td>STM32 (F401, F407, F103), ESP8266, Arduino / AVR</td>
+              </tr>
+              <tr>
+                <th scope="row">Embedded</th>
+                <td>STM32CubeIDE, HAL drivers, I²C, UART, GPIO, board bring-up</td>
+              </tr>
+              <tr>
+                <th scope="row">Hardware</th>
+                <td>
+                  KiCad — schematic capture, PCB layout, custom footprint
+                  libraries, BOM and gerber generation
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">RF</th>
+                <td>Antenna design, S-parameter measurement</td>
+              </tr>
+              <tr>
+                <th scope="row">Simulation</th>
+                <td>LTspice, MATLAB control system analysis</td>
+              </tr>
+              <tr>
+                <th scope="row">Mechanical</th>
+                <td>Fusion 360, Autodesk Inventor, FDM 3D printing</td>
+              </tr>
+              <tr>
+                <th scope="row">Tools</th>
+                <td>Git, GitHub, oscilloscopes, function generators, soldering / rework</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ---------- Projects pointer ---------- -->
+      <section class="wrap reveal" aria-labelledby="proj-heading">
+        <p class="section-label">Projects</p>
+        <h2 id="proj-heading" style="font-size: var(--step-2); margin-bottom: var(--space-m)">
+          Selected projects
+        </h2>
+        <div class="prose">
+          <p>
+            Full write-ups with schematics, firmware, and build notes live on the
+            projects page — every one links to public source.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="projects.html">Browse projects →</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p style="margin: 0">© <span id="year">2026</span> Nicolas Ruth</p>
+        <p style="margin: 0">
+          Built with plain HTML and CSS ·
+          <a href="https://github.com/nruth633/nruth633.github.io" rel="noopener">Source</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

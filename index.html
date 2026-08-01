@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nicolas Ruth — Electrical &amp; Embedded Engineering</title>
+    <meta
+      name="description"
+      content="Nicolas Ruth — electrical and embedded engineering student. STM32 firmware, KiCad PCB design, RF measurement, and control systems."
+    />
+    <meta name="author" content="Nicolas Ruth" />
+
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Nicolas Ruth — Electrical &amp; Embedded Engineering"
+    />
+    <meta
+      property="og:description"
+      content="STM32 firmware, KiCad PCB design, RF measurement, and control systems."
+    />
+    <meta property="og:url" content="https://nruth633.github.io/" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://nruth633.github.io/" />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Applied before first paint so the page never flashes the wrong theme. -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          if (saved) document.documentElement.setAttribute("data-theme", saved);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap nav">
+        <a class="nav-brand" href="index.html">nic ruth</a>
+        <nav aria-label="Main">
+          <ul class="nav-links">
+            <li><a href="index.html" aria-current="page">Home</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="resume.html">Resume</a></li>
+            <li>
+              <a href="https://github.com/nruth633" rel="noopener">GitHub</a>
+            </li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" type="button" aria-label="Switch theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- ---------- Hero ---------- -->
+      <section class="hero wrap">
+        <p class="hero-eyebrow">Electrical &amp; Embedded Engineering</p>
+        <h1>Nicolas Ruth</h1>
+        <p class="hero-lede">
+          I build embedded systems end to end — STM32 firmware in C, the custom
+          PCB it runs on, and the control loop that makes it behave. Currently
+          an engineering student working on RF and hardware design.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="projects.html">
+            View projects
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </a>
+          <a class="btn btn-ghost" href="resume.html">Resume</a>
+          <a class="btn btn-ghost" href="https://github.com/nruth633" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 .5C5.4.5 0 5.9 0 12.5c0 5.3 3.4 9.8 8.2 11.4.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C18.4 4.7 19.4 5 19.4 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 24 12.5C24 5.9 18.6.5 12 .5z" />
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </section>
+
+      <!-- ---------- What I work with ---------- -->
+      <section class="wrap reveal" aria-labelledby="skills-heading">
+        <p class="section-label">What I work with</p>
+        <h2 id="skills-heading">Hardware, firmware, and the loop between them</h2>
+
+        <div class="skill-grid">
+          <article class="skill-card">
+            <h3>Embedded firmware</h3>
+            <p>
+              STM32 in C — F401, F407, and F103 variants. STM32CubeIDE with HAL
+              drivers, peripheral bring-up, and board smoke-testing. Arduino for
+              rapid prototyping.
+            </p>
+          </article>
+
+          <article class="skill-card">
+            <h3>PCB design</h3>
+            <p>
+              KiCad end to end: schematic capture, layout, custom footprint
+              libraries, BOM and gerber generation. Several boards designed,
+              fabricated, and brought up.
+            </p>
+          </article>
+
+          <article class="skill-card">
+            <h3>RF &amp; test</h3>
+            <p>
+              Antenna design and S-parameter measurement. LTspice for analog
+              simulation, plus bench work with scopes and signal generators.
+            </p>
+          </article>
+
+          <article class="skill-card">
+            <h3>Controls &amp; modelling</h3>
+            <p>
+              MATLAB for control system design and analysis — root locus,
+              frequency response, and closed-loop simulation from coursework and
+              lab work.
+            </p>
+          </article>
+
+          <article class="skill-card">
+            <h3>Mechanical &amp; CAD</h3>
+            <p>
+              Fusion 360 and Autodesk Inventor for enclosures and mounts, with
+              FDM 3D printing to get parts in hand and iterate quickly.
+            </p>
+          </article>
+
+          <article class="skill-card">
+            <h3>Tooling</h3>
+            <p>
+              Git and GitHub for version control, including keeping design
+              revisions traceable rather than overwritten. Python for scripting
+              and data work.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ---------- Featured ---------- -->
+      <section class="wrap reveal" aria-labelledby="featured-heading">
+        <p class="section-label">Selected work</p>
+        <h2 id="featured-heading">Featured projects</h2>
+
+        <ul class="project-grid featured">
+          <li>
+            <article class="card">
+              <!-- Swap data-placeholder for <img> once a photo is added.
+                   Build photos live in the repo under firmware_main/Docs_Process/ -->
+              <div class="card-media" data-placeholder="robot photo → assets/img/"></div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/balancing-robot.html">3-Wheel Balancing Robot</a>
+                </h3>
+                <p class="card-desc">
+                  A self-balancing robot built around an STM32F401 and an
+                  MPU6050 IMU, on a control board I designed in KiCad, driven by
+                  an ESP8266 handheld remote. Three firmware revisions kept
+                  side by side so the progression stays visible.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">STM32</li>
+                  <li class="tag">KiCad</li>
+                  <li class="tag">Controls</li>
+                  <li class="tag">ESP8266</li>
+                </ul>
+                <div class="card-links">
+                  <a href="https://github.com/nruth633/3-wheel-balancing-robot" rel="noopener">Source ↗</a>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <li>
+            <article class="card">
+              <div class="card-media" data-placeholder="board render → assets/img/"></div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/adv-project-pcb.html">Advanced Project PCB</a>
+                </h3>
+                <p class="card-desc">
+                  A course capstone board taken from schematic through layout to
+                  fabrication-ready gerbers, including a custom footprint
+                  library for parts that had no stock symbol.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">KiCad</li>
+                  <li class="tag">PCB</li>
+                  <li class="tag">Gerbers</li>
+                </ul>
+                <div class="card-links">
+                  <a href="https://github.com/nruth633/adv-project-pcb" rel="noopener">Source ↗</a>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <li>
+            <article class="card">
+              <div class="card-media" data-placeholder="shield photo → assets/img/"></div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/arduino-shield.html">Arduino UNO IMU Shield</a>
+                </h3>
+                <p class="card-desc">
+                  A custom shield in the Arduino UNO form factor integrating an
+                  MPU6050 IMU — designed to make motion-sensing experiments
+                  repeatable instead of a breadboard rebuilt every session.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">KiCad</li>
+                  <li class="tag">Arduino</li>
+                  <li class="tag">I²C</li>
+                </ul>
+                <div class="card-links">
+                  <a href="https://github.com/nruth633/arduino-shield-pcb" rel="noopener">Source ↗</a>
+                </div>
+              </div>
+            </article>
+          </li>
+        </ul>
+
+        <div class="hero-actions">
+          <a class="btn btn-ghost" href="projects.html">All projects →</a>
+        </div>
+      </section>
+
+      <!-- ---------- Contact ---------- -->
+      <section class="wrap reveal" aria-labelledby="contact-heading">
+        <p class="section-label">Contact</p>
+        <h2 id="contact-heading">Get in touch</h2>
+        <div class="prose">
+          <p>
+            Open to internships and co-op roles in embedded systems, hardware,
+            and RF. The fastest way to reach me is email.
+          </p>
+        </div>
+        <div class="contact-links">
+          <a class="btn btn-primary" href="mailto:nruth633@gmail.com">
+            nruth633@gmail.com
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/nruth633" rel="noopener">GitHub</a>
+          <!-- TODO: add your LinkedIn URL here, then delete this comment.
+          <a class="btn btn-ghost" href="https://linkedin.com/in/YOUR-HANDLE" rel="noopener">LinkedIn</a>
+          -->
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p style="margin: 0">© <span id="year">2026</span> Nicolas Ruth</p>
+        <p style="margin: 0">
+          Built with plain HTML and CSS ·
+          <a href="https://github.com/nruth633/nruth633.github.io" rel="noopener">Source</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
