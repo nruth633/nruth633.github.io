@@ -521,10 +521,26 @@ section {
     border-color var(--transition);
 }
 
-.card:hover {
+/* Only cards that actually go somewhere get the interactive treatment —
+   a card that lifts on hover but does nothing on click reads as broken. */
+.card:has(.card-title a):hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-lift);
   border-color: var(--border-strong);
+}
+
+.card:has(.card-title a) {
+  cursor: pointer;
+}
+
+/* Fallback for browsers without :has() — every card lifts, which is the
+   old behaviour rather than no behaviour. */
+@supports not selector(:has(a)) {
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
+    border-color: var(--border-strong);
+  }
 }
 
 .card-media {
