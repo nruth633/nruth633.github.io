@@ -8,6 +8,15 @@
       name="description"
       content="Self-balancing three-wheel robot: STM32F401 firmware, custom KiCad control board, MPU6050 IMU, and an ESP8266 handheld remote."
     />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="3-Wheel Balancing Robot — Nicolas Ruth" />
+    <meta
+      property="og:description"
+      content="Self-balancing three-wheel robot: STM32F401 firmware, custom KiCad control board, MPU6050 IMU, and an ESP8266 handheld remote."
+    />
+    <meta property="og:url" content="https://nruth633.github.io/projects/balancing-robot.html" />
+    <meta property="og:image" content="https://nruth633.github.io/assets/img/robot-top.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href="https://nruth633.github.io/projects/balancing-robot.html" />
     <link rel="stylesheet" href="../css/style.css" />
@@ -68,14 +77,13 @@
         </header>
 
         <section class="wrap" style="padding-top: var(--space-m)">
-          <!-- Swap this block for a real photo:
-               <img src="../assets/img/robot.jpg" alt="The assembled balancing robot on a bench">
-               Build photos are already in the repo under firmware_main/Docs_Process/ -->
-          <div
-            class="card-media"
-            data-placeholder="robot photo → assets/img/robot.jpg"
-            style="border-radius: var(--radius); border: 1px solid var(--border); aspect-ratio: 21/9; margin-bottom: var(--space-l)"
-          ></div>
+          <figure class="figure">
+            <img src="../assets/img/robot-top.jpg" alt="The assembled robot from above: acrylic chassis, control board, two geared motors with yellow wheels" width="1500" height="1125" />
+            <figcaption>
+              The assembled robot. Control board on the upper deck, motors and
+              wheels below, ESP8266 receiver tucked in alongside.
+            </figcaption>
+          </figure>
 
           <dl class="spec-list">
             <dt>MCU</dt>
@@ -169,15 +177,59 @@
               concrete instead of theoretical.
             </p>
 
-            <!-- ============================================================
-                 TODO — Nic, this is where the site gets genuinely strong.
-                 Add a paragraph or two on:
-                   · your control approach (PID? gains? how you tuned them)
-                   · the loop rate you settled on and why
-                   · complementary / Kalman filtering on the IMU
-                   · what broke and how you found it — recruiters love this
-                 Then delete this comment.
-                 ============================================================ -->
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              The board
+            </h2>
+            <p>
+              The control board puts everything the loop needs on one PCB, built
+              around an STM32F401RBT6 on a 16 MHz crystal. A TB6612FNG drives the
+              motors; the MPU6050, MT6701 magnetic encoders, ESP8266 radio, and
+              motor leads all land on their own connectors rather than being
+              soldered to the chassis. Power comes in over USB-C — behind a PTC
+              fuse, CC resistors, and a USBLC6 ESD array — and splits through
+              LD1117 regulators into 5 V and 3.3 V rails, each with its own
+              indicator LED. A WS2812B gives the firmware one addressable status
+              light, and a 4-pin SWD header keeps the debugger connected.
+            </p>
+            <p>
+              The switch labelled <em>5 V selector</em> is the detail worth
+              pointing at. It cuts the motor rail while leaving the logic powered
+              from USB, so the board can be flashed and stepped through on the
+              bench without a balancing robot trying to drive itself off the desk.
+              That's a bench-ergonomics decision more than an electrical one, and
+              it's the kind of thing you only add after being bitten once.
+            </p>
+          </div>
+
+          <div class="figure-row">
+            <figure class="figure">
+              <img src="../assets/img/robot-board-3d.jpg" alt="KiCad 3D render of the control board with the STM32 package, ESP8266 module, USB-C connector, MPU6050 and JST connectors" loading="lazy" width="1500" height="999" />
+              <figcaption>The v1 control board, rendered from KiCad.</figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="../assets/img/robot-bottom.jpg" alt="Underside of the robot showing the motor mounts and wiring" loading="lazy" width="1500" height="1125" />
+              <figcaption>Underside, with the motors and wiring.</figcaption>
+            </figure>
+          </div>
+
+          <div class="figure-row">
+            <figure class="figure">
+              <img src="../assets/img/robot-schematic.png" alt="KiCad schematic of the control board grouped into microcontroller, motor driver, regulators, IMU, encoder, ESP8266, and SWD sections" loading="lazy" width="1500" height="1034" />
+              <figcaption>
+                Schematic, grouped by function — MCU, motor driver, regulators,
+                and a block per connector.
+              </figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="../assets/img/robot-layout.png" alt="KiCad board layout of the control board" loading="lazy" width="1500" height="1174" />
+              <figcaption>
+                Layout. Each revision keeps its own board files in the repository
+                rather than overwriting the last.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="prose">
             <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
               Building it yourself
             </h2>

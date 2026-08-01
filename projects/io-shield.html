@@ -6,8 +6,17 @@
     <title>Arduino Uno I/O Shield — Nicolas Ruth</title>
     <meta
       name="description"
-      content="A general-purpose Arduino Uno shield: potentiometers, buttons, status and RGB LEDs, an OLED display, and selectable-voltage I²C / SPI expansion headers."
+      content="An Arduino Uno shield carrying a 10-bit R-2R ladder DAC buffered into a 3.5 mm output jack, plus an MPU6050 IMU, an SSD1306 OLED, potentiometers, and buttons."
     />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Arduino Uno I/O Shield — Nicolas Ruth" />
+    <meta
+      property="og:description"
+      content="A 10-bit R-2R ladder DAC buffered into a 3.5 mm jack, plus an MPU6050, an SSD1306 OLED, pots, and buttons — on an Uno shield."
+    />
+    <meta property="og:url" content="https://nruth633.github.io/projects/io-shield.html" />
+    <meta property="og:image" content="https://nruth633.github.io/assets/img/shield-3d.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href="https://nruth633.github.io/projects/io-shield.html" />
     <link rel="stylesheet" href="../css/style.css" />
@@ -51,84 +60,132 @@
       <article>
         <header class="detail-header wrap">
           <a class="back-link" href="../projects.html">← All projects</a>
-          <p class="section-label">PCB Design · Prototyping Hardware</p>
+          <p class="section-label">PCB Design · Mixed Signal</p>
           <h1>Arduino Uno I/O Shield</h1>
           <ul class="tags">
-            <li class="tag tag-accent">KiCad</li>
-            <li class="tag">OLED</li>
-            <li class="tag">I²C / SPI</li>
-            <li class="tag">RGB LEDs</li>
+            <li class="tag tag-accent">10-bit R-2R DAC</li>
+            <li class="tag">KiCad</li>
+            <li class="tag">MPU6050</li>
+            <li class="tag">SSD1306</li>
+            <li class="tag">MCP6002</li>
           </ul>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://github.com/nruth633/arduino-shield-pcb" rel="noopener">
+              View source
+            </a>
+          </div>
         </header>
 
         <section class="wrap" style="padding-top: var(--space-m)">
-          <div class="card-media" data-placeholder="shield photo → assets/img/io-shield.jpg"
-               style="border-radius: var(--radius); border: 1px solid var(--border); aspect-ratio: 21/9; margin-bottom: var(--space-l)"></div>
+          <figure class="figure">
+            <img src="../assets/img/shield-3d.jpg" alt="KiCad 3D render of the shield: OLED and MPU6050 modules at the left, a row of axial resistors forming the ladder, trim pots, buttons, and two audio jacks" width="1500" height="963" />
+            <figcaption>
+              The board as KiCad renders it. The long row of axial resistors
+              across the middle is the R-2R ladder; the two grey barrels on the
+              right edge are the audio in and out jacks.
+            </figcaption>
+          </figure>
 
           <dl class="spec-list">
             <dt>Form factor</dt>
             <dd>Arduino Uno shield</dd>
-            <dt>Input</dt>
-            <dd>Potentiometers and push buttons</dd>
-            <dt>Output</dt>
-            <dd>Status LEDs, RGB LEDs, OLED display</dd>
-            <dt>Expansion</dt>
-            <dd>I²C and SPI headers with selectable voltage</dd>
+            <dt>DAC</dt>
+            <dd>10-bit R-2R ladder, 10 kΩ / 20 kΩ, on D0–D9</dd>
+            <dt>Output buffer</dt>
+            <dd>MCP6002 rail-to-rail op-amp, 100 pF feedback cap</dd>
+            <dt>Analog I/O</dt>
+            <dd>Two 3.5 mm jacks — line in to A2 / A3, buffered line out</dd>
+            <dt>Sensing</dt>
+            <dd>MPU6050 IMU header (I²C)</dd>
+            <dt>Display</dt>
+            <dd>SSD1306 128 × 64 OLED header (I²C)</dd>
+            <dt>Controls</dt>
+            <dd>Two 100 kΩ pots to A0 / A1, two buttons, DC-offset trimmer</dd>
             <dt>Tool</dt>
             <dd>KiCad</dd>
           </dl>
 
           <div class="prose">
             <h2 style="font-size: var(--step-2); margin-bottom: var(--space-m)">
-              A permanent version of the breadboard
+              Giving a digital board an analog voice
             </h2>
             <p>
-              Nearly every microcontroller exercise needs the same handful of
-              things: something to turn, something to press, some LEDs to prove
-              the code reached the line you thought it did, and a display for
-              anything more informative than blinking. Rebuilding that on a
-              breadboard each time is slow, and the failures it produces are
-              wiring failures rather than interesting ones.
+              An Arduino Uno cannot produce an analog voltage. Its
+              <code>analogWrite</code> is PWM — a square wave switching between
+              0 V and 5 V, which sounds like a square wave and measures like one.
+              For anything that actually wants a varying voltage, you need a
+              digital-to-analog converter, and the Uno hasn't got one.
             </p>
             <p>
-              This shield makes that set permanent — pots, buttons, status and
-              RGB LEDs, and an OLED, all on a board that seats on an Uno.
+              This shield builds one out of resistors. Ten digital pins, D0
+              through D9, feed an R-2R ladder made from nothing but 10 kΩ and
+              20 kΩ values. Each rung contributes half the weight of the one
+              above it, so writing a 10-bit number to those pins produces a
+              voltage proportional to it — 1024 steps out of two resistor values
+              and no dedicated DAC chip anywhere on the board.
             </p>
 
             <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
-              Selectable-voltage expansion
+              Why the ladder needs a buffer
             </h2>
             <p>
-              The part worth pointing at is the expansion headers. Breaking out
-              I²C and SPI is routine; letting you choose the voltage on those
-              headers is what makes the board keep earning its place.
+              An R-2R ladder has a real output impedance, which means anything you
+              connect to it becomes part of the divider. Plug in a speaker or a
+              scope probe with modest input impedance and the voltage you
+              carefully computed sags — the ladder's accuracy is only as good as
+              the load's willingness to leave it alone.
             </p>
             <p>
-              The Uno runs at 5 V, but a large share of interesting peripherals —
-              most modern sensors, most displays — are 3.3 V parts, and feeding
-              them 5 V is a good way to destroy them. Making the rail selectable
-              means a 3.3 V sensor can be attached directly without a level
-              shifter improvised on the spot, and it removes an entire class of
-              mistake that only announces itself as a dead component.
+              So the ladder feeds an MCP6002, a rail-to-rail op-amp wired as a
+              buffer. It presents a very high impedance to the ladder and a very
+              low one to whatever comes next, which decouples the two completely.
+              A 100 pF cap across the feedback path rolls off the top end and
+              takes the edge off the step transitions on the way out.
+            </p>
+            <p>
+              A second trimmer sets a DC offset through a jumper, so the output
+              can be centred where the next stage wants it rather than sitting on
+              whatever the ladder happens to produce at code zero.
             </p>
 
-            <!-- ============================================================
-                 TODO — Nic: this page is thinner than the others because I
-                 only had the resume line to work from. Worth adding —
-                   · how voltage selection works (jumper? switch? regulator?)
-                   · which OLED and how it's driven (I²C SSD1306?)
-                   · a photo of the assembled board
-                   · what you've actually used it for since
-                 ============================================================ -->
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Jacks instead of jumper wires
+            </h2>
+            <p>
+              Both ends of the analog path terminate in 3.5 mm jacks — line in
+              routed to analog pins A2 and A3, buffered line out on its own
+              connector. It's a small choice with an outsized effect: the board
+              plugs into ordinary audio gear with a cable anyone already owns,
+              instead of requiring a fresh improvisation of jumper wires and
+              alligator clips every session.
+            </p>
+            <p>
+              The rest of the board is the supporting cast that stops a
+              breadboard being rebuilt each time — two 100 kΩ pots on A0 and A1,
+              two buttons with pull-downs, and headers for an MPU6050 IMU and a
+              128 × 64 SSD1306 OLED, both on the same I²C bus.
+            </p>
+          </div>
 
+          <div class="figure-row">
+              <figure class="figure">
+                <img src="../assets/img/shield-schematic.png" alt="KiCad schematic grouped into shield headers, IMU, screen, buttons, potentiometers, R-2R ladder DAC, and analog in/out" loading="lazy" width="1500" height="904" />
+                <figcaption>Schematic, grouped by function.</figcaption>
+              </figure>
+              <figure class="figure">
+                <img src="../assets/img/shield-layout.png" alt="KiCad board layout of the shield showing the Uno outline and component placement" loading="lazy" width="1500" height="1007" />
+                <figcaption>Layout, on the Uno outline.</figcaption>
+              </figure>
+            </div>
+
+          <div class="prose">
             <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
               Related work
             </h2>
             <p>
-              This is one of three Uno-format boards — the others being the
-              <a href="https://github.com/nruth633/arduino-shield-pcb" rel="noopener">IMU shield</a>
-              and the <a href="demosat.html">DemoSat balloon payload</a>, which
-              also uses the shield form factor.
+              This is one of two Uno-format boards I've designed — the other being
+              the <a href="demosat.html">DemoSat balloon payload</a>, which uses
+              the same shield footprint to carry a sensor stack instead.
             </p>
           </div>
 

@@ -347,7 +347,9 @@ section {
 /* ---------- Hero ---------- */
 
 .hero {
-  padding-block: var(--space-2xl) var(--space-xl);
+  /* The facts strip below carries its own top margin and rule, so the hero
+     needs much less padding underneath it than above. */
+  padding-block: var(--space-2xl) var(--space-m);
 }
 
 .hero-eyebrow {
@@ -375,6 +377,33 @@ section {
   flex-wrap: wrap;
   gap: var(--space-s);
   margin-top: var(--space-l);
+}
+
+/* A short factual strip under the hero. It carries the details a recruiter
+   scans for first, and it stops the hero from ending in a half-empty row. */
+.hero-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
+  gap: var(--space-m);
+  margin: var(--space-xl) 0 0;
+  padding-top: var(--space-m);
+  border-top: 1px solid var(--border);
+}
+
+.hero-facts dt {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+  margin-bottom: 0.25em;
+}
+
+.hero-facts dd {
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--text);
+  line-height: 1.45;
 }
 
 /* ---------- Buttons ---------- */
@@ -558,6 +587,18 @@ section {
   object-fit: cover;
 }
 
+/* Schematics, plots, and board layouts are documents, not photographs —
+   cropping them to fill a 16:9 card throws away the part worth seeing.
+   These sit inside the frame instead, on their own paper. */
+.card-media--fit {
+  background: #f4f4f1;
+  padding: var(--space-s);
+}
+
+.card-media--fit img {
+  object-fit: contain;
+}
+
 /* Placeholder shown until a real photo is dropped in */
 .card-media[data-placeholder]::after {
   content: attr(data-placeholder);
@@ -689,12 +730,36 @@ section {
 
 .figure-row .figure {
   margin-bottom: 0;
+  /* Paired images are rarely the same height. Let each figure fill its grid
+     cell and push its caption down, so the captions share a baseline. */
+  display: flex;
+  flex-direction: column;
+}
+
+.figure-row .figure figcaption {
+  margin-top: auto;
+  padding-top: var(--space-xs);
 }
 
 /* Tall photos shouldn't dominate the page. */
 .figure-tall img {
   max-height: 30rem;
   object-fit: contain;
+}
+
+/* Most schematics and plots here are black ink on white. At full brightness
+   they punch a hole in a dark page, so take the top off the white without
+   inverting the drawing or shifting its colours. */
+:root[data-theme="dark"] .figure img,
+:root[data-theme="dark"] .card-media--fit {
+  filter: brightness(0.87);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .figure img,
+  :root:not([data-theme="light"]) .card-media--fit {
+    filter: brightness(0.87);
+  }
 }
 
 /* ---------- Spec table ---------- */

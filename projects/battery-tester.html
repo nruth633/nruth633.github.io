@@ -6,8 +6,17 @@
     <title>Battery Tester Board — Nicolas Ruth</title>
     <meta
       name="description"
-      content="A battery-tester PCB designed in KiCad for in-house milling on an LPKF ProtoMat S64 — custom footprints and drill specifications written for the machine."
+      content="A battery tester designed in KiCad: a 20 Ω test load, a 1 kΩ reference ladder, and eight LM324 comparators driving an LED bar graph. Schematic complete, never laid out."
     />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Battery Tester Board — Nicolas Ruth" />
+    <meta
+      property="og:description"
+      content="Eight LM324 comparators against a resistor ladder, reading battery voltage under a 20 Ω load. Schematic complete; it ran out of term before layout."
+    />
+    <meta property="og:url" content="https://nruth633.github.io/projects/battery-tester.html" />
+    <meta property="og:image" content="https://nruth633.github.io/assets/img/battery-tester-schematic.png" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href="https://nruth633.github.io/projects/battery-tester.html" />
     <link rel="stylesheet" href="../css/style.css" />
@@ -51,77 +60,112 @@
       <article>
         <header class="detail-header wrap">
           <a class="back-link" href="../projects.html">← All projects</a>
-          <p class="section-label">PCB Design · In-house Fabrication</p>
+          <p class="section-label">Analog Design · Unfinished</p>
           <h1>Battery Tester Board</h1>
           <ul class="tags">
-            <li class="tag tag-accent">KiCad</li>
-            <li class="tag">LPKF ProtoMat S64</li>
-            <li class="tag">Custom footprints</li>
+            <li class="tag tag-accent">LM324</li>
+            <li class="tag">KiCad</li>
+            <li class="tag">8-step bar graph</li>
+            <li class="tag">Schematic only</li>
           </ul>
         </header>
 
         <section class="wrap" style="padding-top: var(--space-m)">
-          <div class="card-media" data-placeholder="board photo → assets/img/battery-tester.jpg"
-               style="border-radius: var(--radius); border: 1px solid var(--border); aspect-ratio: 21/9; margin-bottom: var(--space-l)"></div>
+          <figure class="figure">
+            <img src="../assets/img/battery-tester-schematic.png" alt="KiCad schematic: a 9 V supply, a resistor ladder, two LM324 quad op-amps as eight comparators, each driving an NPN transistor and an LED" width="1500" height="1010" />
+            <figcaption>
+              The complete schematic. Reference ladder down the middle, eight
+              comparators, eight transistor-driven LEDs down the right.
+            </figcaption>
+          </figure>
+
+          <div class="callout">
+            <p>
+              <strong>This one stopped at the schematic.</strong> The design is
+              finished and the capture is complete, but the term ran out before
+              layout, so there is no board and nothing has been measured. It's
+              here because the circuit is worth explaining, not because it works.
+            </p>
+          </div>
 
           <dl class="spec-list">
+            <dt>Readout</dt>
+            <dd>Eight LEDs as a bar graph</dd>
+            <dt>Comparators</dt>
+            <dd>Two LM324 quad op-amps — eight channels</dd>
+            <dt>Reference</dt>
+            <dd>1 kΩ ladder with an 8.2 kΩ tail, 5 kΩ trimmer for calibration</dd>
+            <dt>Test load</dt>
+            <dd>20 Ω through a 1N4007, across the cell under test</dd>
+            <dt>Drive</dt>
+            <dd>NPN per channel, 1 kΩ base, 330 Ω LED ballast</dd>
+            <dt>Supply</dt>
+            <dd>9 V, reverse-protected, with a power-on indicator</dd>
             <dt>Tool</dt>
             <dd>KiCad</dd>
-            <dt>Fabrication</dt>
-            <dd>LPKF ProtoMat S64 CNC mill, in house</dd>
-            <dt>Via drill</dt>
-            <dd>0.7 mm</dd>
-            <dt>Component drill</dt>
-            <dd>1.5 mm</dd>
-            <dt>Outputs</dt>
-            <dd>Gerbers, drill file, front and back copper, edge cuts</dd>
           </dl>
 
           <div class="prose">
             <h2 style="font-size: var(--step-2); margin-bottom: var(--space-m)">
-              Designing for the machine, not the fab house
+              A voltmeter measures the wrong thing
             </h2>
             <p>
-              Most PCB projects end by uploading gerbers to a manufacturer who
-              handles the physical realities. This one was milled in house on an
-              LPKF ProtoMat S64, which moves those realities back onto the
-              designer.
+              Put a multimeter across a tired AA and it will often read close to
+              1.5 V. Put that same cell in a device and it dies immediately. The
+              open-circuit voltage of a battery says almost nothing about whether
+              it can still deliver current — what matters is what the voltage does
+              when you actually ask something of it.
             </p>
             <p>
-              The mill needs its own output set — front copper, back copper,
-              drill file, and edge cuts — and it drills the holes you specify
-              rather than the holes it assumes you meant. So the drill sizes have
-              to be decided deliberately: 0.7 mm for vias, 1.5 mm for component
-              leads. Get those wrong and the board comes off the bed with holes
-              your parts won't fit through.
+              So the first component in this circuit isn't a measuring element at
+              all. It's a 20 Ω resistor placed directly across the cell under
+              test, through a 1N4007. That's the load. Everything downstream
+              measures the cell while it's working, and a battery with high
+              internal resistance sags under it in a way it never would on an
+              open-circuit reading.
             </p>
 
             <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
-              The footprint problem
+              Eight comparators, one ladder
             </h2>
             <p>
-              Stock KiCad footprints carry drill sizes chosen for commercial
-              fabrication, which didn't match what the mill needed. Rather than
-              hand-editing every pad, the fix was to build a custom footprint
-              library: modify one part properly — a resistor, say — with the
-              correct drill specification, then assign that footprint to every
-              part of the same type across the board.
+              The readout is a bar graph: eight LEDs, each lighting once the
+              battery clears a slightly higher threshold. Getting eight thresholds
+              out of one voltage is a job for comparators, and two LM324 quad
+              op-amps supply exactly eight of them.
             </p>
             <p>
-              It's a small workflow decision that stops a tedious, error-prone
-              edit from being repeated dozens of times, and it means the next
-              board milled on the same machine starts from a library that already
-              matches it.
+              Each comparator's reference comes from a single chain of 1 kΩ
+              resistors with an 8.2 kΩ tail, tapped at eight points. Because every
+              threshold is derived from the same chain, they can't drift apart
+              relative to one another — and a 5 kΩ trimmer at the top of the chain
+              slides all eight together, which is what makes the scale calibratable
+              to a particular chemistry rather than fixed at design time.
+            </p>
+            <p>
+              An LM324 output can't drive an LED at any brightness worth looking
+              at, so each channel ends in an NPN transistor through a 1 kΩ base
+              resistor, with 330 Ω setting the LED current. The 9 V supply gets a
+              series 1N4007 against reverse connection and its own indicator LED,
+              on the theory that the most common failure with a test instrument is
+              someone wiring it up backwards.
             </p>
 
-            <!-- ============================================================
-                 TODO — Nic: worth adding here if you have it —
-                   · what the tester actually measures (voltage under load?
-                     internal resistance? capacity?)
-                   · which battery chemistries and sizes it handles
-                   · a photo of the milled board
-                   · how the milled result compared to what you designed
-                 ============================================================ -->
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Where it stopped
+            </h2>
+            <p>
+              The schematic is finished; the board is not. Layout, fabrication,
+              and any actual measurement were still ahead when the term ended, so
+              the threshold spacing has never been checked against real cells and
+              the 20 Ω load has never been verified as the right value for the
+              chemistries it would see.
+            </p>
+            <p>
+              Leaving it here rather than deleting it is deliberate. The design
+              reasoning is the part worth showing, and the honest status of a
+              project is more useful than a tidier version of it.
+            </p>
           </div>
 
           <div class="hero-actions">

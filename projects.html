@@ -8,6 +8,15 @@
       name="description"
       content="Power electronics, analog design, PCB, and embedded projects by Nicolas Ruth — rail launcher, bandgap measurement, balloon payload, and custom boards."
     />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Projects — Nicolas Ruth" />
+    <meta
+      property="og:description"
+      content="Power electronics, analog design, PCB, and embedded projects by Nicolas Ruth — rail launcher, bandgap measurement, balloon payload, and custom boards."
+    />
+    <meta property="og:url" content="https://nruth633.github.io/projects.html" />
+    <meta property="og:image" content="https://nruth633.github.io/assets/img/og-card.png" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href="https://nruth633.github.io/projects.html" />
     <link rel="stylesheet" href="css/style.css" />
@@ -99,7 +108,7 @@
           <!-- ---- Bandgap ---- -->
           <li data-tags="analog">
             <article class="card">
-              <div class="card-media">
+              <div class="card-media card-media--fit">
                 <img src="assets/img/bandgap-extrapolation.png" alt="Plot extrapolating base-emitter voltage to 0 K" loading="lazy" width="1042" height="816" />
               </div>
               <div class="card-body">
@@ -171,15 +180,17 @@
           <!-- ---- FM receiver ---- -->
           <li data-tags="analog">
             <article class="card">
-              <div class="card-media" data-placeholder="receiver photo → assets/img/"></div>
+              <div class="card-media">
+                <img src="assets/img/fm-receiver-build.jpg" alt="FM receiver built on a breadboard next to a speaker and an Arduino Uno" loading="lazy" width="1155" height="1146" />
+              </div>
               <div class="card-body">
                 <h3 class="card-title">
                   <a href="projects/fm-receiver.html">FM Radio Receiver</a>
                 </h3>
                 <p class="card-desc">
-                  Built from discrete components — a hand-wound 0.15 µH coil and a
-                  1–30 pF variable capacitor tuning the 88–108 MHz band, an S9018
-                  RF transistor, and an LM386 driving a speaker.
+                  A discrete receiver on breadboard — hand-wound coil, S9018 RF
+                  stage, LM386 into a speaker. It pulled in one station and not
+                  much else, and the write-up is mostly about why.
                 </p>
                 <ul class="tags">
                   <li class="tag tag-accent">RF</li>
@@ -217,20 +228,22 @@
           <!-- ---- Battery tester ---- -->
           <li data-tags="pcb">
             <article class="card">
-              <div class="card-media" data-placeholder="board photo → assets/img/"></div>
+              <div class="card-media">
+                <img src="assets/img/battery-tester-card.png" alt="Detail of the battery tester schematic: LM324 comparators driving transistors and an LED column" loading="lazy" width="1400" height="788" />
+              </div>
               <div class="card-body">
                 <h3 class="card-title">
                   <a href="projects/battery-tester.html">Battery Tester Board</a>
                 </h3>
                 <p class="card-desc">
-                  A custom battery-tester PCB in KiCad, including non-standard
-                  component footprints and drill specifications written for
-                  in-house fabrication on an LPKF CNC milling machine.
+                  Eight LM324 comparators against a resistor ladder, lighting an
+                  eight-LED bar for battery voltage measured under a 20 Ω load.
+                  Schematic complete; it ran out of term before layout.
                 </p>
                 <ul class="tags">
                   <li class="tag tag-accent">KiCad</li>
-                  <li class="tag">LPKF CNC</li>
-                  <li class="tag">Fabrication</li>
+                  <li class="tag">LM324</li>
+                  <li class="tag">Schematic only</li>
                 </ul>
               </div>
             </article>
@@ -239,21 +252,26 @@
           <!-- ---- I/O shield ---- -->
           <li data-tags="pcb embedded">
             <article class="card">
-              <div class="card-media" data-placeholder="shield photo → assets/img/"></div>
+              <div class="card-media">
+                <img src="assets/img/shield-3d.jpg" alt="KiCad 3D render of the Uno shield with OLED, IMU, trim pots and audio jacks" loading="lazy" width="1500" height="963" />
+              </div>
               <div class="card-body">
                 <h3 class="card-title">
                   <a href="projects/io-shield.html">Arduino Uno I/O Shield</a>
                 </h3>
                 <p class="card-desc">
-                  A general-purpose I/O shield integrating potentiometers, push
-                  buttons, status and RGB LEDs, an OLED display, and
-                  selectable-voltage I²C / SPI expansion headers.
+                  An Uno-format board that gives a 5 V microcontroller an analog
+                  voice: a 10-bit R-2R ladder DAC buffered into a 3.5 mm output
+                  jack, plus an MPU6050, an SSD1306 OLED, pots and buttons.
                 </p>
                 <ul class="tags">
-                  <li class="tag tag-accent">KiCad</li>
-                  <li class="tag">Arduino</li>
-                  <li class="tag">OLED</li>
+                  <li class="tag tag-accent">R-2R DAC</li>
+                  <li class="tag">KiCad</li>
+                  <li class="tag">MPU6050</li>
                 </ul>
+                <div class="card-links">
+                  <a href="https://github.com/nruth633/arduino-shield-pcb" rel="noopener">Source ↗</a>
+                </div>
               </div>
             </article>
           </li>
@@ -261,7 +279,9 @@
           <!-- ---- Balancing robot ---- -->
           <li data-tags="embedded pcb">
             <article class="card">
-              <div class="card-media" data-placeholder="robot photo → assets/img/"></div>
+              <div class="card-media">
+                <img src="assets/img/robot-top.jpg" alt="The assembled three-wheel balancing robot seen from above" loading="lazy" width="1500" height="1125" />
+              </div>
               <div class="card-body">
                 <h3 class="card-title">
                   <a href="projects/balancing-robot.html">3-Wheel Balancing Robot</a>
@@ -283,97 +303,28 @@
             </article>
           </li>
 
-          <!-- ---- IMU shield ---- -->
-          <li data-tags="pcb embedded">
-            <article class="card">
-              <div class="card-media" data-placeholder="shield photo → assets/img/"></div>
-              <div class="card-body">
-                <h3 class="card-title">
-                  <a href="https://github.com/nruth633/arduino-shield-pcb" rel="noopener">Arduino Uno IMU Shield</a>
-                </h3>
-                <p class="card-desc">
-                  A second UNO-format shield, this one integrating an MPU6050 IMU
-                  so motion-sensing experiments sit in a fixed, repeatable
-                  orientation instead of on a breadboard.
-                </p>
-                <ul class="tags">
-                  <li class="tag tag-accent">KiCad</li>
-                  <li class="tag">MPU6050</li>
-                </ul>
-                <div class="card-links">
-                  <a href="https://github.com/nruth633/arduino-shield-pcb" rel="noopener">Source ↗</a>
-                </div>
-              </div>
-            </article>
-          </li>
-
-          <!-- ---- Advanced project PCB ---- -->
-          <li data-tags="pcb">
-            <article class="card">
-              <div class="card-media" data-placeholder="board render → assets/img/"></div>
-              <div class="card-body">
-                <h3 class="card-title">
-                  <a href="https://github.com/nruth633/adv-project-pcb" rel="noopener">Advanced Project PCB</a>
-                </h3>
-                <p class="card-desc">
-                  Advanced electronics course board taken from schematic through
-                  layout to fabrication-ready gerbers, with a custom footprint
-                  library for parts that had no stock symbol.
-                </p>
-                <ul class="tags">
-                  <li class="tag tag-accent">KiCad</li>
-                  <li class="tag">Gerbers</li>
-                </ul>
-                <div class="card-links">
-                  <a href="https://github.com/nruth633/adv-project-pcb" rel="noopener">Source ↗</a>
-                </div>
-              </div>
-            </article>
-          </li>
-
           <!-- ---- IEEE board ---- -->
           <li data-tags="pcb">
             <article class="card">
-              <div class="card-media" data-placeholder="IEEE board → assets/img/"></div>
+              <div class="card-media">
+                <img src="assets/img/ieee-cube-card.png" alt="Detail of the IEEE cube board layout: shift registers, driver array, and output header" loading="lazy" width="1400" height="788" />
+              </div>
               <div class="card-body">
                 <h3 class="card-title">
-                  <a href="https://github.com/nruth633/ieee-pcb" rel="noopener">IEEE LED Matrix Cube Board</a>
+                  <a href="projects/ieee-cube.html">IEEE LED Matrix Cube Board</a>
                 </h3>
                 <p class="card-desc">
-                  A KiCad board designed with the DU IEEE chapter — the layout for
-                  one slice of the LED matrix cube the group built.
+                  One slice of the DU IEEE chapter's LED cube: three daisy-chained
+                  74HCT595 shift registers driving 24 transistor cathode sinks, so
+                  eight RGB columns run off a five-wire bus.
                 </p>
                 <ul class="tags">
-                  <li class="tag tag-accent">KiCad</li>
+                  <li class="tag tag-accent">74HCT595</li>
+                  <li class="tag">KiCad</li>
                   <li class="tag">IEEE</li>
                 </ul>
                 <div class="card-links">
                   <a href="https://github.com/nruth633/ieee-pcb" rel="noopener">Source ↗</a>
-                </div>
-              </div>
-            </article>
-          </li>
-
-          <!-- ---- STM32 learning ---- -->
-          <li data-tags="embedded">
-            <article class="card">
-              <div class="card-media" data-placeholder="bench setup → assets/img/"></div>
-              <div class="card-body">
-                <h3 class="card-title">
-                  <a href="https://github.com/nruth633/stm32-learning" rel="noopener">STM32 Bring&#8209;up &amp; HAL Practice</a>
-                </h3>
-                <p class="card-desc">
-                  Self-directed STM32F401 work: HAL driver experiments, peripheral
-                  exercises, and a stripped-down blink build kept specifically for
-                  smoke-testing freshly assembled boards.
-                </p>
-                <ul class="tags">
-                  <li class="tag tag-accent">STM32F401</li>
-                  <li class="tag">HAL</li>
-                  <li class="tag">Bring-up</li>
-                </ul>
-                <div class="card-links">
-                  <a href="https://github.com/nruth633/stm32-learning" rel="noopener">Source ↗</a>
                 </div>
               </div>
             </article>

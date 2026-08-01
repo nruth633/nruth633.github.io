@@ -6,8 +6,17 @@
     <title>FM Radio Receiver — Nicolas Ruth</title>
     <meta
       name="description"
-      content="An FM receiver built from discrete components — a hand-wound 0.15 µH coil, a 1–30 pF variable capacitor tuning 88–108 MHz, an S9018, and an LM386."
+      content="A discrete FM receiver on breadboard — hand-wound 0.15 µH coil, 1–30 pF tuning, LM386 output. It received one station, and the write-up is about why it didn't do more."
     />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="FM Radio Receiver — Nicolas Ruth" />
+    <meta
+      property="og:description"
+      content="A discrete FM receiver on breadboard. It received one station — and working out why the tuning did nothing was the useful half of the project."
+    />
+    <meta property="og:url" content="https://nruth633.github.io/projects/fm-receiver.html" />
+    <meta property="og:image" content="https://nruth633.github.io/assets/img/fm-receiver-build.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href="https://nruth633.github.io/projects/fm-receiver.html" />
     <link rel="stylesheet" href="../css/style.css" />
@@ -56,31 +65,37 @@
           <ul class="tags">
             <li class="tag tag-accent">88–108 MHz</li>
             <li class="tag">Hand-wound coil</li>
-            <li class="tag">S9018</li>
             <li class="tag">LM386</li>
+            <li class="tag">Coursework</li>
           </ul>
         </header>
 
         <section class="wrap" style="padding-top: var(--space-m)">
-          <!-- Swap for a real photo:
-               <img src="../assets/img/fm-receiver.jpg" alt="The FM receiver build"> -->
-          <div
-            class="card-media"
-            data-placeholder="receiver photo → assets/img/fm-receiver.jpg"
-            style="border-radius: var(--radius); border: 1px solid var(--border); aspect-ratio: 21/9; margin-bottom: var(--space-l)"
-          ></div>
+          <figure class="figure figure-tall">
+            <img src="../assets/img/fm-receiver-build.jpg" alt="The receiver built on a breadboard, wired to a speaker, with an Arduino Uno supplying 5 V" width="1155" height="1146" />
+            <figcaption>
+              The whole receiver. The RF section is crammed into the top-left
+              corner deliberately — on a breadboard, every extra centimetre of
+              lead is inductance you didn't ask for. The Uno is there as a 5 V
+              supply, nothing more.
+            </figcaption>
+          </figure>
 
           <dl class="spec-list">
             <dt>Band</dt>
             <dd>88–108 MHz (FM broadcast)</dd>
             <dt>Tank inductor</dt>
-            <dd>0.15 µH, hand-wound</dd>
+            <dd>≈ 0.15 µH — 28 AWG enamel, 3–4 turns, 5.3 mm dia, 3 mm long</dd>
             <dt>Tuning</dt>
             <dd>1–30 pF variable capacitor</dd>
             <dt>RF stage</dt>
-            <dd>S9018 RF transistor</dd>
+            <dd>Two transistors — S9018 specified, substitutes used</dd>
             <dt>Audio stage</dt>
-            <dd>LM386 power amplifier driving a speaker</dd>
+            <dd>LM386 into a speaker via 470 µF</dd>
+            <dt>Supply</dt>
+            <dd>5 V from an Arduino Uno</dd>
+            <dt>Built for</dt>
+            <dd>Principles of Communications coursework</dd>
           </dl>
 
           <div class="prose">
@@ -88,48 +103,111 @@
               What it is
             </h2>
             <p>
-              A working FM broadcast receiver built from discrete components —
-              no receiver IC doing the hard part. Signal is picked up, tuned,
-              recovered, and amplified through stages I chose and assembled
-              individually.
+              An FM broadcast receiver built out of individual components — no
+              receiver IC doing the hard part — put together for a Principles of
+              Communications course. Antenna, LC tank, two transistor stages, an
+              LM386, a speaker.
+            </p>
+            <p>
+              It received. Once assembled it pulled in one strong local station
+              and held it. Almost everything else the design was supposed to do,
+              it didn't, and that turned out to be the more useful half of the
+              project.
+            </p>
+          </div>
+
+          <figure class="figure">
+              <img src="../assets/img/fm-receiver-block-diagram.png" alt="Hand-drawn block diagram: FM station to antenna to LC tuning circuit to FM demodulation to LM386 audio amp to speaker" loading="lazy" width="1122" height="783" />
+              <figcaption>
+                The signal chain the design was aiming for.
+              </figcaption>
+            </figure>
+
+          <div class="prose">
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Winding the coil
+            </h2>
+            <p>
+              The front end is an LC tank, and at 100 MHz the inductor is a few
+              tenths of a microhenry — far too small to buy off a shelf in any
+              useful way. So it was wound by hand: 28 AWG enamelled copper wrapped
+              three to four turns around a drill bit, giving a coil about 5.3 mm
+              across and 3 mm long, ends sanded back to break through the enamel.
+              That geometry lands at roughly 0.15 µH.
+            </p>
+            <p>
+              Paired with a 1–30 pF variable capacitor, that should sweep the tank
+              across the whole 88–108 MHz band, and the tuning knob should
+              therefore select stations.
             </p>
 
             <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
-              Tuning the band
+              What actually happened
             </h2>
             <p>
-              The front end is an LC tank: a hand-wound 0.15 µH coil paired with a
-              1–30 pF variable capacitor. Sweeping that capacitor moves the
-              resonant frequency across the full 88–108 MHz broadcast band, which
-              is what turns the tuning knob into station selection.
+              Three things went wrong, and they are worth being specific about.
+            </p>
+            <ul>
+              <li>
+                <strong>The variable capacitor did nothing.</strong> Sweeping it
+                end to end produced no change in what was received.
+              </li>
+              <li>
+                <strong>Changing the number of turns on the coil was
+                negligible.</strong> Rewinding it — the other half of setting the
+                resonant frequency — barely moved the result either.
+              </li>
+              <li>
+                <strong>There was significant noise</strong>, and antenna position
+                mattered far more than any control on the board.
+              </li>
+            </ul>
+            <p>
+              Taken together those point at one conclusion: the tank was not what
+              was setting the tuning. If deliberately changing both L and C
+              doesn't move the resonant frequency, then stray capacitance and lead
+              inductance elsewhere in the circuit are swamping the components that
+              were supposed to be in charge. On a solderless breadboard that is
+              entirely plausible — the contact strips run a few picofarads to
+              their neighbours, which is a large fraction of a 1–30 pF tuning
+              range, and the jumper leads add inductance comparable to the coil.
             </p>
             <p>
-              Winding the inductor by hand is the interesting part. At these
-              frequencies a fraction of a microhenry decides where the band
-              lands, and the value depends on turn count, coil diameter, and
-              spacing — so the coil gets adjusted physically until the tuning
-              range covers the stations you actually want.
+              The two transistors are the other suspect. The S9018 was specified
+              for its gain-bandwidth at VHF; the parts actually available were
+              substitutes, and a transistor that runs out of gain before 100 MHz
+              turns a tuned receiver into something that only responds to whatever
+              signal is strongest.
             </p>
+          </div>
 
+          <figure class="figure">
+              <img src="../assets/img/fm-receiver-schematic.png" alt="Hand-drawn schematic: antenna into an LC tank with a 1-30 pF variable capacitor and 0.15 uH coil, two transistors, then 100 nF and 10 k into an LM386 driving a speaker through 470 uF" loading="lazy" width="1500" height="1000" />
+              <figcaption>
+                The circuit as drawn, with the S9018 and LM386 pinouts noted at
+                the bottom. The 25 kΩ pot sets the bias on the RF stage.
+              </figcaption>
+            </figure>
+
+          <div class="prose">
             <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
-              Recovery and audio
+              What a version two would change
             </h2>
             <p>
-              An S9018 — a small-signal transistor with enough gain-bandwidth to
-              be useful at VHF — handles the RF stage and signal recovery. From
-              there the audio drops to an LM386, a classic low-power audio
-              amplifier, which drives a speaker directly.
+              Solder it. Almost every failure above traces back to building a VHF
+              circuit on a breadboard, and the fix is to stop doing that — a
+              soldered board with short leads and a ground plane removes most of
+              the parasitics that were overwhelming the tank. Get the specified
+              transistors rather than substitutes, and the RF stage has the
+              bandwidth the design assumed. Beyond that, a dedicated demodulator
+              IC would recover audio far more cleanly than two discrete stages
+              doing it approximately.
             </p>
-
-            <!-- ============================================================
-                 TODO — Nic, good additions:
-                   · your coil geometry (turns, diameter, wire gauge)
-                   · the detection scheme you used (slope detection?)
-                   · how far you could receive / which stations came in
-                   · anything you had to tweak to get it to actually work
-                   · a photo of the coil — those photograph really well
-                 Then delete this comment.
-                 ============================================================ -->
+            <p>
+              None of that makes the build a failure. It received a station on a
+              breadboard out of loose parts, and the reasons it didn't do more are
+              legible — which is the part worth keeping.
+            </p>
           </div>
 
           <div class="hero-actions">
