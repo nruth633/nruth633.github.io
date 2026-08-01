@@ -49,11 +49,18 @@ Change them in those two places and the whole site follows.
 
 Search the source for `TODO` — each one marks a spot with placeholder text:
 
-- `resume.html` — job title and dates at Arsenal Nexus, degree, university,
-  graduation date
+- `resume.html` — Arsenal Nexus start date and the three experience bullets
 - `index.html` — LinkedIn URL (commented out until you add it)
-- `projects/*.html` — deeper technical write-ups
-- `assets/resume.pdf` — the resume itself
+- `projects/*.html` — measured results and build details (each page lists
+  exactly what would strengthen it)
+- `assets/img/` — no photos yet; every project shows a placeholder block
+
+## Before you publish
+
+`assets/resume.pdf` contains your phone number. The site itself deliberately
+shows email only, but the downloadable PDF does not — so pushing this publishes
+the number. Either accept that, or put a phone-free version at
+`assets/resume.pdf` and keep the full one for direct applications.
 
 ## Local preview
 
