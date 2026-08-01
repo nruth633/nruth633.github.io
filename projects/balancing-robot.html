@@ -3,16 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>3-Wheel Balancing Robot — Nicolas Ruth</title>
+    <title>3-Wheel Robot — Nicolas Ruth</title>
     <meta
       name="description"
-      content="A three-wheel robot on a hand-soldered STM32F401 board, driven from a phone browser over an ESP8266 access point with live IMU telemetry. It drives; the balance loop is unfinished."
+      content="A three-wheel robot on a hand-soldered STM32F401 board I designed, driven from any phone browser over the ESP8266's own WiFi access point, with live IMU telemetry."
     />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="3-Wheel Balancing Robot — Nicolas Ruth" />
+    <meta property="og:title" content="3-Wheel Robot — Nicolas Ruth" />
     <meta
       property="og:description"
-      content="Drives from any phone browser over the ESP8266's own WiFi access point, with roll and pitch streaming back live. The balance loop is the part that was never finished."
+      content="Drives from any phone browser over the ESP8266's own WiFi access point, with speed, roll, and pitch streaming back live onto the control page."
     />
     <meta property="og:url" content="https://nruth633.github.io/projects/balancing-robot.html" />
     <meta property="og:image" content="https://nruth633.github.io/assets/img/robot-top.jpg" />
@@ -59,8 +59,8 @@
       <article>
         <header class="detail-header wrap">
           <a class="back-link" href="../projects.html">← All projects</a>
-          <p class="section-label">Embedded · Controls · PCB</p>
-          <h1>3-Wheel Balancing Robot</h1>
+          <p class="section-label">Embedded · PCB · Wireless</p>
+          <h1>3-Wheel Robot</h1>
           <ul class="tags">
             <li class="tag tag-accent">STM32F401RBT6</li>
             <li class="tag">MPU6050</li>
@@ -105,25 +105,18 @@
               What it is
             </h2>
             <p>
-              A three-wheel robot running on a board I designed, laid out, and
-              soldered myself. It drives — connect a phone to the WiFi network
-              the robot puts out, open its address in a browser, and you get a
-              control pad that moves it forward, backward, and turning, with the
-              IMU's roll and pitch coming back live on the same page.
+              A three-wheel robot running on a control board I designed, laid
+              out, and hand-soldered. Connect a phone to the WiFi network the
+              robot puts out, open its address in a browser, and you get a
+              control pad that drives it forward, backward, and turning — with
+              speed, roll, and pitch coming back live on the same page.
             </p>
             <p>
-              <strong>What it doesn't do is balance.</strong> The intent was an
-              inverted pendulum that holds itself upright by driving its wheels
-              against the direction it's falling, and that part was never
-              finished — the control loop exists but was never tuned to the point
-              where the robot stays up on its own. It's a working
-              remote-controlled robot with an unfinished controller on top of it.
-            </p>
-            <p>
-              It was built across several iterations. Rather than overwriting
-              each revision, every one is kept in the repository — so the
-              progression from the first two-wheel board through to the current
-              version stays visible and reviewable.
+              The whole stack is mine: the schematic and layout, the assembly,
+              the STM32 firmware, and the control interface. It was built across
+              several revisions, and rather than overwriting each one they are
+              all kept in the repository, so the progression from the first
+              two-wheel board through to the current version stays reviewable.
             </p>
 
             <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
@@ -201,29 +194,10 @@
             </p>
 
             <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
-              The encoder-free variant
-            </h2>
-            <p>
-              One branch of the project drops the wheel encoders entirely and
-              estimates attitude from the IMU alone. That removes a sensor and
-              its wiring, but it also removes the velocity feedback the loop was
-              leaning on — so the controller has to do more with less. Both
-              versions are kept side by side rather than one replacing the
-              other, which is what makes the tradeoff something you can compare
-              instead of argue about.
-            </p>
-            <p>
-              Neither version balances yet. Tuning is where the project sits: an
-              inverted pendulum is unstable by definition, so the loop has to
-              react faster than the robot falls, and getting the gains and the
-              loop rate into that window is the work still left.
-            </p>
-
-            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
               The board
             </h2>
             <p>
-              The control board puts everything the loop needs on one PCB, built
+              The control board puts everything the robot needs on one PCB, built
               around an STM32F401RBT6 on a 16 MHz crystal. A TB6612FNG drives the
               motors; the MPU6050, MT6701 magnetic encoders, ESP8266 radio, and
               motor leads all land on their own connectors rather than being
@@ -237,7 +211,7 @@
               The switch labelled <em>5 V selector</em> is the detail worth
               pointing at. It cuts the motor rail while leaving the logic powered
               from USB, so the board can be flashed and stepped through on the
-              bench without a balancing robot trying to drive itself off the desk.
+              bench without the robot trying to drive itself off the desk.
               That's a bench-ergonomics decision more than an electrical one, and
               it's the kind of thing you only add after being bitten once.
             </p>
@@ -304,6 +278,24 @@
           </div>
 
           <div class="prose">
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              The self-balancing branch
+            </h2>
+            <p>
+              The original target was a self-balancing robot — an inverted
+              pendulum holding itself upright by driving its wheels against the
+              direction it falls. That's where the IMU and the encoder inputs
+              come from, and the repository still carries a balance loop plus a
+              variant that drops the wheel encoders and estimates attitude from
+              the IMU alone.
+            </p>
+            <p>
+              Neither loop was ever tuned to the point where the robot stays up,
+              so that branch is unfinished. What it left behind is the useful
+              part: a board with an IMU, encoder inputs, and live telemetry, on a
+              robot that drives.
+            </p>
+
             <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
               Building it yourself
             </h2>
