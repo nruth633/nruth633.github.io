@@ -16,15 +16,17 @@ projects/             project deep-dives
 css/style.css         the entire stylesheet
 js/main.js            theme toggle, filtering, scroll reveal
 assets/img/           photos and board renders
-assets/resume.pdf     resume download (add this file)
-tools/                one-off generators; not part of the published site
+assets/resume.pdf     resume download (generated — see "The resume" below)
+tools/                generators (resume, social card); not published
 ```
 
 ## Editing
 
 **Add a project.** Copy an existing `<li>` block in `projects.html`, change the
-text, and set `data-tags` to any of `stm32 pcb controls matlab arduino`. The
-filter buttons pick it up automatically — no JS changes needed.
+text, and set `data-tags` to one or more of `power analog pcb embedded`
+(space-separated) — those are the values the filter buttons in `projects.html`
+actually match. Existing values are picked up automatically; a new value needs a
+matching filter button.
 
 **Add a photo.** Drop the image in `assets/img/` (≤ 1500 px on the long edge —
 JPEG for photos and 3D renders, palette PNG for schematics and layouts), then:
@@ -82,12 +84,24 @@ rather than an edit:
   nothing about the controller (PID? gains? loop rate? complementary filter on
   the IMU?). That's the most interesting part of the project and the biggest
   remaining gap on the site.
-- **LPKF milling** — `index.html`'s "PCB design & fabrication" skill card claims
-  custom footprints and drill specs for in-house LPKF milling. That claim used to
-  hang off the battery tester, which never got past schematic, so it now has no
-  project backing it. Either point it at the board it actually belongs to, or
-  drop it.
 - **IEEE board, SRCLR** — see the note below.
+
+## Resolved 2026-09-07 — resume corrections
+
+Nic confirmed he has never milled a board, so the LPKF / in-house-fabrication
+claim was dropped everywhere: the `index.html` skill card is now "PCB design &
+assembly", and the battery tester is described by what it actually is (an
+eight-channel LM324 comparator bar-graph, schematic stage). Two more claims on
+the PDF resume were wrong the same way and were also fixed — the DemoSat payload
+was described as "designed **and soldered**" when it was never fabricated, and
+the I/O shield was credited with RGB LEDs and selectable-voltage I²C/SPI headers
+it does not have, while omitting the R-2R DAC that is its best feature. The
+Arsenal Nexus role is a *completed* summer-2026 internship ("RF Engineering
+Intern"), not an ongoing engineer role — the site said "Present" in three places.
+
+**The pattern to keep watching for:** every one of these came from resume prose
+written before, or apart from, the design files. Check the KiCad project before
+writing a sentence about a board.
 
 ## A design issue worth checking
 
@@ -109,12 +123,49 @@ sensors.
 
 If you add photos, keep to that rule — your own work only.
 
-## Before you publish
+## The resume
 
-`assets/resume.pdf` contains your phone number. The site itself deliberately
-shows email only, but the downloadable PDF does not — so pushing this publishes
-the number. Either accept that, or put a phone-free version at
-`assets/resume.pdf` and keep the full one for direct applications.
+`assets/resume.pdf` is **generated**, not exported from Google Docs. The source
+is `tools/resume-src.html`; edit that and run:
+
+```
+python tools/make-resume.py
+```
+
+That writes two variants from the one source:
+
+| output | phone number | for |
+| --- | --- | --- |
+| `assets/resume.pdf` | stripped | the site (published) |
+| `~/Desktop/Nicolas_Ruth_Resume.pdf` | intact | direct applications |
+
+**The phone number is not in this repo.** `resume-src.html` carries a
+`{{PHONE}}` placeholder; the real number lives in `tools/resume-private.json`,
+which is gitignored. `tools/resume_source.py` is the single place that defines
+the two variants, and both build scripts go through it.
+
+The web variant needs no private file, so a fresh clone can still build the
+published PDF — the full variant just skips with a message. That matters: the old
+workflow exported from Google Docs and redacted the export by hand, so **every
+re-export silently put the number back**. Now it cannot.
+
+The script also asserts the result is one page and prints the room remaining. It
+is currently about 12pt — under a line. If an edit overflows, the build fails and
+tells you; tune the CSS custom properties at the top of `resume-src.html`
+(`--body`, `--lead`, `--gap-sec`, `--gap-entry`, `--bullet-gap`) rather than
+cutting content. Those five knobs scale every line at once and are worth far
+more space than deleting a bullet.
+
+`tools/resume-to-docx.py` converts the same source to `.docx` for re-importing
+into Google Docs, so the editable copy does not drift from the published one:
+
+```
+python tools/resume-to-docx.py tools/resume-src.html ~/Desktop/Nicolas_Ruth_Resume.docx
+```
+
+Word and Google Docs break lines slightly differently from Chrome, so the
+`.docx` page count is **not** verified by the build — the PDF is the artifact
+that is measured.
 
 ## Local preview
 

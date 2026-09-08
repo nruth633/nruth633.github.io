@@ -7,3 +7,11 @@ desktop.ini
 .vscode/
 .idea/
 *.swp
+
+# Personal data kept out of a public repo. tools/make-resume.py reads the phone
+# number from here; resume-src.html only carries a {{PHONE}} placeholder.
+tools/resume-private.json
+
+# resume_source.py is imported by the build scripts, so Python caches it
+__pycache__/
+*.pyc

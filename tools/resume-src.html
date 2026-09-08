@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Nicolas Ruth — Resume</title>
+<style>
+  /* ---- fit knobs: tune these to land on exactly one page ---- */
+  :root{
+    --body: 9.2pt;      /* body text size         */
+    --lead: 1.16;       /* line-height multiplier */
+    --gap-sec: 2.7pt;   /* space above a section  */
+    --gap-entry: 2.0pt; /* space between entries  */
+    --bullet-gap: 0.5pt;/* space between bullets  */
+  }
+  @page { size: letter; margin: 0.34in 0.42in; }
+
+  *{ box-sizing: border-box; margin: 0; padding: 0; }
+  html{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: var(--body);
+    line-height: var(--lead);
+    color: #000;
+  }
+
+  /* ---------- header ---------- */
+  .name{
+    font-size: 18pt; font-weight: 700; letter-spacing: .035em;
+    line-height: 1.05; text-align: center;
+  }
+  .contact{ text-align: center; margin-top: 2pt; font-size: 9.0pt; }
+  .contact a{ color: #000; text-decoration: none; }
+
+  /* ---------- sections ---------- */
+  h2{
+    font-size: 9.5pt; font-weight: 700; letter-spacing: .09em;
+    text-transform: uppercase;
+    margin-top: var(--gap-sec); padding-bottom: 1.2pt;
+    border-bottom: .7pt solid #000;
+  }
+
+  /* ---------- entries ---------- */
+  .entry{ margin-top: var(--gap-entry); }
+  .entry-head{
+    display: flex; align-items: baseline; gap: .6em;
+    justify-content: space-between;
+  }
+  .entry-title{ font-weight: 700; }
+  .entry-title .org{ font-weight: 400; }
+  .entry-meta{
+    flex: 0 0 auto; font-style: italic; font-size: 8.9pt; white-space: nowrap;
+  }
+  .entry-meta.tools{ font-style: normal; }
+
+  ul{ list-style: none; margin-top: .9pt; }
+  li{ padding-left: 9pt; text-indent: -9pt; margin-top: var(--bullet-gap); }
+  li::before{ content: "\2022"; display: inline-block; width: 9pt; text-indent: 0; }
+
+  /* one-line entries: title, dates and detail all in one run */
+  .oneline{ margin-top: var(--gap-entry); }
+  .oneline .yr{ font-style: italic; }
+
+  .degree{ margin-top: 0.6pt; }
+
+  /* skills block: hanging indent so the labels line up */
+  .skills p{ margin-top: var(--bullet-gap); padding-left: 42pt; text-indent: -42pt; }
+</style>
+</head>
+<body>
+
+  <p class="name">NICOLAS RUTH</p>
+  <p class="contact">
+    Denver, CO&nbsp; &bull;&nbsp; <span class="phone">{{PHONE}}&nbsp; &bull;&nbsp; </span>nruth633@gmail.com&nbsp; &bull;&nbsp;
+    <a href="https://nruth633.github.io">nruth633.github.io</a>&nbsp; &bull;&nbsp;
+    <a href="https://github.com/nruth633">github.com/nruth633</a>
+  </p>
+
+  <!-- ============ EDUCATION ============ -->
+  <h2>Education</h2>
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-title">University of Denver <span class="org">&mdash; Denver, CO</span></span>
+      <span class="entry-meta">Expected May 2027</span>
+    </div>
+    <div class="degree"><b>B.S. in Electrical Engineering</b> &mdash; Specialization in Robotics
+      &middot; Minor in Mathematics</div>
+    <ul>
+      <li><b>Relevant coursework:</b> Advanced Electronics, Physical Electronics, Signals &amp; Systems,
+          Microprocessors, Electromagnetics</li>
+    </ul>
+  </div>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <h2>Experience</h2>
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-title">RF Engineering Intern <span class="org">&mdash; Arsenal Nexus, Denver, CO</span></span>
+      <span class="entry-meta">June &ndash; August 2026</span>
+    </div>
+    <ul>
+      <li>Simulated antenna cans in MATLAB to optimize directivity, and designed and simulated Vivaldi antennas
+          ahead of physical build.</li>
+      <li>Took the designs to hardware rather than stopping at simulation: azimuth pattern tests to confirm
+          directivity, plus S11 and S21 measurements on a Rigol RSA5065N in VNA mode.</li>
+    </ul>
+  </div>
+  <p class="oneline"><b>Lead Cashier</b> &mdash; Miss Molly&rsquo;s Bakery, Denver <span class="yr">(2022&ndash;2023)</span>
+     &mdash; sole closing employee; trained new cashiers and cut wait times.</p>
+  <p class="oneline"><b>Landscaper</b> &mdash; Self-Employed, Denver <span class="yr">(2022&ndash;2023)</span>
+     &mdash; maintained grounds and operated equipment, managing client schedules.</p>
+
+  <!-- ============ PCB DESIGN ============ -->
+  <h2>PCB Design</h2>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-title">3-Wheel Robot Control Board</span>
+      <span class="entry-meta tools">KiCad &middot; STM32F401 &middot; Hand-soldered SMD</span>
+    </div>
+    <ul>
+      <li>Designed the schematic and layout in KiCad for a robot control board around an STM32F401RBT6 (Cortex-M4):
+          TB6612FNG motor driver, MPU6050 IMU, MT6701 magnetic encoders, ESP8266 radio, USB-C input behind a PTC fuse
+          and USBLC6 ESD array, and LD1117 regulators feeding separate 5 V and 3.3 V rails.</li>
+      <li>Hand-soldered every surface-mount part on the bare board &mdash; passives, both regulators, motor driver,
+          crystal, and the STM32 in a 64-pin QFP &mdash; spacing the layout for hand assembly and keeping load-bearing
+          connectors through-hole.</li>
+      <li>Added a switch cutting the motor rail but leaving logic USB-powered, so the board flashes without driving
+          off the bench.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-title">DemoSat High-Altitude Balloon Payload</span>
+      <span class="entry-meta tools">KiCad</span>
+    </div>
+    <ul>
+      <li>Redesigned an existing balloon payload as an Arduino Uno shield in KiCad after finding two of its four
+          sensors out of production, choosing replacements against the flight&rsquo;s altitude, temperature, and
+          low-pressure limits.</li>
+      <li>Integrated temperature (DS18B20, 1-Wire), humidity (HIH-9120), pressure (DPS310), and 3-axis accelerometer
+          (ADXL345) sensors with SD logging on one shared 3.3 V rail and I&sup2;C bus &mdash; ~120 g, ~$115, 259 mW
+          typical, against budgets of 200 g and $147.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-title">Arduino Uno I/O Shield</span>
+      <span class="entry-meta tools">KiCad &middot; Built &amp; hand-soldered</span>
+    </div>
+    <ul>
+      <li>Designed a mixed-signal Uno shield giving the Arduino a true analog output: a 10-bit R-2R ladder DAC
+          (10 k&Omega; / 20 k&Omega;) on D0&ndash;D9 buffered by an MCP6002 rail-to-rail op-amp, with a DC-offset
+          trimmer and 3.5 mm line in / line out jacks.</li>
+      <li>Added two 100 k&Omega; potentiometers, two buttons, and I&sup2;C headers for an MPU6050 IMU and a
+          128 &times; 64 SSD1306 OLED.</li>
+      <li>Had the board fabricated and hand-soldered the assembly.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-title">Battery Tester Board</span>
+      <span class="entry-meta tools">KiCad</span>
+    </div>
+    <ul>
+      <li>Designed an eight-channel battery load tester that reads a cell under a switched 20 &Omega; load rather than
+          open-circuit: two LM324 quad op-amps as eight comparators against a tapped 1 k&Omega; resistor ladder, with a
+          5 k&Omega; trimmer calibrating all eight thresholds together.</li>
+    </ul>
+  </div>
+
+  <!-- ============ TECHNICAL PROJECTS ============ -->
+  <h2>Technical Projects</h2>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-title">Electromagnetic Rail Launcher (Railgun)</span>
+      <span class="entry-meta tools">Power Electronics &middot; High Voltage</span>
+    </div>
+    <ul>
+      <li>Built a rail-type electromagnetic launcher: a DC boost converter steps an 11.1 V LiPo to ~225 V, charging a
+          13,200 &micro;F bank (six 250 V / 2200 &micro;F electrolytics in parallel, ~330 J stored) discharged across
+          dual aluminum rails to accelerate a small metal projectile.</li>
+      <li>Designed a 2.6 k&Omega; inrush-limiting resistor network with a 600 V blocking diode to protect the charging
+          stage.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-title">FM Radio Receiver</span>
+      <span class="entry-meta tools">RF / Analog</span>
+    </div>
+    <ul>
+      <li>Built an FM receiver from discrete parts: a hand-wound 0.15 &micro;H coil and 1&ndash;30 pF variable capacitor
+          tuning the 88&ndash;108 MHz band, an S9018 RF transistor recovering the signal, and an LM386 driving a speaker.</li>
+      <li>Diagnosed unresponsive tuning &mdash; on a solderless breadboard, stray parasitic capacitance rivalled the
+          1&ndash;30 pF tuning range, so layout rather than the variable capacitor set the resonant frequency.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="entry-title">Electromagnetic Pulse (EMP) Demonstrator</span>
+      <span class="entry-meta tools">High Voltage</span>
+    </div>
+    <ul>
+      <li>Designed a capacitor-discharge EMP generator: a 9 V high-voltage step-up converter charges a 20 kV ceramic
+          capacitor bank, discharged through a hand-wound coil to produce a pulsed magnetic field.</li>
+    </ul>
+  </div>
+
+  <!-- ============ SKILLS ============ -->
+  <h2>Technical Skills</h2>
+  <div class="skills">
+    <p><b>Languages:</b> C / Embedded C, Python, MATLAB, Java</p>
+    <p><b>Tools:</b> KiCad, LTspice, MATLAB, STM32CubeIDE, Arduino IDE, SolidWorks / Onshape, Microsoft Office</p>
+    <p><b>Hardware:</b> STM32, Arduino and Teensy MCUs; schematic capture and PCB layout; hand SMD assembly to 64-pin
+       QFP; component selection; oscilloscope, multimeter, spectrum analyzer, vector network analyzer;
+       3D printers</p>
+    <p><b>Concepts:</b> Analog &amp; digital circuit design, PCB design &amp; hand assembly, robotics, RF and antenna design,
+       sensor integration &amp; data logging, power electronics, electromagnetics, embedded systems</p>
+  </div>
+
+  <!-- ============ LEADERSHIP ============ -->
+  <h2>Leadership &amp; Activities</h2>
+  <p class="oneline"><b>Member</b> &mdash; DU IEEE Chapter <span class="yr">(2026&ndash;Present)</span>
+     &mdash; assisted in designing a PCB layout for a slice of the chapter&rsquo;s LED matrix cube.</p>
+  <p class="oneline"><b>Mechanical Team Lead</b> &mdash; FIRST Robotics <span class="yr">(2021&ndash;2023)</span>
+     &mdash; led the mechanical subteam, training new members on machines, components, and tools to deliver a
+     competition-ready robot.</p>
+  <p class="oneline"><b>Also:</b> DU Time Attack Motorsport Team <span class="yr">(2025)</span> &mdash; vehicle aero and
+     downforce discussions; Mile High Flight Club <span class="yr">(2022&ndash;2023)</span> &mdash; aviation and
+     aerospace careers; Colorado Young Leaders <span class="yr">(2023)</span> &mdash; community service and
+     environmental sustainability events.</p>
+
+</body>
+</html>
