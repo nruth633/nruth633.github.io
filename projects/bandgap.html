@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+    <title>Measuring the Silicon Bandgap | Nicolas Ruth</title>
+    <meta
+      name="description"
+      content="Extracting the silicon bandgap and Boltzmann's constant from one transistor, a 9 V battery and a multimeter, then combining them into a flat voltage reference."
+    />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Measuring the Silicon Bandgap | Nicolas Ruth" />
+    <meta
+      property="og:description"
+      content="Extracting the silicon bandgap and Boltzmann's constant from one transistor, a 9 V battery and a multimeter, then combining them into a flat voltage reference."
+    />
+    <meta property="og:url" content="https://nruth633.github.io/projects/bandgap.html" />
+    <meta property="og:image" content="https://nruth633.github.io/assets/img/bandgap-extrapolation.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://nruth633.github.io/projects/bandgap.html" />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap nav">
+        <a class="site-name" href="../index.html">Nicolas Ruth</a>
+        <nav aria-label="Main">
+          <ul class="nav-links">
+            <li><a href="../projects.html" aria-current="page">Projects</a></li>
+            <li><a href="../resume.html">Resume</a></li>
+            <li><a href="https://github.com/nruth633" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <article>
+        <header class="detail-header wrap">
+          <a class="back-link" href="../projects.html">← All projects</a>
+          <p class="section-label">Physical Electronics · Measurement · Semiconductor Physics</p>
+          <h1>Measuring the Silicon Bandgap from One Transistor</h1>
+          <ul class="tags">
+            <li class="tag tag-accent">E<sub>g</sub> = 1.31 eV</li>
+            <li class="tag">k = 1.56 × 10⁻²³ J/K</li>
+            <li class="tag">R² = 0.97</li>
+            <li class="tag">−1 to 75 °C</li>
+          </ul>
+        </header>
+
+        <section class="wrap" style="padding-top: var(--space-m)">
+          <div class="prose">
+            <h2 style="font-size: var(--step-2); margin-bottom: var(--space-m)">
+              What I set out to do
+            </h2>
+            <p>
+              Measure two physical constants, the silicon bandgap and Boltzmann's
+              constant, from a single transistor, using a 9 V battery, three NPN
+              transistors, a switch, a few resistors and a multimeter. Then
+              combine the two results into a voltage that barely changes with
+              temperature. That's a bandgap reference, and almost every
+              integrated circuit has one inside it.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Why it works
+            </h2>
+            <p>
+              A forward-biased junction follows V<sub>BE</sub> = (kT/q)·ln(I/I<sub>S</sub>).
+              The saturation current I<sub>S</sub> rises steeply with temperature
+              because it carries the bandgap inside it as exp(−E<sub>g</sub>/kT),
+              and that growth wins out, so V<sub>BE</sub> <em>falls</em> almost
+              linearly as the transistor heats up, by roughly 2 mV per kelvin in
+              silicon. If you extend that line down to 0 K, the thermal terms go
+              to zero and the intercept equals E<sub>g</sub>/q. So a temperature
+              sweep gives you the bandgap.
+            </p>
+            <p>
+              For Boltzmann's constant, run the <em>same</em> transistor at two
+              different currents and subtract. I<sub>S</sub> is different for
+              every transistor, but it's the same in both readings, so it
+              cancels and leaves ΔV<sub>BE</sub> = (kT/q)·ln(I₁/I₂). That
+              difference grows linearly with absolute temperature, and since the
+              current ratio is known, you can solve for k.
+            </p>
+          </div>
+
+          <div class="figure-row">
+            <figure class="figure">
+              <img
+                src="../assets/img/bandgap-schematic.png"
+                alt="Schematic: an all-NPN current mirror acting as a current sink, a current selector switch, and the diode-connected test transistor"
+                width="867" height="508"
+              />
+              <figcaption>
+                Current mirror, current selector, and the device under test.
+              </figcaption>
+            </figure>
+            <figure class="figure figure-tall">
+              <img
+                src="../assets/img/bandgap-waterbath.jpg"
+                alt="A beaker of colored water with a thermometer and the test transistor's leads submerged"
+                width="1500" height="1355"
+              />
+              <figcaption>
+                Only the test transistor goes in the bath. The mirror stays on
+                the bench.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="prose">
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              The measurement
+            </h2>
+            <p>
+              The transistor under test is a diode-connected NPN, with the
+              collector tied to the base. Its current is set by an all-NPN
+              current mirror running as a sink, so the bias holds steady as it
+              heats up. A switch
+              selects either a 10 k or 100 k reference resistor, giving two
+              currents about 10:1 apart for the ΔV<sub>BE</sub> half of the
+              experiment.
+            </p>
+            <p>
+              The mirror stays <em>out</em> of the bath, at room temperature. If
+              the current source heated up along with the transistor, the current
+              would drift with temperature and I'd be measuring two things
+              changing at once. I used eight baths from about −1 °C to 75 °C and
+              gave each one three minutes to settle.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Data I threw out
+            </h2>
+            <p>
+              I threw out every 1 k reading. At that current the 9 V battery
+              sagged badly and the readings drifted while I watched. I also
+              dropped three 10 k points as outliers because they showed a
+              <em>higher</em> voltage at a <em>higher</em> temperature, which can't
+              happen, since V<sub>BE</sub> only falls as the transistor warms
+              up. That
+              left five clean points for the bandgap fit and four paired points
+              for Boltzmann.
+            </p>
+            <p>
+              I didn't want to drop data just because it didn't fit. Both cuts had
+              a physical reason: one set had a known supply problem, and the
+              other broke the rule that V<sub>BE</sub> can only fall with
+              temperature.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Results
+            </h2>
+          </div>
+
+          <div class="figure-row">
+            <figure class="figure">
+              <img
+                src="../assets/img/bandgap-extrapolation.png"
+                alt="Plot of base-emitter voltage against temperature with a linear fit extrapolated back to 0 K, intercepting at 1.31 eV"
+                width="1042" height="816"
+              />
+              <figcaption>
+                V<sub>BE</sub> against temperature, extrapolated to 0 K. Excluded
+                outliers marked separately.
+              </figcaption>
+            </figure>
+            <figure class="figure">
+              <img
+                src="../assets/img/bandgap-boltzmann-fit.png"
+                alt="Plot of delta V-BE against temperature with a linear fit through the origin giving k = 1.56e-23 J/K"
+                width="1010" height="810"
+              />
+              <figcaption>
+                ΔV<sub>BE</sub> against temperature, fitted through the origin.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Measured</th>
+                  <th scope="col">Accepted</th>
+                  <th scope="col">Error</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">V<sub>BE</sub> slope</th>
+                  <td>−2.16 mV/K (R² = 0.97)</td>
+                  <td>≈ −2 mV/K</td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <th scope="row">Silicon bandgap</th>
+                  <td>1.31 eV</td>
+                  <td>1.12 eV at room temperature, ≈1.17 eV at 0 K</td>
+                  <td>+17 % / +12 %</td>
+                </tr>
+                <tr>
+                  <th scope="row">Boltzmann's constant</th>
+                  <td>1.56 × 10⁻²³ J/K</td>
+                  <td>1.38 × 10⁻²³ J/K</td>
+                  <td>+13 %</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="prose">
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Building the reference
+            </h2>
+            <p>
+              The last step adds the falling V<sub>BE</sub> to the rising
+              ΔV<sub>BE</sub>, multiplied by about 9.8 so the two slopes cancel.
+              The sum is flat at roughly 1.31 V across the whole temperature
+              range. That's a bandgap reference, and it comes out at the same
+              1.31 V as the extrapolated intercept, which is a good check that
+              the two measurements agree.
+            </p>
+          </div>
+
+          <figure class="figure">
+            <img
+              src="../assets/img/bandgap-reference.png"
+              alt="Plot showing the falling V-BE and rising weighted delta V-BE summing to a flat 1.31 volt line across temperature"
+              width="1040" height="828"
+            />
+            <figcaption>
+              The two temperature slopes cancel, leaving a flat 1.31 V.
+            </figcaption>
+          </figure>
+
+          <div class="prose">
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Where the error comes from
+            </h2>
+            <p>
+              Both constants came out high, and I think there are two reasons. The
+              real V<sub>BE</sub> curve bends slightly rather than being
+              perfectly straight, so fitting a line and pushing it all the way to
+              0 K overshoots the true intercept. Also, my bath temperatures weren't
+              perfectly settled. One cold point even read below a warmer one, and
+              you can see the scatter in the plot.
+            </p>
+            <p>
+              That scatter hurts Boltzmann more than the bandgap, because
+              ΔV<sub>BE</sub> is a difference of about 60 mV between two much
+              larger readings, so a small error in either one gets magnified. Tighter
+              temperature control and a wider sweep would pull both closer.
+            </p>
+            <p>
+              For a 9 V battery and a handheld multimeter, getting within 13–17%
+              of the textbook values seems reasonable to me.
+            </p>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn btn-ghost" href="../projects.html">← All projects</a>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p style="margin: 0">© <span id="year">2026</span> Nicolas Ruth</p>
+        <p style="margin: 0">
+          <a href="mailto:nruth633@gmail.com">nruth633@gmail.com</a> · <a href="https://github.com/nruth633" rel="noopener">GitHub</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+  </body>
+</html>

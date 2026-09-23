@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+    <title>Projects | Nicolas Ruth</title>
+    <meta
+      name="description"
+      content="PCB, RF and analog, embedded, and power electronics projects by Nicolas Ruth: custom boards, a balloon payload, a rail launcher, and a bandgap measurement."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Projects | Nicolas Ruth" />
+    <meta
+      property="og:description"
+      content="PCB, RF and analog, embedded, and power electronics projects by Nicolas Ruth: custom boards, a balloon payload, a rail launcher, and a bandgap measurement."
+    />
+    <meta property="og:url" content="https://nruth633.github.io/projects.html" />
+    <meta property="og:image" content="https://nruth633.github.io/assets/img/og-card-v3.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Nicolas Ruth, Electrical Engineering, University of Denver" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://nruth633.github.io/projects.html" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap nav">
+        <a class="site-name" href="index.html">Nicolas Ruth</a>
+        <nav aria-label="Main">
+          <ul class="nav-links">
+            <li><a href="projects.html" aria-current="page">Projects</a></li>
+            <li><a href="resume.html">Resume</a></li>
+            <li><a href="https://github.com/nruth633" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="wrap" style="padding-bottom: 0">
+        <h1>Projects</h1>
+        <div class="prose">
+          <p style="color: var(--text-soft)">
+            A mix of class projects and my own. Some were built and some only
+            got as far as a design, and each page says which. Several have
+            design files on GitHub.
+          </p>
+        </div>
+
+        <div class="filter-bar" role="group" aria-label="Filter projects by area">
+          <button class="filter-btn" type="button" data-filter="all" aria-pressed="true">All</button>
+          <button class="filter-btn" type="button" data-filter="power" aria-pressed="false">Power</button>
+          <button class="filter-btn" type="button" data-filter="analog" aria-pressed="false">Analog &amp; RF</button>
+          <button class="filter-btn" type="button" data-filter="pcb" aria-pressed="false">PCB</button>
+          <button class="filter-btn" type="button" data-filter="embedded" aria-pressed="false">Embedded</button>
+        </div>
+        <p id="filter-status" class="visually-hidden" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="wrap" style="padding-top: var(--space-m)">
+        <ul class="project-grid">
+          <!-- ---- Rail launcher ---- -->
+          <li data-tags="power">
+            <article class="card">
+              <div class="card-media">
+                <img src="assets/img/railgun-card.jpg" alt="Six large electrolytic capacitors soldered into a 3D-printed tray" loading="lazy" width="1400" height="788" />
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/rail-launcher.html">Electromagnetic Rail Launcher</a>
+                </h3>
+                <p class="card-desc">
+                  A 13,200 µF capacitor bank charged to 225 V from an 11.1 V
+                  LiPo, about 330 J. Twelve series resistors, picked for their
+                  wattage, keep inrush to 85 mA.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">330 J</li>
+                  <li class="tag">Power electronics</li>
+                  <li class="tag">High voltage</li>
+                </ul>
+              </div>
+            </article>
+          </li>
+
+          <!-- ---- Bandgap ---- -->
+          <li data-tags="analog">
+            <article class="card">
+              <div class="card-media card-media--fit">
+                <img src="assets/img/bandgap-extrapolation.png" alt="Plot extrapolating base-emitter voltage to 0 K" loading="lazy" width="1042" height="816" />
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/bandgap.html">Measuring the Silicon Bandgap</a>
+                </h3>
+                <p class="card-desc">
+                  Measured the silicon bandgap (1.31 eV) and Boltzmann's constant
+                  (1.56 × 10⁻²³ J/K) with one transistor, a 9 V battery and a
+                  multimeter, then used them to build a flat voltage reference.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">Semiconductor physics</li>
+                  <li class="tag">Measurement</li>
+                  <li class="tag">R² = 0.97</li>
+                </ul>
+              </div>
+            </article>
+          </li>
+
+          <!-- ---- DemoSat ---- -->
+          <li data-tags="pcb embedded">
+            <article class="card">
+              <div class="card-media">
+                <img src="assets/img/demosat-render.jpg" alt="3D render of the DemoSat payload shield" loading="lazy" width="1500" height="1029" />
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/demosat.html">DemoSat Balloon Payload</a>
+                </h3>
+                <p class="card-desc">
+                  Redesigned a high-altitude balloon payload after two of its four
+                  sensors were discontinued. The design comes to 120 g and
+                  $115, under the 200 g and $147 limits. Not built.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">KiCad</li>
+                  <li class="tag">Sensors</li>
+                  <li class="tag">Design only</li>
+                </ul>
+              </div>
+            </article>
+          </li>
+
+          <!-- ---- Analog synth ---- -->
+          <li data-tags="analog">
+            <article class="card">
+              <div class="card-media card-media--fit">
+                <img src="assets/img/synth-schematic.png" alt="Schematic of the analog synthesizer: two astable stages, pitch control, and an LM386 output" loading="lazy" width="1500" height="843" />
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/analog-synth.html">Transistor Analog Synthesizer</a>
+                </h3>
+                <p class="card-desc">
+                  An all-analog instrument with no microcontroller: an astable
+                  oscillator, pitch control by light or voltage, a slow
+                  modulator and an LM386 output. I checked every stage on the
+                  scope.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">Discrete analog</li>
+                  <li class="tag">Audio</li>
+                  <li class="tag">LM386</li>
+                </ul>
+              </div>
+            </article>
+          </li>
+
+          <!-- ---- FM receiver ---- -->
+          <li data-tags="analog">
+            <article class="card">
+              <div class="card-media">
+                <img src="assets/img/fm-receiver-card.jpg" alt="FM receiver on a breadboard with an Arduino Uno supplying 5 V and a speaker alongside" loading="lazy" width="1400" height="788" />
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/fm-receiver.html">FM Radio Receiver</a>
+                </h3>
+                <p class="card-desc">
+                  A receiver built from discrete parts on a breadboard, with a
+                  hand-wound coil, a transistor RF stage and an LM386 driving a
+                  speaker. It picked up one station and not much else, so most
+                  of the write-up is about why.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">RF</li>
+                  <li class="tag">Analog</li>
+                  <li class="tag">Discrete</li>
+                </ul>
+              </div>
+            </article>
+          </li>
+
+          <!-- ---- EMP demonstrator ---- -->
+          <li data-tags="power">
+            <article class="card">
+              <div class="card-media">
+                <img src="assets/img/emp-card.jpg" alt="Hand-wound copper coil on a tube with nail electrodes at the spark gap" loading="lazy" width="1400" height="788" />
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/emp-demonstrator.html">Electromagnetic Pulse Demonstrator</a>
+                </h3>
+                <p class="card-desc">
+                  A capacitor-discharge EMP generator: a 9 V high-voltage step-up
+                  converter charges a 20 kV ceramic capacitor bank, discharged
+                  through a hand-wound coil to produce a pulsed magnetic field.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">High voltage</li>
+                  <li class="tag">20 kV</li>
+                  <li class="tag">Magnetics</li>
+                </ul>
+              </div>
+            </article>
+          </li>
+
+          <!-- ---- Battery tester ---- -->
+          <li data-tags="pcb">
+            <article class="card">
+              <div class="card-media">
+                <img src="assets/img/battery-tester-card.png" alt="Detail of the battery tester schematic: LM324 comparators driving transistors and an LED column" loading="lazy" width="1400" height="788" />
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/battery-tester.html">Battery Tester Board</a>
+                </h3>
+                <p class="card-desc">
+                  Eight LM324 comparators against a resistor ladder, lighting an
+                  eight-LED bar for battery voltage measured under a 20 Ω load.
+                  The schematic is done, but the term ended before I got to layout.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">KiCad</li>
+                  <li class="tag">LM324</li>
+                  <li class="tag">Schematic only</li>
+                </ul>
+              </div>
+            </article>
+          </li>
+
+          <!-- ---- I/O shield ---- -->
+          <li data-tags="pcb embedded">
+            <article class="card">
+              <div class="card-media">
+                <img src="assets/img/shield-3d.jpg" alt="KiCad 3D render of the Uno shield with OLED, IMU, trim pots and audio jacks" loading="lazy" width="1500" height="963" />
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/io-shield.html">Arduino Uno I/O Shield</a>
+                </h3>
+                <p class="card-desc">
+                  An Uno shield with a 10-bit R-2R ladder DAC, buffered out to a
+                  3.5 mm jack, so the Uno can output audio. It also has headers
+                  for an MPU6050 and an SSD1306 OLED, plus pots and buttons.
+                  Fabricated and hand-soldered.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">R-2R DAC</li>
+                  <li class="tag">KiCad</li>
+                  <li class="tag">MPU6050</li>
+                  <li class="tag">Hand-soldered</li>
+                </ul>
+                <div class="card-links">
+                  <a href="https://github.com/nruth633/arduino-shield-pcb" rel="noopener">Source on GitHub</a>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <!-- ---- 3-wheel robot ---- -->
+          <li data-tags="embedded pcb">
+            <article class="card">
+              <div class="card-media">
+                <img src="assets/img/robot-card.jpg" alt="The control board with all SMD components hand-soldered, including the STM32 in a 64-pin package" loading="lazy" width="1400" height="788" />
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/balancing-robot.html">3-Wheel Robot</a>
+                </h3>
+                <p class="card-desc">
+                  An STM32F401 control board I designed and hand-soldered,
+                  including the 64-pin QFP. You drive it from a phone browser
+                  over the ESP8266's own WiFi, and it streams IMU data back.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">Hand-soldered SMD</li>
+                  <li class="tag">STM32</li>
+                  <li class="tag">KiCad</li>
+                </ul>
+                <div class="card-links">
+                  <a href="https://github.com/nruth633/3-wheel-balancing-robot" rel="noopener">Source on GitHub</a>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <!-- ---- IEEE board ---- -->
+          <li data-tags="pcb">
+            <article class="card">
+              <div class="card-media">
+                <img src="assets/img/ieee-cube-card.png" alt="Detail of the IEEE cube board layout: shift registers, driver array, and output header" loading="lazy" width="1400" height="788" />
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/ieee-cube.html">IEEE LED Matrix Cube Board</a>
+                </h3>
+                <p class="card-desc">
+                  One slice of the DU IEEE chapter's LED cube. Three daisy-chained
+                  74HCT595 shift registers drive 24 transistor cathode sinks, so
+                  eight RGB columns run off a five-wire bus.
+                </p>
+                <ul class="tags">
+                  <li class="tag tag-accent">74HCT595</li>
+                  <li class="tag">KiCad</li>
+                  <li class="tag">IEEE</li>
+                </ul>
+                <div class="card-links">
+                  <a href="https://github.com/nruth633/ieee-pcb" rel="noopener">Source on GitHub</a>
+                </div>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p style="margin: 0">© <span id="year">2026</span> Nicolas Ruth</p>
+        <p style="margin: 0">
+          <a href="mailto:nruth633@gmail.com">nruth633@gmail.com</a> · <a href="https://github.com/nruth633" rel="noopener">GitHub</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

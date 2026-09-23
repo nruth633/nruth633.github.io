@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+    <title>Electromagnetic Pulse Demonstrator | Nicolas Ruth</title>
+    <meta
+      name="description"
+      content="A handheld EMP demonstrator: 9 V stepped up to charge four 20 kV ceramic capacitors, discharged through a hand-wound coil on a 3D-printed former."
+    />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Electromagnetic Pulse Demonstrator | Nicolas Ruth" />
+    <meta
+      property="og:description"
+      content="A handheld EMP demonstrator: 9 V stepped up to charge four 20 kV ceramic capacitors, discharged through a hand-wound coil on a 3D-printed former."
+    />
+    <meta property="og:url" content="https://nruth633.github.io/projects/emp-demonstrator.html" />
+    <meta property="og:image" content="https://nruth633.github.io/assets/img/emp-coil.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://nruth633.github.io/projects/emp-demonstrator.html" />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap nav">
+        <a class="site-name" href="../index.html">Nicolas Ruth</a>
+        <nav aria-label="Main">
+          <ul class="nav-links">
+            <li><a href="../projects.html" aria-current="page">Projects</a></li>
+            <li><a href="../resume.html">Resume</a></li>
+            <li><a href="https://github.com/nruth633" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <article>
+        <header class="detail-header wrap">
+          <a class="back-link" href="../projects.html">← All projects</a>
+          <p class="section-label">High Voltage · Magnetics · Team Project</p>
+          <h1>Electromagnetic Pulse Demonstrator</h1>
+          <ul class="tags">
+            <li class="tag tag-accent">20 kV caps</li>
+            <li class="tag">9 V source</li>
+            <li class="tag">Hand-wound coil</li>
+            <li class="tag">3D printed</li>
+          </ul>
+        </header>
+
+        <section class="wrap" style="padding-top: var(--space-m)">
+          <div class="figure-row">
+            <figure class="figure figure-tall">
+              <img
+                src="../assets/img/emp-coil.jpg"
+                alt="Close-up of the coil: enameled copper wire wound onto a black 3D-printed tube, with two nails protruding from the end as electrodes, fixed with hot glue"
+                width="1400" height="2245"
+              />
+              <figcaption>
+                The coil: enameled copper wound on the printed tube, with two nails
+                as electrodes.
+              </figcaption>
+            </figure>
+            <figure class="figure figure-tall">
+              <img
+                src="../assets/img/emp-wire.jpg"
+                alt="A spool of red enameled copper wire on a desk next to the partly assembled device"
+                width="1400" height="1867"
+              />
+              <figcaption>
+                The enameled copper wire. We wound every turn by hand.
+              </figcaption>
+            </figure>
+          </div>
+
+          <dl class="spec-list">
+            <dt>Source</dt>
+            <dd>Single 9 V battery</dd>
+            <dt>Converter</dt>
+            <dd>DC step-up module</dd>
+            <dt>Storage</dt>
+            <dd>Four 20 kV ceramic capacitors</dd>
+            <dt>Coil</dt>
+            <dd>Hand-wound enameled copper on a 3D-printed tube</dd>
+            <dt>Electrodes</dt>
+            <dd>Nails, set in hot glue</dd>
+            <dt>Team</dt>
+            <dd>With Angel Avila Ponce and Ali Behbehani, Nov 2025</dd>
+          </dl>
+
+          <div class="prose">
+            <h2 style="font-size: var(--step-2); margin-bottom: var(--space-m)">
+              What it is
+            </h2>
+            <p>
+              A capacitor-discharge device that makes a short, strong burst of
+              electromagnetic energy, the same thing a lightning strike does on a
+              much bigger scale. A pulse like this induces sudden voltage and
+              current spikes in nearby conductors, which is how an EMP disrupts
+              electronics.
+            </p>
+            <p>
+              The requirements were to make the pulse from a small battery, use 3D
+              printing, keep the cost down, and make it safe to hold.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              The 250,000 V claim
+            </h2>
+            <p>
+              The step-up converter we used was advertised at 250,000 V. We put it
+              in the parts list with a note saying that was "hard to believe."
+              A module that small and cheap can't really produce a quarter of a
+              million volts, and if we had believed it, we would have sized
+              everything else around a number that isn't real.
+            </p>
+            <p>
+              We chose 20 kV capacitors because that was a limit we could reason
+              about, not because the converter's advertised number said we could
+              go higher.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              What was hard
+            </h2>
+            <p>
+              Four things gave us trouble. Parts were often at risk of blowing,
+              so we charged it carefully. Deciding how many capacitors to use was
+              a tradeoff: more stored energy, but more stress on the converter and
+              more danger to whoever is holding it. The tube dimensions mattered
+              too, because the coil's shape sets the field you get.
+            </p>
+            <p>
+              And winding the coil by hand took a very long time. The turns go on
+              one at a time, and the count and spacing decide whether it works at
+              all.
+            </p>
+          </div>
+
+          <figure class="figure figure-tall">
+            <img
+              src="../assets/img/emp-assembly.jpg"
+              alt="Soldering the circuit under a magnifier with helping-hands clips, blue indicator LEDs lit"
+              width="1400" height="1332"
+            />
+            <figcaption>Assembly under the magnifier.</figcaption>
+          </figure>
+
+          <div class="prose">
+            <div class="callout">
+              <p>
+                <strong>Safety.</strong> "Safe to hold" was one of the four
+                requirements, which is why it has a low supply voltage, a fully
+                enclosed printed housing, and a set charge and discharge
+                sequence. A charged high-voltage capacitor stays dangerous after
+                the supply is removed, and we handled it that way.
+              </p>
+            </div>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn btn-ghost" href="../projects.html">← All projects</a>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p style="margin: 0">© <span id="year">2026</span> Nicolas Ruth</p>
+        <p style="margin: 0">
+          <a href="mailto:nruth633@gmail.com">nruth633@gmail.com</a> · <a href="https://github.com/nruth633" rel="noopener">GitHub</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+    <title>DemoSat Balloon Payload | Nicolas Ruth</title>
+    <meta
+      name="description"
+      content="Redesigning a high-altitude balloon payload around obsolete sensors: 120 g and $115 against a 200 g / $147 budget, at 259 mW."
+    />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="DemoSat Balloon Payload | Nicolas Ruth" />
+    <meta
+      property="og:description"
+      content="Redesigning a high-altitude balloon payload around obsolete sensors: 120 g and $115 against a 200 g / $147 budget, at 259 mW."
+    />
+    <meta property="og:url" content="https://nruth633.github.io/projects/demosat.html" />
+    <meta property="og:image" content="https://nruth633.github.io/assets/img/demosat-render.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://nruth633.github.io/projects/demosat.html" />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap nav">
+        <a class="site-name" href="../index.html">Nicolas Ruth</a>
+        <nav aria-label="Main">
+          <ul class="nav-links">
+            <li><a href="../projects.html" aria-current="page">Projects</a></li>
+            <li><a href="../resume.html">Resume</a></li>
+            <li><a href="https://github.com/nruth633" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <article>
+        <header class="detail-header wrap">
+          <a class="back-link" href="../projects.html">← All projects</a>
+          <p class="section-label">PCB Design · Sensors · Design only</p>
+          <h1>DemoSat High-Altitude Balloon Payload</h1>
+          <ul class="tags">
+            <li class="tag tag-accent">KiCad</li>
+            <li class="tag">120 g</li>
+            <li class="tag">$115</li>
+            <li class="tag">259 mW</li>
+            <li class="tag">Design only</li>
+          </ul>
+        </header>
+
+        <section class="wrap" style="padding-top: var(--space-m)">
+          <figure class="figure">
+            <img
+              src="../assets/img/demosat-render.jpg"
+              alt="3D render of the assembled payload shield showing the DPS310 pressure sensor, display, and status LEDs"
+              width="1500" height="1029"
+            />
+            <figcaption>The payload as an Arduino Uno shield.</figcaption>
+          </figure>
+
+          <div class="prose">
+            <h2 style="font-size: var(--step-2); margin-bottom: var(--space-m)">
+              Background
+            </h2>
+            <p>
+              This started from an existing balloon payload, and the task was to
+              redesign it. When I checked whether the original could still be
+              built, two of its four sensors were <strong>out of
+              production</strong>. You can't buy the humidity or pressure parts
+              anymore, so the original design can't be built again, whether or
+              not it worked before.
+            </p>
+            <p>
+              So most of the project was picking replacement parts while staying
+              under the mass, cost and power limits.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Constraints
+            </h2>
+          </div>
+
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Requirement</th>
+                  <th scope="col">Budget</th>
+                  <th scope="col">Design figure</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Mass</th>
+                  <td>under 200 g</td>
+                  <td>~120 g</td>
+                </tr>
+                <tr>
+                  <th scope="row">Cost</th>
+                  <td>under $147</td>
+                  <td>~$115</td>
+                </tr>
+                <tr>
+                  <th scope="row">Power</th>
+                  <td>less than the original (~90 mA)</td>
+                  <td>259 mW typical, 459 mW with all LEDs on</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="prose">
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Sensor selection
+            </h2>
+            <p>
+              Each replacement had to be better than the part it replaced, not
+              just available. I compared resolution, accuracy and power draw, and
+              looked for parts that run at 3.3 V so the whole board could share
+              one supply voltage.
+            </p>
+          </div>
+
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Measures</th>
+                  <th scope="col">Original</th>
+                  <th scope="col">Chosen</th>
+                  <th scope="col">Why</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Acceleration</th>
+                  <td>ADXL335</td>
+                  <td>ADXL345</td>
+                  <td>
+                    I²C instead of analog, 13-bit, range to ±16 g rather than
+                    ±3 g, ~140 µA at 3.3 V
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Pressure</th>
+                  <td>HSCDANN015PAAA5</td>
+                  <td>DPS310</td>
+                  <td>
+                    300–1200 hPa, runs on 1.7–3.6 V instead of 5 V, and only
+                    ~1.7 µA at 3.3 V
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Humidity</th>
+                  <td>HIH-4030</td>
+                  <td>HIH-9120</td>
+                  <td>
+                    I²C, ±1.7 % accuracy against ±3.5 %, physically much smaller
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Temperature</th>
+                  <td>TMP36</td>
+                  <td>DS18B20</td>
+                  <td>
+                    Digital rather than analog, 9–12 bit instead of ADC-limited
+                    to 10, ±0.5 °C against ±2 °C, waterproof package suits
+                    external mounting
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="prose">
+            <p>
+              Three of the four use I²C, so they share one two-wire bus. The
+              DS18B20 is 1-Wire instead. It uses an extra pin, but it comes as a
+              sealed probe that can sit outside the enclosure and measure the
+              outside air instead of the inside of a warm box.
+            </p>
+            <p>
+              Using digital sensors also gets around the Arduino's 10-bit ADC,
+              which limited the accuracy of the original design no matter how
+              good its analog sensors were.
+            </p>
+          </div>
+
+          <div class="figure-row">
+            <figure class="figure">
+              <img
+                src="../assets/img/demosat-pcb-front.png"
+                alt="KiCad render of the payload board, front copper layer"
+                width="562" height="439"
+              />
+              <figcaption>Board front.</figcaption>
+            </figure>
+            <figure class="figure">
+              <img
+                src="../assets/img/demosat-pcb-back.png"
+                alt="KiCad render of the payload board, back copper layer"
+                width="557" height="439"
+              />
+              <figcaption>Board back.</figcaption>
+            </figure>
+          </div>
+
+          <div class="prose">
+            <p>
+              The layout is a 2-layer board, 69.5 × 54.0 mm (2.74 × 2.13 in). OSH
+              Park quoted $29.05 for three.
+            </p>
+          </div>
+
+          <div class="figure-row">
+            <figure class="figure">
+              <img
+                src="../assets/img/demosat-schematic.png"
+                alt="KiCad schematic of the payload, showing the sensor blocks and Arduino shield headers"
+                width="1500" height="772"
+              />
+              <figcaption>Schematic.</figcaption>
+            </figure>
+            <figure class="figure">
+              <img
+                src="../assets/img/demosat-block-diagram.jpg"
+                alt="Hand-drawn block diagram: accelerometer, humidity, pressure and internal and external temperature feeding the Uno over I2C, out to a datalogger and four LEDs"
+                width="1486" height="1242"
+              />
+              <figcaption>System block diagram from the design phase.</figcaption>
+            </figure>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn btn-ghost" href="../projects.html">← All projects</a>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p style="margin: 0">© <span id="year">2026</span> Nicolas Ruth</p>
+        <p style="margin: 0">
+          <a href="mailto:nruth633@gmail.com">nruth633@gmail.com</a> · <a href="https://github.com/nruth633" rel="noopener">GitHub</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+  </body>
+</html>

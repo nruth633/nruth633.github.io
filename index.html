@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+    <title>Nicolas Ruth, Electrical Engineering</title>
+    <meta
+      name="description"
+      content="Nicolas Ruth, B.S. Electrical Engineering at the University of Denver, expected 2027. PCB design and assembly, RF, embedded systems, and power electronics."
+    />
+    <meta name="author" content="Nicolas Ruth" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Nicolas Ruth, Electrical Engineering" />
+    <meta
+      property="og:description"
+      content="PCB design and assembly, RF, embedded systems, and power electronics."
+    />
+    <meta property="og:url" content="https://nruth633.github.io/" />
+    <meta property="og:image" content="https://nruth633.github.io/assets/img/og-card-v3.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Nicolas Ruth, Electrical Engineering, University of Denver" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://nruth633.github.io/" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap nav">
+        <a class="site-name" href="index.html">Nicolas Ruth</a>
+        <nav aria-label="Main">
+          <ul class="nav-links">
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="resume.html">Resume</a></li>
+            <li><a href="https://github.com/nruth633" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero wrap">
+        <h1>Nicolas Ruth</h1>
+        <p class="hero-lede">
+          I'm an electrical engineering student at the University of Denver, and
+          I expect to graduate in May 2027 with a specialization in robotics and
+          a minor in mathematics. This past summer I was an RF engineering intern
+          at Arsenal Nexus, where I designed and tested antennas. Most of what I
+          work on is PCBs, RF, embedded systems, and power electronics.
+        </p>
+        <p class="hero-lede">
+          Below are a few projects, or you can see
+          <a href="projects.html">all of them</a>, my
+          <a href="resume.html">resume</a>, or my
+          <a href="https://github.com/nruth633" rel="noopener">GitHub</a>.
+        </p>
+      </section>
+
+      <section class="wrap" aria-labelledby="featured-heading">
+        <h2 id="featured-heading">Projects</h2>
+
+        <ul class="project-grid">
+          <li>
+            <article class="card">
+              <div class="card-media">
+                <img src="assets/img/railgun-card.jpg" alt="Six large electrolytic capacitors soldered into a 3D-printed tray" loading="lazy" width="1400" height="788" />
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/rail-launcher.html">Electromagnetic Rail Launcher</a>
+                </h3>
+                <p class="card-desc">
+                  A 13,200 µF capacitor bank charged to 225 V from an 11.1 V
+                  LiPo, about 330 J. Twelve series resistors keep inrush to
+                  85 mA. I picked them for their wattage rather than their
+                  resistance. A 600 V diode blocks current from flowing back.
+                </p>
+                <ul class="tags">
+                  <li class="tag">Power electronics</li>
+                  <li class="tag">High voltage</li>
+                </ul>
+              </div>
+            </article>
+          </li>
+
+          <li>
+            <article class="card">
+              <div class="card-media card-media--fit">
+                <img src="assets/img/bandgap-extrapolation.png" alt="Plot of base-emitter voltage against temperature extrapolated back to 0 K" loading="lazy" width="1042" height="816" />
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/bandgap.html">Measuring the Silicon Bandgap</a>
+                </h3>
+                <p class="card-desc">
+                  I measured the silicon bandgap and Boltzmann's constant with
+                  one transistor, a 9 V battery and a multimeter, then used
+                  them to build a flat 1.31 V reference. My numbers were
+                  13–17% off the textbook values, and the page goes through
+                  why.
+                </p>
+                <ul class="tags">
+                  <li class="tag">Semiconductor physics</li>
+                  <li class="tag">Measurement</li>
+                </ul>
+              </div>
+            </article>
+          </li>
+
+          <li>
+            <article class="card">
+              <div class="card-media">
+                <img src="assets/img/demosat-render.jpg" alt="3D render of the DemoSat balloon payload shield" loading="lazy" width="1500" height="1029" />
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="projects/demosat.html">DemoSat Balloon Payload</a>
+                </h3>
+                <p class="card-desc">
+                  A redesign of a high-altitude balloon payload after two of
+                  its four sensors were discontinued. The new design comes to
+                  120 g and $115, under the 200 g and $147 limits. It was
+                  designed but never built.
+                </p>
+                <ul class="tags">
+                  <li class="tag">KiCad</li>
+                  <li class="tag">Sensors</li>
+                  <li class="tag">Design only</li>
+                </ul>
+              </div>
+            </article>
+          </li>
+        </ul>
+
+        <p style="margin-top: var(--space-m)">
+          <a href="projects.html">All ten projects</a>
+        </p>
+      </section>
+
+      <section class="wrap" aria-labelledby="skills-heading">
+        <h2 id="skills-heading">Skills</h2>
+
+        <dl class="skill-list">
+          <dt>PCB design</dt>
+          <dd>
+            KiCad schematics and layout, BOMs and gerbers. I hand-solder my own
+            SMD boards, down to a 64-pin QFP.
+          </dd>
+
+          <dt>RF and analog</dt>
+          <dd>
+            Vivaldi antenna design in MATLAB. S-parameters and amplitude sweeps
+            on a Rigol RSA5065N real-time spectrum analyzer, turned into azimuth
+            radiation patterns. Discrete analog circuits.
+          </dd>
+
+          <dt>Embedded</dt>
+          <dd>C on STM32, Arduino and Teensy. I²C and SPI sensors, data logging, board bring-up.</dd>
+
+          <dt>Power electronics</dt>
+          <dd>Boost converters, high-voltage capacitor banks, inrush limiting, protection.</dd>
+
+          <dt>Simulation</dt>
+          <dd>LTspice and MATLAB, checked against measurements on a scope and multimeter.</dd>
+
+          <dt>Mechanical</dt>
+          <dd>SolidWorks and Onshape, 3D printing, hand and power tools.</dd>
+        </dl>
+      </section>
+
+      <section class="wrap" aria-labelledby="contact-heading">
+        <h2 id="contact-heading">Contact</h2>
+        <div class="prose">
+          <p>
+            I'm looking for full-time engineering jobs as well as internships and
+            co-ops, in PCB design, RF, embedded systems, or power electronics.
+            Email is the best way to reach me:
+            <a href="mailto:nruth633@gmail.com">nruth633@gmail.com</a>.
+          </p>
+          <p>
+            Design files for several of these boards are on
+            <a href="https://github.com/nruth633" rel="noopener">GitHub</a>, and
+            there's a <a href="assets/resume.pdf">PDF of my resume</a>.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p style="margin: 0">© <span id="year">2026</span> Nicolas Ruth</p>
+        <p style="margin: 0">
+          <a href="mailto:nruth633@gmail.com">nruth633@gmail.com</a> · <a href="https://github.com/nruth633" rel="noopener">GitHub</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

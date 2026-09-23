@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+    <title>Battery Tester Board | Nicolas Ruth</title>
+    <meta
+      name="description"
+      content="A battery tester designed in KiCad: a 20 Ω test load, a 1 kΩ reference ladder, and eight LM324 comparators driving an LED bar graph. Schematic complete, never laid out."
+    />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Battery Tester Board | Nicolas Ruth" />
+    <meta
+      property="og:description"
+      content="Eight LM324 comparators against a resistor ladder, reading battery voltage under a 20 Ω load. Schematic complete; it ran out of term before layout."
+    />
+    <meta property="og:url" content="https://nruth633.github.io/projects/battery-tester.html" />
+    <meta property="og:image" content="https://nruth633.github.io/assets/img/battery-tester-schematic.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://nruth633.github.io/projects/battery-tester.html" />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap nav">
+        <a class="site-name" href="../index.html">Nicolas Ruth</a>
+        <nav aria-label="Main">
+          <ul class="nav-links">
+            <li><a href="../projects.html" aria-current="page">Projects</a></li>
+            <li><a href="../resume.html">Resume</a></li>
+            <li><a href="https://github.com/nruth633" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <article>
+        <header class="detail-header wrap">
+          <a class="back-link" href="../projects.html">← All projects</a>
+          <p class="section-label">Analog Design · Unfinished</p>
+          <h1>Battery Tester Board</h1>
+          <ul class="tags">
+            <li class="tag tag-accent">LM324</li>
+            <li class="tag">KiCad</li>
+            <li class="tag">8-step bar graph</li>
+            <li class="tag">Schematic only</li>
+          </ul>
+        </header>
+
+        <section class="wrap" style="padding-top: var(--space-m)">
+          <figure class="figure">
+            <img src="../assets/img/battery-tester-schematic.png" alt="KiCad schematic: a 9 V supply, a resistor ladder, two LM324 quad op-amps as eight comparators, each driving an NPN transistor and an LED" width="1500" height="1010" />
+            <figcaption>
+              The complete schematic: the reference ladder down the middle, eight
+              comparators, and eight transistor-driven LEDs down the right.
+            </figcaption>
+          </figure>
+
+          <div class="callout">
+            <p>
+              <strong>This one stopped at the schematic.</strong> The schematic is
+              done, but the term ended before layout, so there's no board and
+              nothing has been measured. I'm including it for the circuit
+              design, not because it's been shown to work.
+            </p>
+          </div>
+
+          <dl class="spec-list">
+            <dt>Readout</dt>
+            <dd>Eight LEDs as a bar graph</dd>
+            <dt>Comparators</dt>
+            <dd>Two LM324 quad op-amps, eight channels</dd>
+            <dt>Reference</dt>
+            <dd>1 kΩ ladder with an 8.2 kΩ tail, 5 kΩ trimmer for calibration</dd>
+            <dt>Test load</dt>
+            <dd>20 Ω through a 1N4007, across the cell under test</dd>
+            <dt>Drive</dt>
+            <dd>NPN per channel, 1 kΩ base, 330 Ω LED ballast</dd>
+            <dt>Supply</dt>
+            <dd>9 V, reverse-protected, with a power-on indicator</dd>
+            <dt>Tool</dt>
+            <dd>KiCad</dd>
+          </dl>
+
+          <div class="prose">
+            <h2 style="font-size: var(--step-2); margin-bottom: var(--space-m)">
+              Why it tests under load
+            </h2>
+            <p>
+              A multimeter across a worn-out AA will often read close to 1.5 V,
+              but the same battery dies right away in a device. The open-circuit
+              voltage says very little about whether a battery can still supply
+              current. What matters is what the voltage does under load.
+            </p>
+            <p>
+              So the circuit puts a 20 Ω resistor across the battery, through a
+              1N4007, as a load. Everything after that measures the battery while
+              it's supplying current, and a battery with high internal resistance
+              sags in a way it wouldn't with nothing connected.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              The comparators
+            </h2>
+            <p>
+              The readout is a bar graph of eight LEDs, each lighting once the
+              battery passes a slightly higher threshold. That takes eight
+              comparators, and two LM324 quad op-amps give exactly eight.
+            </p>
+            <p>
+              Each comparator's reference comes from a single chain of 1 kΩ
+              resistors with an 8.2 kΩ tail, tapped at eight points. Since every
+              threshold comes from the same chain, they can't drift relative to
+              each other. A 5 kΩ trimmer at the top of the chain shifts all eight
+              together, so the scale can be calibrated for a particular battery
+              type.
+            </p>
+            <p>
+              An LM324 output can't drive an LED very brightly, so each channel
+              drives an NPN transistor through a 1 kΩ base resistor, with 330 Ω
+              setting the LED current. The 9 V supply has a series 1N4007 to
+              protect against connecting it backwards, and its own power
+              LED.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Where it stopped
+            </h2>
+            <p>
+              The schematic is finished, but the board isn't. The term ended
+              before layout, fabrication or any measurements, so the threshold
+              spacing hasn't been checked against real batteries and I haven't
+              confirmed 20 Ω is the right load.
+            </p>
+            <p>
+              I left it on the site because the design is still worth showing,
+              as long as it's clear it was never built.
+            </p>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn btn-ghost" href="../projects.html">← All projects</a>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p style="margin: 0">© <span id="year">2026</span> Nicolas Ruth</p>
+        <p style="margin: 0">
+          <a href="mailto:nruth633@gmail.com">nruth633@gmail.com</a> · <a href="https://github.com/nruth633" rel="noopener">GitHub</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+  </body>
+</html>

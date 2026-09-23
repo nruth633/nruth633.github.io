@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+    <title>3-Wheel Robot | Nicolas Ruth</title>
+    <meta
+      name="description"
+      content="A three-wheel robot on a hand-soldered STM32F401 board I designed, driven from any phone browser over the ESP8266's own WiFi access point, with live IMU telemetry."
+    />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="3-Wheel Robot | Nicolas Ruth" />
+    <meta
+      property="og:description"
+      content="Drives from any phone browser over the ESP8266's own WiFi access point, with roll and pitch from the IMU streaming back live onto the control page."
+    />
+    <meta property="og:url" content="https://nruth633.github.io/projects/balancing-robot.html" />
+    <meta property="og:image" content="https://nruth633.github.io/assets/img/robot-top.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://nruth633.github.io/projects/balancing-robot.html" />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap nav">
+        <a class="site-name" href="../index.html">Nicolas Ruth</a>
+        <nav aria-label="Main">
+          <ul class="nav-links">
+            <li><a href="../projects.html" aria-current="page">Projects</a></li>
+            <li><a href="../resume.html">Resume</a></li>
+            <li><a href="https://github.com/nruth633" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <article>
+        <header class="detail-header wrap">
+          <a class="back-link" href="../projects.html">← All projects</a>
+          <p class="section-label">Embedded · PCB · Wireless</p>
+          <h1>3-Wheel Robot</h1>
+          <ul class="tags">
+            <li class="tag tag-accent">STM32F401RBT6</li>
+            <li class="tag">MPU6050</li>
+            <li class="tag">KiCad</li>
+            <li class="tag">ESP8266</li>
+            <li class="tag">WebSockets</li>
+          </ul>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://github.com/nruth633/3-wheel-balancing-robot" rel="noopener">
+              View source
+            </a>
+          </div>
+        </header>
+
+        <section class="wrap" style="padding-top: var(--space-m)">
+          <figure class="figure">
+            <img src="../assets/img/robot-top.jpg" alt="The assembled robot from above: acrylic chassis, control board, two geared motors with yellow wheels" width="1500" height="1125" />
+            <figcaption>
+              The assembled robot. The control board is on the upper deck, with
+              the motors and wheels below and the ESP8266 next to the board.
+            </figcaption>
+          </figure>
+
+          <dl class="spec-list">
+            <dt>MCU</dt>
+            <dd>STM32F401RBT6 (ARM Cortex-M4)</dd>
+            <dt>IMU</dt>
+            <dd>MPU6050 3-axis gyro and 3-axis accelerometer, over I²C</dd>
+            <dt>Toolchain</dt>
+            <dd>STM32CubeIDE, HAL drivers, C</dd>
+            <dt>Control</dt>
+            <dd>
+              ESP8266 access point serving its own web page, driven from a phone
+              browser over WebSockets
+            </dd>
+            <dt>Board</dt>
+            <dd>Custom control PCB designed in KiCad</dd>
+          </dl>
+
+          <div class="prose">
+            <h2 style="font-size: var(--step-2); margin-bottom: var(--space-m)">
+              What it is
+            </h2>
+            <p>
+              A three-wheel robot running on a control board I designed, laid
+              out, and hand-soldered. You connect a phone to the robot's own WiFi
+              network, open its address in a browser, and get a control pad for
+              driving forward, backward and turning. Roll and pitch from the IMU
+              show up live on the same page.
+            </p>
+            <p>
+              I did all of it: the schematic and layout, the assembly, the STM32
+              firmware, and the control page. It went through several revisions,
+              and I kept each one in the repository instead of overwriting it, so
+              you can see how it got from the first two-wheel board to the
+              current one.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              How it's put together
+            </h2>
+          </div>
+
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Module</th>
+                  <th scope="col">What it does</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">firmware_main</th>
+                  <td>
+                    The first board, a two-wheel version: KiCad files, gerbers, an
+                    interactive BOM, a CAD model of the assembly, and build
+                    photos. No firmware, despite the folder name.
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">firmware_v2</th>
+                  <td>
+                    KiCad project for a later board revision
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">balance_noEncoder</th>
+                  <td>
+                    The STM32 firmware: MPU6050 through a complementary filter,
+                    TB6612 motor control, and the UART link to the ESP8266
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">remote_esp8266</th>
+                  <td>
+                    ESP8266 access point, web server, and the WebSocket control
+                    page for the phone
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">pcb</th>
+                  <td>
+                    KiCad project for the control board: schematic and layout
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="prose">
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Driving it from a phone
+            </h2>
+            <p>
+              There's no pairing and no app. The ESP8266 runs its own access
+              point, so the robot is its own WiFi network. You join it, open the
+              ESP's address, and it serves the control page itself. Any phone
+              with a browser works, and no internet connection is needed.
+            </p>
+            <p>
+              Commands go over a WebSocket instead of separate HTTP requests. With
+              one request per button press, every command waits on a round trip
+              and the robot lags behind your input. An open socket sends small
+              JSON messages both ways continuously. The ESP8266 passes each command
+              to the STM32 over UART. The data coming back is also useful for
+              debugging, since I can watch roll and pitch while the robot is
+              moving instead of reading them over a serial cable afterward.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              The board
+            </h2>
+            <p>
+              The control board puts everything the robot needs on one PCB, built
+              around an STM32F401RBT6 on a 16 MHz crystal. A TB6612FNG drives the
+              motors. The MPU6050, the MT6701 magnetic encoders, the ESP8266 and
+              the motor leads each plug into their own connector instead of being
+              soldered to the chassis. Power comes in over USB-C through a PTC
+              fuse, CC resistors and a USBLC6 ESD array, then LD1117 regulators
+              make 5 V and 3.3 V rails, each with an indicator LED. A WS2812B gives the firmware one addressable status
+              light, and a 4-pin SWD header keeps the debugger connected.
+            </p>
+            <p>
+              The switch labeled <em>5 V selector</em> cuts power to the motors
+              while the logic stays powered from USB. That way I can flash and
+              debug the board on the bench without the robot driving itself off
+              the desk.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Populated by hand
+            </h2>
+            <p>
+              The boards came back bare, and I soldered every surface-mount part
+              by hand: the passives, both regulators, the TB6612, the crystal,
+              and the STM32 in a 64-pin quad flat pack.
+            </p>
+            <p>
+              I planned the layout around that. Parts are spaced far enough apart
+              for an iron and tweezers instead of packed as tightly as the design
+              rules allow. Anything that takes mechanical stress, like the USB-C
+              port, the JST connectors and the headers, is through-hole, because
+              surface-mount pads can peel off.
+            </p>
+          </div>
+
+          <div class="figure-row">
+            <figure class="figure">
+              <img src="../assets/img/robot-board-bare.jpg" alt="The bare control board before assembly, showing empty pads and silkscreen reference designators" loading="lazy" width="1500" height="1199" />
+              <figcaption>Bare board, as it came from the fab.</figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="../assets/img/robot-board-soldered.jpg" alt="The same board fully populated by hand: STM32 in a 64-pin QFP, regulators, motor driver, USB-C, and JST connectors" loading="lazy" width="1500" height="1116" />
+              <figcaption>
+                The same board populated. The QFP, SOIC packages and passives are
+                all hand-soldered.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="figure-row">
+            <figure class="figure">
+              <img src="../assets/img/robot-board-3d.jpg" alt="KiCad 3D render of the control board with the STM32 package, ESP8266 module, USB-C connector, MPU6050 and JST connectors" loading="lazy" width="1500" height="999" />
+              <figcaption>The v1 control board, rendered from KiCad.</figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="../assets/img/robot-bottom.jpg" alt="Underside of the robot showing the motor mounts and wiring" loading="lazy" width="1500" height="1125" />
+              <figcaption>Underside, with the motors and wiring.</figcaption>
+            </figure>
+          </div>
+
+          <div class="figure-row">
+            <figure class="figure">
+              <img src="../assets/img/robot-schematic.png" alt="KiCad schematic of the control board grouped into microcontroller, motor driver, regulators, IMU, encoder, ESP8266, and SWD sections" loading="lazy" width="1500" height="1034" />
+              <figcaption>
+                Schematic, grouped by function: MCU, motor driver, regulators, and
+                a block per connector.
+              </figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="../assets/img/robot-layout.png" alt="KiCad board layout of the control board" loading="lazy" width="1500" height="1174" />
+              <figcaption>
+                Layout. Each revision has its own board files in the repository.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="prose">
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Self-balancing (unfinished)
+            </h2>
+            <p>
+              The original goal was a self-balancing robot, an inverted pendulum
+              that stays upright by driving its wheels in the direction it's
+              falling. That's why it has the IMU and encoder inputs. The
+              firmware reads the MPU6050 through a complementary filter at
+              100 Hz to get roll and pitch, which is the first thing a balance
+              controller needs.
+            </p>
+            <p>
+              I didn't get as far as a working balance controller, and the
+              encoder code is still switched off, so for now it only drives. The
+              board has what balancing would need: an IMU, encoder inputs and
+              live telemetry.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Building it yourself
+            </h2>
+            <p>
+              The firmware in <code>balance_noEncoder/</code> is an STM32CubeIDE
+              project. Open it with <em>File → Open Projects from File System</em>
+              and build. The board files were saved in KiCad 9 and 10, so open
+              them in KiCad 10.
+            </p>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn btn-ghost" href="../projects.html">← All projects</a>
+            <a class="btn btn-ghost" href="https://github.com/nruth633/3-wheel-balancing-robot" rel="noopener">
+              View source on GitHub
+            </a>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p style="margin: 0">© <span id="year">2026</span> Nicolas Ruth</p>
+        <p style="margin: 0">
+          <a href="mailto:nruth633@gmail.com">nruth633@gmail.com</a> · <a href="https://github.com/nruth633" rel="noopener">GitHub</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+    <title>Arduino Uno I/O Shield | Nicolas Ruth</title>
+    <meta
+      name="description"
+      content="An Arduino Uno shield carrying a 10-bit R-2R ladder DAC buffered into a 3.5 mm output jack, plus an MPU6050 IMU, an SSD1306 OLED, potentiometers, and buttons."
+    />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Arduino Uno I/O Shield | Nicolas Ruth" />
+    <meta
+      property="og:description"
+      content="A 10-bit R-2R ladder DAC buffered into a 3.5 mm jack, plus an MPU6050, an SSD1306 OLED, pots, and buttons, on an Uno shield."
+    />
+    <meta property="og:url" content="https://nruth633.github.io/projects/io-shield.html" />
+    <meta property="og:image" content="https://nruth633.github.io/assets/img/shield-3d.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://nruth633.github.io/projects/io-shield.html" />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap nav">
+        <a class="site-name" href="../index.html">Nicolas Ruth</a>
+        <nav aria-label="Main">
+          <ul class="nav-links">
+            <li><a href="../projects.html" aria-current="page">Projects</a></li>
+            <li><a href="../resume.html">Resume</a></li>
+            <li><a href="https://github.com/nruth633" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <article>
+        <header class="detail-header wrap">
+          <a class="back-link" href="../projects.html">← All projects</a>
+          <p class="section-label">PCB Design · Mixed Signal · Built</p>
+          <h1>Arduino Uno I/O Shield</h1>
+          <ul class="tags">
+            <li class="tag tag-accent">10-bit R-2R DAC</li>
+            <li class="tag">KiCad</li>
+            <li class="tag">MPU6050</li>
+            <li class="tag">SSD1306</li>
+            <li class="tag">MCP6002</li>
+          </ul>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://github.com/nruth633/arduino-shield-pcb" rel="noopener">
+              View source
+            </a>
+          </div>
+        </header>
+
+        <section class="wrap" style="padding-top: var(--space-m)">
+          <figure class="figure">
+            <img src="../assets/img/shield-3d.jpg" alt="KiCad 3D render of the shield: OLED and MPU6050 modules at the left, a row of axial resistors forming the ladder, trim pots, buttons, and two audio jacks" width="1500" height="963" />
+            <figcaption>
+              The board as KiCad renders it. The long row of axial resistors
+              across the middle is the R-2R ladder; the two gray barrels on the
+              right edge are the audio in and out jacks.
+            </figcaption>
+          </figure>
+
+          <dl class="spec-list">
+            <dt>Form factor</dt>
+            <dd>Arduino Uno shield</dd>
+            <dt>DAC</dt>
+            <dd>10-bit R-2R ladder, 10 kΩ / 20 kΩ, on D0–D9</dd>
+            <dt>Output buffer</dt>
+            <dd>MCP6002 rail-to-rail op-amp, 100 pF feedback cap</dd>
+            <dt>Analog I/O</dt>
+            <dd>Two 3.5 mm jacks: line in to A2 / A3, buffered line out</dd>
+            <dt>Sensing</dt>
+            <dd>MPU6050 IMU header (I²C)</dd>
+            <dt>Display</dt>
+            <dd>SSD1306 128 × 64 OLED header (I²C)</dd>
+            <dt>Controls</dt>
+            <dd>Two 100 kΩ pots to A0 / A1, two buttons, DC-offset trimmer</dd>
+            <dt>Tool</dt>
+            <dd>KiCad</dd>
+            <dt>Status</dt>
+            <dd>Fabricated and hand-soldered</dd>
+          </dl>
+
+          <div class="prose">
+            <h2 style="font-size: var(--step-2); margin-bottom: var(--space-m)">
+              Why a DAC
+            </h2>
+            <p>
+              An Arduino Uno can't output a real analog voltage. Its
+              <code>analogWrite</code> is PWM, a square wave switching between
+              0 V and 5 V. If you need an actual varying voltage, like for audio,
+              you need a digital-to-analog converter, and the Uno doesn't have
+              one.
+            </p>
+            <p>
+              This shield makes one out of resistors. Ten digital pins, D0 through
+              D9, feed an R-2R ladder made only of 10 kΩ and 20 kΩ resistors.
+              Each step counts half as much as the one above it, so writing a
+              10-bit number to those pins gives a proportional voltage. That's
+              1024 levels from two resistor values, with no DAC chip.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Why the ladder needs a buffer
+            </h2>
+            <p>
+              An R-2R ladder has a real output impedance, so anything you connect
+              to it becomes part of the divider. If you plug in something with a
+              low input impedance, like a speaker, the output voltage sags and
+              isn't accurate anymore.
+            </p>
+            <p>
+              So the ladder feeds an MCP6002, a rail-to-rail op-amp wired as a
+              buffer. It has a very high input impedance, so it doesn't load the ladder,
+              and a low output impedance to drive whatever comes next. A 100 pF
+              cap across the feedback path rolls off the high end and smooths
+              the steps.
+            </p>
+            <p>
+              A trimmer sets a DC offset through a jumper, so the output can be
+              centered where the next stage needs it.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Jacks instead of jumper wires
+            </h2>
+            <p>
+              Both ends of the analog path use 3.5 mm jacks. Line in goes to
+              analog pins A2 and A3, and the buffered line out has its own jack.
+              That means the board connects to normal audio gear with a regular
+              cable, instead of jumper wires and alligator clips every time.
+            </p>
+            <p>
+              The rest of the board is there so I don't have to rebuild a
+              breadboard each time: two 100 kΩ pots on A0 and A1, two buttons
+              with pull-downs, and headers for an MPU6050 IMU and a 128 × 64
+              SSD1306 OLED, both on the same I²C bus.
+            </p>
+          </div>
+
+          <div class="figure-row">
+              <figure class="figure">
+                <img src="../assets/img/shield-schematic.png" alt="KiCad schematic grouped into shield headers, IMU, screen, buttons, potentiometers, R-2R ladder DAC, and analog in/out" loading="lazy" width="1500" height="904" />
+                <figcaption>Schematic, grouped by function.</figcaption>
+              </figure>
+              <figure class="figure">
+                <img src="../assets/img/shield-layout.png" alt="KiCad board layout of the shield showing the Uno outline and component placement" loading="lazy" width="1500" height="1007" />
+                <figcaption>Layout, on the Uno outline.</figcaption>
+              </figure>
+            </div>
+
+          <div class="prose">
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Related work
+            </h2>
+            <p>
+              This is one of two Uno shields I've designed. The other is the
+              <a href="demosat.html">DemoSat balloon payload</a>, which uses the
+              same shield outline for a set of sensors.
+            </p>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn btn-ghost" href="../projects.html">← All projects</a>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p style="margin: 0">© <span id="year">2026</span> Nicolas Ruth</p>
+        <p style="margin: 0">
+          <a href="mailto:nruth633@gmail.com">nruth633@gmail.com</a> · <a href="https://github.com/nruth633" rel="noopener">GitHub</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+  </body>
+</html>

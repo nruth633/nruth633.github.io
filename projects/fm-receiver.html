@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+    <title>FM Radio Receiver | Nicolas Ruth</title>
+    <meta
+      name="description"
+      content="A discrete FM receiver on a breadboard with a hand-wound 0.15 µH coil, 1–30 pF tuning and an LM386 output. It received one station, and the write-up is about why it didn't do more."
+    />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="FM Radio Receiver | Nicolas Ruth" />
+    <meta
+      property="og:description"
+      content="A discrete FM receiver on a breadboard. It received one station, and figuring out why the tuning did nothing is most of the write-up."
+    />
+    <meta property="og:url" content="https://nruth633.github.io/projects/fm-receiver.html" />
+    <meta property="og:image" content="https://nruth633.github.io/assets/img/fm-receiver-build.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://nruth633.github.io/projects/fm-receiver.html" />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap nav">
+        <a class="site-name" href="../index.html">Nicolas Ruth</a>
+        <nav aria-label="Main">
+          <ul class="nav-links">
+            <li><a href="../projects.html" aria-current="page">Projects</a></li>
+            <li><a href="../resume.html">Resume</a></li>
+            <li><a href="https://github.com/nruth633" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <article>
+        <header class="detail-header wrap">
+          <a class="back-link" href="../projects.html">← All projects</a>
+          <p class="section-label">RF · Analog</p>
+          <h1>FM Radio Receiver</h1>
+          <ul class="tags">
+            <li class="tag tag-accent">88–108 MHz</li>
+            <li class="tag">Hand-wound coil</li>
+            <li class="tag">LM386</li>
+            <li class="tag">Coursework</li>
+          </ul>
+        </header>
+
+        <section class="wrap" style="padding-top: var(--space-m)">
+          <figure class="figure figure-tall">
+            <img src="../assets/img/fm-receiver-build.jpg" alt="The receiver built on a breadboard, wired to a speaker, with an Arduino Uno supplying 5 V" width="1155" height="1146" />
+            <figcaption>
+              The whole receiver. I kept the RF section packed into the top-left
+              corner on purpose, since on a breadboard every extra centimeter of
+              lead adds inductance. The Uno is only there as a 5 V supply.
+            </figcaption>
+          </figure>
+
+          <dl class="spec-list">
+            <dt>Band</dt>
+            <dd>88–108 MHz (FM broadcast)</dd>
+            <dt>Tank inductor</dt>
+            <dd>≈ 0.15 µH, 28 AWG enamel, 3–4 turns, 5.3 mm dia, 3 mm long</dd>
+            <dt>Tuning</dt>
+            <dd>1–30 pF variable capacitor</dd>
+            <dt>RF stage</dt>
+            <dd>Two transistors (S9018 specified, substitutes used)</dd>
+            <dt>Audio stage</dt>
+            <dd>LM386 into a speaker via 470 µF</dd>
+            <dt>Supply</dt>
+            <dd>5 V from an Arduino Uno</dd>
+            <dt>Built for</dt>
+            <dd>Principles of Communications coursework</dd>
+          </dl>
+
+          <div class="prose">
+            <h2 style="font-size: var(--step-2); margin-bottom: var(--space-m)">
+              What it is
+            </h2>
+            <p>
+              An FM broadcast receiver built from individual parts, with no
+              receiver IC, for a Principles of Communications class. It's an
+              antenna, an LC tank, two transistor stages, an LM386 and a
+              speaker.
+            </p>
+            <p>
+              It did receive. Once it was put together it picked up one strong
+              local station and held it. Almost nothing else worked the way the
+              design said it should, and working out why is most of what I got
+              out of it.
+            </p>
+          </div>
+
+          <figure class="figure">
+              <img src="../assets/img/fm-receiver-block-diagram.png" alt="Hand-drawn block diagram: FM station to antenna to LC tuning circuit to FM demodulation to LM386 audio amp to speaker" loading="lazy" width="1122" height="783" />
+              <figcaption>
+                The signal chain the design was aiming for.
+              </figcaption>
+            </figure>
+
+          <div class="prose">
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Winding the coil
+            </h2>
+            <p>
+              The front end is an LC tank, and at 100 MHz the inductor only needs
+              to be a few tenths of a microhenry. You can't really buy that off
+              the shelf, so I wound it by hand: 28 AWG enameled copper, three to
+              four turns around a drill bit, about 5.3 mm across and 3 mm long,
+              with the ends sanded to get through the enamel. That works out to
+              roughly 0.15 µH.
+            </p>
+            <p>
+              With a 1–30 pF variable capacitor, that should cover the whole
+              88–108 MHz band, so turning the tuning knob should change
+              stations.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              What actually happened
+            </h2>
+            <p>
+              Three things went wrong:
+            </p>
+            <ul>
+              <li>
+                <strong>The variable capacitor did nothing.</strong> Sweeping it
+                end to end produced no change in what was received.
+              </li>
+              <li>
+                <strong>Changing the number of turns on the coil was
+                negligible.</strong> Rewinding it, which is the other half of setting
+                the resonant frequency, barely changed the result either.
+              </li>
+              <li>
+                <strong>There was significant noise</strong>, and antenna position
+                mattered far more than any control on the board.
+              </li>
+            </ul>
+            <p>
+              Together, those mean the tank wasn't what set the tuning. If
+              changing both L and C doesn't move the resonant frequency, then
+              stray capacitance and lead inductance somewhere else in the circuit
+              must be bigger than the parts that were supposed to set it. That's
+              very possible on a solderless breadboard. The contact strips have a
+              few picofarads between neighbors, which is a big chunk of a
+              1–30 pF tuning range, and the jumper wires add about as much
+              inductance as the coil.
+            </p>
+            <p>
+              The transistors are the other suspect. The design called for the
+              S9018 because of its gain-bandwidth at VHF, but I had to use
+              substitutes. If a transistor runs out of gain before 100 MHz, the
+              receiver stops acting tuned and just responds to whichever signal
+              is strongest.
+            </p>
+          </div>
+
+          <figure class="figure">
+              <img src="../assets/img/fm-receiver-schematic.png" alt="Hand-drawn schematic: antenna into an LC tank with a 1-30 pF variable capacitor and 0.15 uH coil, two transistors, then 100 nF and 10 k into an LM386 driving a speaker through 470 uF" loading="lazy" width="1500" height="1000" />
+              <figcaption>
+                The circuit as drawn, with the S9018 and LM386 pinouts noted at
+                the bottom. The 25 kΩ pot sets the bias on the RF stage.
+              </figcaption>
+            </figure>
+
+          <div class="prose">
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              What a version two would change
+            </h2>
+            <p>
+              Solder it. Almost every problem above comes from building a VHF
+              circuit on a breadboard. A soldered board with short leads and a
+              ground plane would get rid of most of the parasitics. Using the
+              actual S9018s instead of substitutes would give the RF stage the
+              bandwidth the design assumed. After that, a dedicated demodulator
+              IC would give much cleaner audio than two discrete stages.
+            </p>
+            <p>
+              I don't count it as a failure. It picked up a station on a
+              breadboard full of loose parts, and I can explain why it didn't do
+              more.
+            </p>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn btn-ghost" href="../projects.html">← All projects</a>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p style="margin: 0">© <span id="year">2026</span> Nicolas Ruth</p>
+        <p style="margin: 0">
+          <a href="mailto:nruth633@gmail.com">nruth633@gmail.com</a> · <a href="https://github.com/nruth633" rel="noopener">GitHub</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+  </body>
+</html>

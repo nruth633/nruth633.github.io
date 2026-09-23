@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+    <title>IEEE LED Matrix Cube Board | Nicolas Ruth</title>
+    <meta
+      name="description"
+      content="One slice of the DU IEEE chapter's LED matrix cube: three daisy-chained 74HCT595 shift registers driving 24 transistor cathode sinks, designed in KiCad."
+    />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="IEEE LED Matrix Cube Board | Nicolas Ruth" />
+    <meta
+      property="og:description"
+      content="Three daisy-chained 74HCT595 shift registers driving 24 transistor cathode sinks, so eight RGB columns run off a five-wire bus."
+    />
+    <meta property="og:url" content="https://nruth633.github.io/projects/ieee-cube.html" />
+    <meta property="og:image" content="https://nruth633.github.io/assets/img/ieee-cube-layout.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://nruth633.github.io/projects/ieee-cube.html" />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap nav">
+        <a class="site-name" href="../index.html">Nicolas Ruth</a>
+        <nav aria-label="Main">
+          <ul class="nav-links">
+            <li><a href="../projects.html" aria-current="page">Projects</a></li>
+            <li><a href="../resume.html">Resume</a></li>
+            <li><a href="https://github.com/nruth633" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <article>
+        <header class="detail-header wrap">
+          <a class="back-link" href="../projects.html">← All projects</a>
+          <p class="section-label">PCB Design · Digital · DU IEEE</p>
+          <h1>IEEE LED Matrix Cube Board</h1>
+          <ul class="tags">
+            <li class="tag tag-accent">74HCT595</li>
+            <li class="tag">24 channels</li>
+            <li class="tag">KiCad</li>
+            <li class="tag">MMBT3904</li>
+          </ul>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://github.com/nruth633/ieee-pcb" rel="noopener">
+              View source
+            </a>
+          </div>
+        </header>
+
+        <section class="wrap" style="padding-top: var(--space-m)">
+          <figure class="figure figure-tall">
+            <img src="../assets/img/ieee-cube-layout.png" alt="KiCad board layout: three shift registers on the left, 24 transistor and resistor pairs across the middle, output headers on the right" width="1494" height="1500" />
+            <figcaption>
+              The finished layout. Shift registers run down the left edge, the 24
+              cathode drivers fill the middle, and the two 12-pin headers on the
+              right carry eight RGB columns out to the cube.
+            </figcaption>
+          </figure>
+
+          <dl class="spec-list">
+            <dt>Role</dt>
+            <dd>One slice of the chapter's LED matrix cube</dd>
+            <dt>Drivers</dt>
+            <dd>3 × 74HCT595D shift registers, daisy-chained</dd>
+            <dt>Channels</dt>
+            <dd>24 (eight columns × red, green, blue)</dd>
+            <dt>Switching</dt>
+            <dd>MMBT3904 NPN low-side sinks, 2.2 kΩ base resistors</dd>
+            <dt>Ballast</dt>
+            <dd>68 Ω on blue and green, 120 Ω on red</dd>
+            <dt>Control bus</dt>
+            <dd>Five wires: CLK, DATA, LATCH, BLANK, GND</dd>
+            <dt>Tool</dt>
+            <dd>KiCad</dd>
+          </dl>
+
+          <div class="prose">
+            <h2 style="font-size: var(--step-2); margin-bottom: var(--space-m)">
+              Eight RGB columns, five wires
+            </h2>
+            <p>
+              An LED cube needs a huge number of separately controlled outputs,
+              and a microcontroller doesn't have nearly enough pins. The solution
+              is to clock the LED states in as serial data instead of driving
+              each one from its own pin.
+            </p>
+            <p>
+              Three 74HCT595 shift registers sit in series. Each one takes serial
+              data on one pin and presents eight parallel outputs, so three of
+              them give 24 outputs, which is eight columns of red, green, and
+              blue. The processor shifts 24 bits in on <code>DATA</code> and
+              <code>CLK</code>, pulses <code>LATCH</code>, and the whole slice
+              updates at once.
+            </p>
+            <p>
+              The fifth signal, <code>BLANK</code>, drives the registers' active-low
+              output-enable pins together. It turns every output off at
+              once without changing the latched data, so it works as a
+              brightness control. Driving it with PWM dims the whole slice
+              without changing the frame.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Why red gets the bigger resistor
+            </h2>
+            <p>
+              The shift register outputs can't sink enough current for an LED, so
+              each of the 24 channels drives an MMBT3904 through a 2.2 kΩ base
+              resistor and the transistor sinks the current. The ballast
+              resistors took more thought.
+            </p>
+            <p>
+              Blue and green LEDs drop roughly 3 V; red drops closer to 2 V. With
+              all three on the same 5 V rail through the same resistor, the red
+              channel would get much more current than the others, so the cube's
+              &ldquo;white&rdquo; would look pink and the reds would burn out
+              sooner. Using 120 Ω for red and 68 Ω for blue and green brings the
+              three currents into the same range so the colors mix properly.
+            </p>
+
+            <h2 style="font-size: var(--step-2); margin: var(--space-l) 0 var(--space-m)">
+              Built to chain
+            </h2>
+            <p>
+              The board is one slice of a larger cube, so its five-pin output
+              header mirrors its input header exactly: the last register's
+              overflow output becomes the next slice's <code>DATA</code>, and
+              clock, latch, and blank pass straight through. Slices stack without
+              any wiring changes, and the firmware just shifts in a longer
+              frame.
+            </p>
+            <p>
+              That overflow line goes out through a 68 Ω series resistor. The data
+              line has to make it through a ribbon cable to the next board, and
+              the resistor damps the reflections that fast CMOS edges cause on an
+              unterminated line.
+            </p>
+          </div>
+
+          <figure class="figure">
+              <img src="../assets/img/ieee-cube-schematic.png" alt="Full KiCad schematic showing inputs, three shift registers, twenty-four cathode transistors, and the output connectors" loading="lazy" width="1500" height="880" />
+              <figcaption>
+                The full schematic, grouped the way the board is laid out: inputs
+                and decoupling on the left, then the shift-register chain, the 24
+                cathode drivers, and the output headers.
+              </figcaption>
+            </figure>
+
+          <div class="prose">
+            <div class="callout">
+              <p>
+                Designed with the University of Denver IEEE student chapter. This
+                board is the layout for one slice, and the full cube is the
+                chapter's group project.
+              </p>
+            </div>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn btn-ghost" href="../projects.html">← All projects</a>
+            <a class="btn btn-ghost" href="https://github.com/nruth633/ieee-pcb" rel="noopener">Source ↗</a>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p style="margin: 0">© <span id="year">2026</span> Nicolas Ruth</p>
+        <p style="margin: 0">
+          <a href="mailto:nruth633@gmail.com">nruth633@gmail.com</a> · <a href="https://github.com/nruth633" rel="noopener">GitHub</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+  </body>
+</html>
